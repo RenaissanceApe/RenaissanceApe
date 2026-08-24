@@ -6,6 +6,65 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.49 — August 2026
+
+### First Field Note published, PT and EN
+
+`portugal-events` in both trees. The Field Notes section had been advertised in
+the nav since v1.42 with nothing behind it; it now has an article, and both
+hubs show a card instead of an empty state.
+
+```
+/pt/field-notes/portugal-events.html
+/field-notes/portugal-events.html
+/images/og/portugal-events-pt.png
+/images/og/portugal-events-en.png
+```
+
+Same slug in both languages, per the site rule, rather than the per-language
+slugs the source markdown proposed. `portugal-events` is a programme name, so
+it reads correctly in both trees and leaves room for the planned follow-up.
+
+Built to the content handover:
+
+- measure capped at 68ch, line-height 1.8, body text not pure white
+  (`rgba(255,255,255,0.75)` is 10.4:1 on `#021829`, passes AA)
+- exactly one pull-quote, the Porto festival line, accent rule, not italic
+- exactly one in-content CTA, at the foot, to cal.com. The nav "Get started"
+  button is site chrome and was left alone.
+- accent green held to four uses: pull-quote rule, the inline AV eligibility
+  emphasis, the CTA, and the nav active state. The article template's green
+  rule on the standfirst was muted so it would not be a fifth.
+- source section breaks rendered as low-contrast dividers with real space
+- the Nota renders as an inset disclaimer, a different register from the body
+- all editorial scaffolding stripped: post type, slug header, legal basis
+  line, the EN writing guidance, and the "O QUE MUDOU DA v1" section
+- legal designations left in Portuguese on both pages, including in the EN
+  body, per the brief
+
+The EN body was written to the brief in the source file rather than machine
+translated: mirrored section by section, same figures in the same order, first
+person, designations untranslated.
+
+### Fixed along the way
+
+The article template's meta line used `rgba(255,255,255,0.35)`, which is 3.2:1
+on the page background and fails WCAG AA. Raised to 0.55 on both new pages.
+The templates themselves still carry the old value and should be updated when
+the next article is built.
+
+The template also ships `og:type` as `website` and carries placeholder meta
+descriptions. Both new pages now declare `og:type` once, as `article`, and
+carry a real description mirrored across `description`, `og:description`,
+`twitter:description` and the JSON-LD, in the language of the page.
+
+### OG images
+
+1200x630, generated from the paid-ad creative spec using the site's
+self-hosted Space Mono, one per language. Referenced as absolute URLs.
+
+---
+
 ## v1.48 — August 2026
 
 ### Shared design-system CSS extracted to `base.css`
