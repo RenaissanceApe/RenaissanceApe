@@ -5,9 +5,11 @@
   "description": "Dev-only tooling for lumenandpixel.com. Not part of the published site.",
   "scripts": {
     "extract-css": "node extract-base-css.mjs",
-    "check-css": "node extract-base-css.mjs --check"
+    "check-css": "node extract-base-css.mjs --check",
+    "check": "node check.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.48.0",
     "postcss": "^8.4.47"
   }
 }
