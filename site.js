@@ -56,6 +56,52 @@
   }
 
 
+  /* ── Tab scroll-spy ─────────────────────────────────────────────────────
+     Highlights the tab for whichever section is currently in view. Opt in by
+     putting `data-scrollspy` on the element holding the `.tab-link` anchors;
+     the sections come from the anchors' own `#fragment` hrefs, so the tab
+     strip is the single source of truth and cannot drift from a second list.
+
+     This lived inline on three pages and had already drifted: two different
+     rootMargins, an inconsistent threshold, different variable names, and one
+     copy minified while its translated twin was not. The two attributes below
+     preserve each page's existing values exactly.
+
+       data-scrollspy-margin      rootMargin    (default '-20% 0px -65% 0px')
+       data-scrollspy-threshold   threshold     (default 0)
+
+     Purely decorative, so it fails closed: with no IntersectionObserver the
+     tabs simply keep whichever one the markup marked active.               */
+
+  if ('IntersectionObserver' in window) {
+    toArray(document.querySelectorAll('[data-scrollspy]')).forEach(function (strip) {
+      var tabs = toArray(strip.querySelectorAll('.tab-link[href^="#"]'));
+      if (!tabs.length) return;
+
+      var sections = tabs
+        .map(function (tab) { return document.getElementById(tab.getAttribute('href').slice(1)); })
+        .filter(Boolean);
+      if (!sections.length) return;
+
+      var margin = strip.getAttribute('data-scrollspy-margin') || '-20% 0px -65% 0px';
+      var threshold = parseFloat(strip.getAttribute('data-scrollspy-threshold')) || 0;
+
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          tabs.forEach(function (tab) { tab.classList.remove('active'); });
+          var match = tabs.filter(function (tab) {
+            return tab.getAttribute('href') === '#' + entry.target.id;
+          })[0];
+          if (match) match.classList.add('active');
+        });
+      }, { rootMargin: margin, threshold: threshold });
+
+      sections.forEach(function (section) { spy.observe(section); });
+    });
+  }
+
+
   /* ── Footer year ────────────────────────────────────────────────────────
      The markup carries a real, correct year so it reads properly with
      JavaScript off. This only rolls it forward once the calendar passes it,
