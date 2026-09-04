@@ -6,6 +6,55 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.50 — September 2026
+
+### Field Notes text contrast raised to WCAG AA (issue #6)
+
+The third pass at this bug, and the first one measured rather than eyeballed.
+
+v1.49 claimed the 3.2:1 meta colour was "raised to 0.55 on both new pages". It
+was not. `rgba(255,255,255,0.35)` was still live on `.fn-back`, `.article-date`
+and `.article-read-time`, and 0.35 turned out not to be the only failing value.
+
+Rather than grep for one literal, every text node in the six Field Notes files
+was measured in a headless browser: foreground composited over the effective
+background chain, WCAG AA threshold selected per element from its own computed
+font size and weight. That found **seven** failing colours, not one:
+
+| Selector | Was | Measured | Now |
+|---|---|---|---|
+| `.fn-item-date` | 0.3 | 2.66:1 | 0.55 |
+| `.fn-back` | 0.35 | 3.18:1 | 0.55 |
+| `.article-date` | 0.35 | 3.18:1 | 0.55 |
+| `.article-read-time` | 0.35 | 3.18:1 | 0.55 |
+| `.article-footer-back` | 0.4 | 3.78:1 | 0.55 |
+| `.fn-filter` | 0.45 | 4.45:1 | 0.55 |
+| `.article-eyebrow` | 0.45 | 4.45:1 | 0.55 |
+
+Also raised: `.fn-lang-note` and `.fn-empty` (both 0.3, not rendered at audit
+time but reachable states), and the `·` separator on `.article-read-time::before`.
+
+Both `article-template.html` files are fixed, so the next article starts correct
+instead of inheriting the bug a fourth time.
+
+### Decorative SVGs hidden from assistive tech
+
+Five SVG arrows in the Field Notes tree carried no `aria-hidden`, so screen
+readers announced them inside links that already have their own text. The two
+published articles were correct and both templates were wrong, which is the
+same template-drift pattern as the contrast bug.
+
+### Still failing, deliberately not fixed here
+
+Nine more colours fail AA, all in `base.css` and page-level CSS rather than the
+Field Notes tree: the footer wordmark, social links and copyright at 3.83:1
+(`--gray-500`, `#6b7485`), the nav quiz link and language switch at 4.21-4.47:1,
+and `.hero-scope` and `.tab-link.active` elsewhere. These render on all 24
+pages. Fixing them is a site-wide restyle and belongs in its own change, not
+inside an issue scoped to six files.
+
+---
+
 ## v1.49 — August 2026
 
 ### First Field Note published, PT and EN
