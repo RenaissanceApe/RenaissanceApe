@@ -6,6 +6,82 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.51 — September 2026
+
+### Tab scroll-spy moved into site.js (issue #11)
+
+The issue reported `IntersectionObserver` pasted back into `legal.html`,
+`pt/legal.html` and `services.html`, against the README rule that `site.js`
+owns scroll-reveal.
+
+Reading it before deleting it, as the issue asked: **it is not reveal logic.**
+It is tab scroll-spy, which highlights the section nav as you scroll, and
+`site.js` does not provide it. Deleting the three copies would have removed a
+working feature from three pages.
+
+The real problem was that the same feature existed three times and had already
+drifted:
+
+| | `legal.html` | `pt/legal.html` | `services.html` |
+|---|---|---|---|
+| variable | `obs` | `obs` | `sobs` |
+| formatting | expanded | minified | minified |
+| `rootMargin` | `-20% 0px -65% 0px` | `-20% 0px -65% 0px` | `-30% 0px -60% 0px` |
+| `threshold` | `0.05` | `0.05` | none |
+
+A translated pair carrying the same behaviour in two different shapes is the
+exact drift this audit keeps finding.
+
+It now lives once in `site.js`, opted into with `data-scrollspy` on the tab
+strip. Sections come from the tab anchors' own `#fragment` hrefs rather than a
+second hardcoded list, so the two cannot disagree. Each page's existing
+`rootMargin` and `threshold` are preserved via data attributes, so nothing
+changed behaviourally.
+
+### Two markup defects in pt/services.html
+
+Found by the new CI on its first run: a stray `</div>` after the mobile menu,
+and `.footer-inner` never closed. Browsers recover from both, so neither was
+visible — but an unclosed `<div>` in this same file is what blanked two PT
+pages in production before. Both corrected against the EN counterpart.
+
+### Shared typography guard lifted to base.css
+
+`h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }` was pasted
+into 18 pages. Now in `base.css` once.
+
+### Not changed, and why
+
+`extract-base-css.mjs --check` reports zero extractable rules, but its list of
+shared selectors is curated, so that is not the whole picture. Measured
+independently, **68 rules are still byte-identical across four or more pages**
+— most significantly the entire `.resources-*` and `.resource-card*` block,
+which the six Field Notes files inherit wholesale from `resources.html`.
+
+That is page-family CSS, not design system. Lifting it into `base.css` would
+put component styles into the shared base and make the split harder to reason
+about, and it is the same root cause issue #12 exists to decide properly. Left
+for that decision rather than half-solved here.
+
+### Verification
+
+Every computed style that matters (48 properties plus geometry) was captured
+for every element on all 22 pages at 1280px and 375px, before and after, with
+animations and transitions frozen so the comparison measured layout rather
+than whichever frame was caught.
+
+**Zero differences.** The only deltas were the element count on the three pages
+that lost a `<script>` node, which is the change itself.
+
+Scroll-spy behaviour was compared separately by recording the active tab at
+every 150px of scroll on all three pages, before and after: 104 positions, of
+which 101 identical. The other three are unstable run-to-run **on identical
+code** — section boundaries where the observer callback races the measurement —
+and were verified as flake, not regression, by comparing the new code against
+itself.
+
+---
+
 ## v1.49 — August 2026
 
 ### First Field Note published, PT and EN
