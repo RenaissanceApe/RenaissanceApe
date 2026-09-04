@@ -284,7 +284,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 </footer>
 
 <script>
-var SERVICES_PT = {
+var SERVICES = {
   SD: { nameHTML: 'Design de<br><em>Espetáculo</em>', anchor: '#show-design',
     why: "As suas respostas apontam para uma lacuna entre onde vive a visão criativa e onde começa a realidade técnica. O Design de Espetáculo fecha essa lacuna — construímos o sistema visual que liga o que imagina ao que pode ser efetivamente construído, programado e entregue em palco.",
     modes: {
@@ -529,7 +529,7 @@ function computeResult() {
 
 function renderResult() {
   var r = computeResult();
-  var svc = SERVICES_PT[r.win];
+  var svc = SERVICES[r.win];
   var mode = svc.modes[r.modeKey];
   document.getElementById('result-service-name').innerHTML = svc.nameHTML;
   document.getElementById('result-mode-name').textContent = '→ ' + mode.name;

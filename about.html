@@ -402,18 +402,17 @@
     var p=new URLSearchParams(window.location.search);
     var k=p.get('service');
     var sel=document.getElementById('service');
-    var qf=document.getElementById('quiz_result');
     var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
     var val=map[k]||k||'';
     if(sel&&val)sel.value=val;
-    if(qf&&val)qf.value=val;
     if(window.location.hash==='#contact-form'){
       var ft=document.getElementById('contact-form');
       if(ft){requestAnimationFrame(function(){
-        ft.closest('.contact-section')&&ft.closest('.contact-section').querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
-        ft.scrollIntoView({behavior:'smooth',block:'start'});
-        if(sel&&sel.value)sel.focus({preventScroll:true});
-        else ft.querySelector('input,select,textarea')&&ft.querySelector('input,select,textarea').focus({preventScroll:true});
+        var section=ft.closest('.contact-section');
+        if(section)section.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+        ft.scrollIntoView({behavior:prefersReducedMotion?'auto':'smooth',block:'start'});
+        var target=(sel&&sel.value)?sel:ft.querySelector('input,select,textarea');
+        if(target)target.focus({preventScroll:true});
       });}
     }
   })();
