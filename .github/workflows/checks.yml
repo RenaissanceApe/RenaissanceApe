@@ -1,0 +1,50 @@
+# Site checks. Nothing here touches the published site — GitHub Pages deploys
+# from main independently of this workflow.
+#
+# What each check protects is documented in _tools/checks/*.mjs. Run the same
+# checks locally with:  cd _tools && npm ci && npm run check
+name: checks
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _tools/package-lock.json
+
+      - name: Install dev tooling
+        working-directory: _tools
+        run: npm ci
+
+      # Only Chromium, and only the browser itself. The contrast check renders
+      # each page to measure what the browser actually computed; a static CSS
+      # reading of it produced ~90% false positives.
+      - name: Install Chromium
+        working-directory: _tools
+        run: npx playwright install --with-deps chromium
+
+      # Proves each check still fires on a known defect before trusting a
+      # green run. A check that never fires reports green and is believed.
+      - name: Self-test the checks
+        working-directory: _tools
+        run: node selftest.mjs
+
+      - name: Run site checks
+        run: node _tools/check.mjs

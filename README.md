@@ -129,10 +129,38 @@ values, only the labels are translated.
 
 ## Checking your work
 
+CI runs on every push and pull request (`.github/workflows/checks.yml`). Run the
+same checks locally before pushing:
+
+```bash
+cd _tools && npm ci
+npm run check                   # all six checks
+node check.mjs --only contrast  # just one
+node selftest.mjs               # prove the checks still catch their defects
+```
+
+| Check | Catches |
+|---|---|
+| `html-structure` | unbalanced tags, duplicate ids — an unclosed `<div>` blanked two PT pages in production |
+| `links` | internal links and assets that do not resolve |
+| `parity` | an EN page with no PT counterpart, and `hreflang` pairs that do not point at each other |
+| `contrast` | text below its WCAG AA threshold, measured in a browser |
+| `shared-logic` | reveal or mobile-menu logic pasted back into a page |
+| `base-css` | shared rules still sitting inline, so `base.css` has gone stale |
+
+`selftest.mjs` builds a fixture site with one deliberate defect per check and
+asserts each check fires on it and stays quiet on a clean one. A check that
+never fires reports green and gets believed, which is worse than no check.
+
+### What CI cannot do
+
+These still need a human, and are worth doing after any visual change:
+
+- the page at 375px wide with the mobile menu open
+- the page with JavaScript disabled — content must still be reachable
+- a form submitted with a malformed email, and with the network offline
+- whether the result actually looks right
+
 ```bash
 python3 -m http.server 8000     # then browse http://localhost:8000
 ```
-
-Worth checking after any change: the page at 375px wide with the mobile menu
-open, the page with JavaScript disabled, and — if you touched a form — that a
-malformed email is rejected.

@@ -16,7 +16,11 @@ import postcss from 'postcss';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOT = path.resolve(import.meta.dirname, '..');
+/* SITE_ROOT lets _tools/selftest.mjs point the extractor at a fixture site,
+   so check 6 can be proven to fire like the other five. */
+const ROOT = process.env.SITE_ROOT
+  ? path.resolve(process.env.SITE_ROOT)
+  : path.resolve(import.meta.dirname, '..');
 const CHECK = process.argv.includes('--check');
 
 /* ── Which selectors belong to the shared design system ──────────────────
@@ -149,7 +153,39 @@ for (const [sel, v] of variants) {
 }
 
 const missing = SHARED.filter(s => !canon.has(s));
-if (missing.length) console.log(`  warning: never found ${missing.join(', ')}`);
+
+/* How many shared rules are still sitting inline in a page. This line is
+   parsed by _tools/checks/base-css.mjs, so keep the format stable. */
+console.log(`EXTRACTABLE: ${canon.size}`);
+
+/* Nothing left inline is the healthy steady state: the extraction has already
+   happened and base.css is current. It is not an error — but the emit path
+   below rebuilds base.css *from the pages*, so with an empty canon it would
+   crash (and with a partial one it would silently drop every rule that has
+   already been lifted). Stop here in both cases. */
+if (canon.size === 0) {
+  console.log('base.css is current: no shared rules remain inline.');
+  process.exit(0);
+}
+
+/* --check is report-only and must never reach the rebuild below. */
+if (CHECK) {
+  console.log('still extractable:');
+  for (const sel of SHARED.filter(s => canon.has(s))) console.log(`  ${sel}`);
+  console.log('(--check: nothing was written)');
+  process.exit(0);
+}
+
+if (missing.length) {
+  console.log(`  warning: never found ${missing.join(', ')}`);
+  {
+    console.error(
+      '\nRefusing to rewrite base.css: only some shared rules were found inline.\n' +
+      'Rebuilding from this state would drop the rules that are already in\n' +
+      'base.css. Re-run with --check to see what is still extractable.');
+    process.exit(2);
+  }
+}
 
 // ── build base.css ───────────────────────────────────────────────────────
 const out = [`/* ─── LUMEN AND PIXEL — SHARED BASE ────────────────────────────────────────
