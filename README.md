@@ -21,6 +21,8 @@ site.css, site.js                                        Shared styles and behav
 fonts.css, fonts/                                        Self-hosted webfonts
 images/                                                  Logos, icons, gradients
 CHANGELOG.md                                             What changed, and why
+INTAKE.md                                                The form → n8n contract
+CLAUDE.md                                                Rules for agents working here
 ```
 
 ## Shared files — read this before editing a page
@@ -79,38 +81,22 @@ no consent banner. Keep it that way: anything new that runs in the visitor's
 browser changes the site's legal position and means updating `legal.html` and
 `pt/legal.html`.
 
-This covers **page load**. Submitting a form is different, and the distinction
-matters:
+This covers **page load**. Submitting a form is different.
 
-| Endpoint | Used by | `form_type` |
-|---|---|---|
-| `…/webhook/inbound-lead` | contact form (`about.html`, `pt/about.html`) | `contact` |
-| `…/webhook/inbound-lead` | newsletter (`index.html`, `pt/index.html`) | `newsletter` |
+Every form is a **native HTML `<form method="POST">`** to one n8n Cloud
+endpoint, `…/webhook/inbound-lead`. No JavaScript is involved in submitting.
+**The full contract — fields per `form_type`, honeypot, consent wording and
+redirects — is in [`INTAKE.md`](INTAKE.md).** It is the site's only
+cross-system contract.
 
-Every form is a **native HTML `<form method="POST">`** to the one intake
-endpoint. No JavaScript is involved in submitting: the browser validates the
-`required` and `type="email"` fields, posts the form, and n8n answers with a
-303 redirect: contact to `thank-you.html`, newsletter to
-`check-your-inbox.html`, each under `pt/` when `lang=pt`. `form_type` tells the forms apart. The field contract is in
-`CHANGELOG.md` v1.53.
+The posture is decided: **public endpoint, native form POST, honeypot
+`lp_ref_code`, no shared secret** (a public form cannot hold one). The page
+does no screening of its own; n8n discards submissions where the honeypot is
+filled. Do not read the zero-off-origin-requests property above as implying
+the endpoint is protected. It says nothing about it.
 
-**The webhook URL is public** — in the served HTML, in this repo, and in any
-visitor's network tab. Anyone can POST arbitrary payloads to it. The page does
-no screening of its own any more: the honeypot is a field named `lp_ref_code`
-that is sent with every submission, and **n8n must discard anything where it
-is not empty**. Nothing in the browser can protect a request that does not
-come from the browser.
-
-That may be an acceptable posture for a two-form marketing site. It is not
-currently a decision — see the webhook posture issue. Do not read the
-zero-off-origin-requests property above as implying these endpoints are
-protected. It says nothing about them.
-
-The endpoint lives in n8n Cloud. The newsletter used to post to a separate
-double opt-in workflow (`_n8n/newsletter-double-opt-in.json`,
-`…/webhook/newsletter-signup`). The site no longer calls it: whether a
-newsletter signup is confirmed by email now depends entirely on what
-`inbound-lead` does with `form_type=newsletter`.
+Email — double opt-in, unsubscribe, sequences — is handled by **MailerLite**,
+downstream of n8n. The site never implements email logic.
 
 ## Host dependencies
 
@@ -119,12 +105,12 @@ the site elsewhere has to reimplement it or lose it:
 
 | Behaviour | Provided by | If the host changes |
 |---|---|---|
-| `_tools/` and `_n8n/` are not published | Jekyll skips `_`-prefixed paths | Both directories become **publicly readable**. `_n8n/` contains workflow definitions. |
+| `_tools/` is not published | Jekyll skips `_`-prefixed paths | It becomes **publicly readable** (dev tooling only, nothing secret). |
 | `pt/field-notes.html` redirects to `pt/field-notes/` | Nothing — it is a `<meta http-equiv="refresh">` stub, because Pages cannot issue a 301 | Replace with a real redirect and delete the stub |
 | Custom domain and HTTPS | `CNAME` plus the Pages configuration | Reconfigure at the new host |
 
 The first row is the one to be careful about: there is no `.gitignore`-style
-guarantee here. `_`-prefixed directories are private **only** because Jekyll is
+guarantee here. `_`-prefixed directories are unpublished **only** because Jekyll is
 running, and Jekyll is running only because Pages turns it on by default.
 
 ## Working on both languages
