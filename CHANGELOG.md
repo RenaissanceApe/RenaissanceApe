@@ -6,6 +6,62 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.54 — September 2026
+
+### v2 governance: this repo answers to its own rules only
+
+The v1 infrastructure is retired. lp-brain, automata and
+contract-checker / lp-warden are archived and have no authority over this
+repo, so their rules are **removed**, not left in place to be ignored.
+
+#### Added
+
+- **`CLAUDE.md`** — the repo's rules for agents. There was no agent
+  instructions file before; the v1 rules lived in `.contracts/manifest.yaml`
+  and in the archived repos. In short: this repo is the static website only;
+  its one cross-system contract is `INTAKE.md`; operations live in Notion and
+  automations in n8n Cloud; email is MailerLite's job, never the site's; every
+  PR targets `main`, no stacked PRs, one concern per PR; EN mirrors to PT;
+  version bump and CHANGELOG entry per change; brand constants unchanged; no
+  new third-party service without explicit approval.
+- **`INTAKE.md`** — the form → n8n contract as it stands after v1.53:
+  endpoint, method, fields per `form_type`, the exact consent wording, the
+  honeypot, the 303 redirects, and the posture. Checked field by field against
+  the form HTML.
+
+#### Removed
+
+- **`.contracts/`** — the manifest that described this repo to lp-warden.
+- **`_n8n/`** — the old double opt-in workflow definition and its README.
+  The site stopped calling it in v1.53, and newsletter email now runs in
+  MailerLite via n8n v2-01. Its workflow definition remains in git history.
+
+No CI check validated anything against the archived repos, so every check
+stays: HTML structure, links, EN/PT parity, contrast, shared logic,
+`base.css` freshness, and the check self-test.
+
+#### Decided
+
+- **Webhook posture (#8):** public endpoint, native form POST, honeypot
+  `lp_ref_code`, no shared secret — a public form cannot hold one.
+- **Newsletter (#21, #22):** signups go to MailerLite via n8n v2-01. MailerLite
+  runs double opt-in and records the confirmation IP and time. Consent wording
+  and timestamp are stored on the Notion contact. The Automata consent ledger
+  is retired.
+
+The v1.53 entry above is left as written: it records what was true then,
+including the open question about double opt-in that this entry answers.
+
+#### Changed
+
+- `README.md` points to `INTAKE.md` for the form contract, states the decided
+  posture and that email belongs to MailerLite, and drops `_n8n/` from the
+  host-dependencies table.
+
+No rendered page changed.
+
+---
+
 ## v1.53 — September 2026
 
 ### Every form posts natively to the n8n intake endpoint
