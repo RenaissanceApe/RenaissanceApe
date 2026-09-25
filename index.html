@@ -302,20 +302,24 @@ body{display:flex;flex-direction:column;}
   <p class="section-label">Stay in the loop</p>
   <h2>Keep up with the latest news.</h2>
   <p>Sign up today.</p>
-  <form class="newsletter-form" id="newsletter-form" novalidate>
+  <form class="newsletter-form" id="newsletter-form" action="https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead" method="POST">
+    <input type="hidden" name="form_type" value="newsletter" />
+    <input type="hidden" name="lang" value="en" />
+    <input type="hidden" name="source_page" value="/" />
     <div class="newsletter-row">
       <label class="sr-only" for="newsletter-email">Email address</label>
       <input type="email" id="newsletter-email" name="email" placeholder="you@company.com" maxlength="254" autocomplete="email" required />
       <button type="submit" id="newsletter-btn">Subscribe</button>
     </div>
     <label class="newsletter-consent">
-      <input type="checkbox" id="newsletter-consent" required />
-      <span id="newsletter-consent-text">I agree to receive occasional emails from Lumen and Pixel, and I understand I can unsubscribe at any time. See our <a href="legal.html#privacy">Privacy Policy</a>.</span>
+      <input type="checkbox" id="newsletter-consent" name="consent" value="yes" required />
+      <span id="newsletter-consent-text">Send me occasional emails from Lumen and Pixel. Unsubscribe at any time. See our <a href="legal.html#privacy">Privacy Policy</a>.</span>
     </label>
-    <!-- Honeypot. Styled off-screen by site.css; see the contact form for the rationale. -->
+    <!-- Honeypot. Hidden from humans by .hp-field in site.css (not type=hidden,
+         which bots skip). Named lp_ref_code, not "website", so browser autofill leaves it alone. -->
     <div class="hp-field" aria-hidden="true">
-      <label for="nl_ref_code">Do not fill this in</label>
-      <input type="text" id="nl_ref_code" name="nl_ref_code" tabindex="-1" autocomplete="off" />
+      <label for="lp_ref_code">Do not fill this in</label>
+      <input type="text" id="lp_ref_code" name="lp_ref_code" tabindex="-1" autocomplete="off" />
     </div>
     <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
   </form>
@@ -337,107 +341,5 @@ body{display:flex;flex-direction:column;}
   </div>
 </footer>
 
-<script>
-// Newsletter signup -> n8n.
-// Mirrors the contact form's screening: the endpoint is public and metered,
-// so an untouched honeypot and a plausible time-on-page are required before
-// a request is spent. Consent is explicit and the exact wording the visitor
-// agreed to is sent with it, so the record is evidence rather than a flag.
-(function(){
-  var form = document.getElementById('newsletter-form');
-  if(!form) return;
-  var btn     = document.getElementById('newsletter-btn');
-  var status  = document.getElementById('newsletter-status');
-  var email   = document.getElementById('newsletter-email');
-  var consent = document.getElementById('newsletter-consent');
-  var trap    = document.getElementById('nl_ref_code');
-
-  var ENDPOINT    = 'https://lumenandpixel.app.n8n.cloud/webhook/newsletter-signup';
-  var TIMEOUT_MS  = 15000;
-  var MIN_FILL_MS = 3000;
-
-  var loadedAt = Date.now();
-  var submitting = false;
-  var consentText = (document.getElementById('newsletter-consent-text') || {})
-                      .textContent.trim().replace(/\s+/g, ' ');
-
-  function setStatus(type, text){
-    status.textContent = text;
-    status.style.color = type === 'success' ? 'var(--green-500)' : '#e05c5c';
-  }
-  function reset(){
-    submitting = false;
-    btn.disabled = false;
-    btn.textContent = 'Subscribe';
-  }
-  function looksLikeEmail(v){
-    return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v);
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if(submitting) return;
-    var value = email.value.trim();
-
-    // Bot signals — acknowledge without sending, so nothing is learned.
-    if((trap && trap.value) || (Date.now() - loadedAt) < MIN_FILL_MS){
-      setStatus('success', 'Almost there \u2014 check your inbox and confirm your subscription.');
-      form.reset();
-      return;
-    }
-    if(!looksLikeEmail(value)){
-      setStatus('error', 'Please enter a valid email address.');
-      email.focus();
-      return;
-    }
-    if(!consent.checked){
-      setStatus('error', 'Please tick the box to confirm you want these emails.');
-      consent.focus();
-      return;
-    }
-
-    submitting = true;
-    btn.disabled = true;
-    btn.textContent = 'Sending\u2026';
-    status.textContent = '';
-
-    var controller = window.AbortController ? new AbortController() : null;
-    var timer = setTimeout(function(){ if(controller) controller.abort(); }, TIMEOUT_MS);
-
-    var options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email:         value.slice(0, 254),
-        consent:       true,
-        consent_text:  consentText,
-        consent_at:    new Date().toISOString(),
-        language:      'en',
-        source:        'Website newsletter',
-        entry_page:    window.location.pathname
-      })
-    };
-    if(controller) options.signal = controller.signal;
-
-    fetch(ENDPOINT, options)
-      .then(function(res){
-        clearTimeout(timer);
-        if(res.ok){
-          setStatus('success', 'Almost there \u2014 check your inbox and confirm your subscription.');
-          form.reset();
-          reset();
-        } else {
-          setStatus('error', 'Something went wrong. Please try again shortly.');
-          reset();
-        }
-      })
-      .catch(function(err){
-        clearTimeout(timer);
-        setStatus('error', err && err.name === 'AbortError' ? 'That took too long. Please try again in a moment.' : 'Could not subscribe. Check your connection and try again.');
-        reset();
-      });
-  });
-})();
-</script>
 </body>
 </html>
