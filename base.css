@@ -54,6 +54,13 @@ a {
   text-decoration: none;
 }
 
+/* Long words and headings must not overflow their container. This guard was
+   pasted into 16 of the 22 pages; it belongs here. */
+h1, h2, h3, .error-code, .page-heading {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 /* ── Navigation ──────────────────────────────────────────────────────── */
 nav {
   position: fixed;

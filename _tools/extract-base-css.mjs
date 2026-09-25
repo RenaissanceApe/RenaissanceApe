@@ -154,9 +154,31 @@ for (const [sel, v] of variants) {
 
 const missing = SHARED.filter(s => !canon.has(s));
 
+/* A page is allowed to override base.css from its own <style> — that is what
+   the stylesheet ordering is for, and thank-you.html uses it to make the nav
+   sticky instead of fixed. So an inline rule only counts as duplication if
+   base.css does not already say something *different* for that selector.
+   Without this, a deliberate override reads as drift for ever. */
+const baseCssPath = path.join(ROOT, 'base.css');
+const baseSigs = new Map();
+if (fs.existsSync(baseCssPath)) {
+  postcss.parse(fs.readFileSync(baseCssPath, 'utf8')).each(n => {
+    if (n.type === 'rule') baseSigs.set(normSel(n.selector), sigOf(n));
+  });
+}
+const overrides = [];
+for (const [sel, { sig }] of canon) {
+  if (baseSigs.has(sel) && baseSigs.get(sel) !== sig) {
+    overrides.push(sel);
+    canon.delete(sel);
+  }
+}
+
 /* How many shared rules are still sitting inline in a page. This line is
    parsed by _tools/checks/base-css.mjs, so keep the format stable. */
 console.log(`EXTRACTABLE: ${canon.size}`);
+if (overrides.length)
+  console.log(`deliberate overrides (base.css already differs): ${overrides.join(', ')}`);
 
 /* Nothing left inline is the healthy steady state: the extraction has already
    happened and base.css is current. It is not an error — but the emit path

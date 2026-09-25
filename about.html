@@ -131,7 +131,6 @@
   .form-note{flex:1 1 280px;font-size:12px;color:var(--gray-500);max-width:360px;line-height:1.6;padding-top:4px;}
   .form-note a{color:var(--blue-300);text-decoration:underline;}
   /* ── FOOTER ── */
-  h1,h2,h3,.error-code,.page-heading{overflow-wrap:break-word;word-break:break-word;}
   @media(max-width:900px){
     .about-hero{padding:120px 24px 0;}
     .about-hero h1{font-size:clamp(1.8rem,7vw,2.8rem);}
@@ -420,10 +419,11 @@
     if(window.location.hash==='#contact-form'){
       var ft=document.getElementById('contact-form');
       if(ft){requestAnimationFrame(function(){
-        ft.closest('.contact-section')&&ft.closest('.contact-section').querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
-        ft.scrollIntoView({behavior:'smooth',block:'start'});
-        if(sel&&sel.value)sel.focus({preventScroll:true});
-        else ft.querySelector('input,select,textarea')&&ft.querySelector('input,select,textarea').focus({preventScroll:true});
+        var section=ft.closest('.contact-section');
+        if(section)section.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+        ft.scrollIntoView({behavior:prefersReducedMotion?'auto':'smooth',block:'start'});
+        var target=(sel&&sel.value)?sel:ft.querySelector('input,select,textarea');
+        if(target)target.focus({preventScroll:true});
       });}
     }
   })();
