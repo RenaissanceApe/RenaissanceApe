@@ -11,7 +11,7 @@ Format: version → date → what changed and why.
 ### Every form posts natively to the n8n intake endpoint
 
 **Not live until the `inbound-lead` workflow is confirmed to handle the new
-fields.** Built on branch `forms-n8n-intake`.
+fields and redirects.** Built on branch `forms-n8n-intake`.
 
 (v1.51 and v1.52 are claimed by the open scroll-spy and EN/PT parity pull
 requests, so this entry takes v1.53 to avoid a collision.)
@@ -23,9 +23,13 @@ Both forms, in both languages, are now plain HTML:
 ```
 
 No JavaScript sends anything. The browser enforces `required` and
-`type="email"`, posts the form urlencoded, and n8n answers with a 303 to
-`thank-you.html` or `pt/thank-you.html` chosen by the `lang` field. One
-endpoint receives every form; `form_type` tells them apart.
+`type="email"` and posts the form urlencoded. One endpoint receives every
+form; `form_type` tells them apart. n8n answers with a 303:
+
+| `form_type` | `lang=en` | `lang=pt` |
+|---|---|---|
+| `contact` | `/thank-you.html` | `/pt/thank-you.html` |
+| `newsletter` | `/check-your-inbox.html` | `/pt/check-your-inbox.html` |
 
 #### Field contract
 
@@ -41,21 +45,40 @@ endpoint receives every form; `form_type` tells them apart.
 | `message` | required | not present | |
 | `quiz_result` | hidden, filled from `?service=` | not present | empty unless arriving from the quiz |
 | `consent` | optional checkbox, `yes` | required checkbox, `yes` | absent when unticked; never pre-ticked |
-| `website` | honeypot | honeypot | must arrive empty; was `lp_ref_code` / `nl_ref_code` |
+| `lp_ref_code` | honeypot | honeypot | must arrive empty |
+
+The honeypot keeps the name `lp_ref_code` on all four forms (the newsletter's
+was `nl_ref_code`). A field named `website` gets filled by browser autofill,
+which would silently discard real visitors. It stays a text input hidden by
+`.hp-field` in `site.css`, with `tabindex="-1"` and `autocomplete="off"`.
+
+#### Consent wording
+
+Identical on the contact and newsletter forms. This is the text a subscriber
+agrees to, so it is recorded here exactly:
+
+- EN: `Send me occasional emails from Lumen and Pixel. Unsubscribe at any time. See our Privacy Policy.`
+- PT: `Enviem-me emails ocasionais da Lumen and Pixel. Pode cancelar a subscrição a qualquer momento. Consulte a nossa Política de Privacidade.`
+
+"Privacy Policy" / "Política de Privacidade" is a link to `legal.html#privacy`.
 
 #### Changed
 
 - `about.html`, `pt/about.html`: `action`/`method` added, `novalidate` removed
   so the browser validates, three hidden fields plus `quiz_result`, field
-  names aligned, honeypot renamed to `website`, an optional consent checkbox
-  added above the submit row, and the `fetch()` submit handler deleted. The
-  pre-fill script stays: it fills the service select and `quiz_result` from
-  `?service=`. PT gained the two `quiz_result` lines EN already had.
+  names aligned, an optional consent checkbox added above the submit row, and
+  the `fetch()` submit handler deleted. The pre-fill script stays: it fills
+  the service select and `quiz_result` from `?service=`. PT gained the two
+  `quiz_result` lines EN already had.
 - `index.html`, `pt/index.html`: `action`/`method` added, `novalidate`
   removed, hidden fields added, the consent checkbox now has
-  `name="consent" value="yes"`, its label is the new consent wording plus the
-  existing privacy link, honeypot renamed to `website`, and the whole
-  `fetch()` script deleted.
+  `name="consent" value="yes"` and the wording above, honeypot renamed
+  `nl_ref_code` → `lp_ref_code`, and the whole `fetch()` script deleted.
+- New `check-your-inbox.html` and `pt/check-your-inbox.html`: where a
+  newsletter signup lands. Same layout as the thank-you pages, `noindex`.
+  The heading reuses the message the old homepage script showed after a
+  signup: *Almost there — check your inbox and confirm your subscription.* /
+  *Quase lá — verifique o seu email e confirme a subscrição.*
 - The newsletter no longer calls `…/webhook/newsletter-signup`. Double opt-in
   now happens only if `inbound-lead` routes `form_type=newsletter` into it.
 
@@ -66,7 +89,7 @@ endpoint receives every form; `form_type` tells them apart.
 - `consent_text` and `consent_at`. The newsletter used to send the exact
   wording the visitor agreed to and a timestamp. Neither is in the new field
   contract, and `legal.html` still says the exact consent wording is kept, so
-  n8n must record it (for example, by `lang`) for that to stay true.
+  n8n must record it (the strings above, by `lang`) for that to stay true.
 - In-page status messages. The `.contact-form-status` and `.newsletter-status`
   elements are left in place but nothing writes to them now.
 
@@ -81,13 +104,13 @@ history and should be revoked in the Web3Forms dashboard.
 
 Every form was driven in a headless browser with the n8n host intercepted
 inside the browser and every other off-origin request aborted, so no request
-reached n8n. 34 checks passed, including: an empty contact form, an unticked
-newsletter consent and a malformed email are all blocked by the browser;
-consent is never pre-ticked; the honeypot is off-screen and out of the tab
-order; each form posts urlencoded with exactly the fields above; and arriving
-from the quiz with `?service=SA` sends `quiz_result=System Architecture`.
+reached n8n. The browser blocks an empty contact form, an unticked newsletter
+consent and a malformed email; consent is never pre-ticked; the honeypot is
+off-screen and out of the tab order; each form posts urlencoded with exactly
+the fields above; and arriving from the quiz with `?service=SA` sends
+`quiz_result=System Architecture`.
 
-The six CI checks report exactly the same findings as `main`: this change adds
+The CI checks report exactly the same findings as `main`: this change adds
 none.
 
 ---

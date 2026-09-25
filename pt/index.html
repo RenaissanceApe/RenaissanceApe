@@ -260,13 +260,13 @@ body{display:flex;flex-direction:column;}
     </div>
     <label class="newsletter-consent">
       <input type="checkbox" id="newsletter-consent" name="consent" value="yes" required />
-      <span id="newsletter-consent-text">Enviem-me emails ocasionais da Lumen &amp; Pixel. Consulte a nossa <a href="legal.html#privacy">Política de Privacidade</a>.</span>
+      <span id="newsletter-consent-text">Enviem-me emails ocasionais da Lumen and Pixel. Pode cancelar a subscrição a qualquer momento. Consulte a nossa <a href="legal.html#privacy">Política de Privacidade</a>.</span>
     </label>
     <!-- Honeypot. Hidden from humans by .hp-field in site.css (not type=hidden,
-         which bots skip). Named "website" because the n8n intake filters on it. -->
+         which bots skip). Named lp_ref_code, not "website", so browser autofill leaves it alone. -->
     <div class="hp-field" aria-hidden="true">
-      <label for="website">Não preencher</label>
-      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+      <label for="lp_ref_code">Não preencher</label>
+      <input type="text" id="lp_ref_code" name="lp_ref_code" tabindex="-1" autocomplete="off" />
     </div>
     <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
   </form>

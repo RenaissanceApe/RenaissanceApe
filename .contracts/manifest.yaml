@@ -76,15 +76,16 @@ consumes:
   # urlencoded, no JavaScript involved in sending. Contact form: about.html and
   # pt/about.html. Newsletter: index.html and pt/index.html. Fields:
   #   all forms:  form_type (contact|newsletter), lang (en|pt), source_page,
-  #               email, website (honeypot, must arrive empty)
+  #               email, lp_ref_code (honeypot, must arrive empty)
   #   contact:    name, company, service, message, quiz_result, consent (opt.)
   #   newsletter: consent (required, value "yes")
   # `consent` is absent when unticked (native checkbox behaviour). `service` is
   # one of the five English <option> values shared by both languages.
   # `quiz_result` is the quiz's winning code SD|SC|SA|TD expanded to a service
   # name by the prefill script in each about page; empty when the visitor did
-  # not come from the quiz. The site expects a 303 redirect to thank-you.html
-  # or pt/thank-you.html chosen by `lang`; it does not inspect the response.
+  # not come from the quiz. The site expects a 303 redirect: contact to
+  # thank-you.html, newsletter to check-your-inbox.html, each under pt/ when
+  # lang=pt. It does not inspect the response.
   #
   # Marked `assumed`, and the assumption is the `repo:` field, not the
   # dependency. The dependency is verified: this site's contact form does not
@@ -106,7 +107,7 @@ consumes:
   # states this endpoint is public and unauthenticated and that anyone can POST
   # arbitrary payloads to it. Since v1.53 the page does no screening of its own:
   # the 3-second minimum fill time is gone with the JavaScript, and the honeypot
-  # (`website`) is only useful if n8n discards submissions where it is not
+  # (`lp_ref_code`) is only useful if n8n discards submissions where it is not
   # empty. The posture is still "not currently a decision".
   - repo: automata
     id: inbound-lead
