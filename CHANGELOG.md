@@ -67,9 +67,12 @@ agrees to, so it is recorded here exactly:
 - `about.html`, `pt/about.html`: `action`/`method` added, `novalidate` removed
   so the browser validates, three hidden fields plus `quiz_result`, field
   names aligned, an optional consent checkbox added above the submit row, and
-  the `fetch()` submit handler deleted. The pre-fill script stays: it fills
-  the service select and `quiz_result` from `?service=`. PT gained the two
-  `quiz_result` lines EN already had.
+  the `fetch()` submit handler deleted. The pre-fill script stays and fills
+  the service select from `?service=`. `quiz_result` is filled by its own small
+  block, identical in EN and PT, rather than inside the pre-fill: the
+  EN/PT parity work (#20) deletes the old `quiz_result` lines from the English
+  pre-fill as dead code, and git merges that deletion silently. Kept separate,
+  the two changes merge cleanly in either order.
 - `index.html`, `pt/index.html`: `action`/`method` added, `novalidate`
   removed, hidden fields added, the consent checkbox now has
   `name="consent" value="yes"` and the wording above, honeypot renamed

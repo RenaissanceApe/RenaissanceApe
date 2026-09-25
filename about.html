@@ -414,11 +414,9 @@
     var p=new URLSearchParams(window.location.search);
     var k=p.get('service');
     var sel=document.getElementById('service');
-    var qf=document.getElementById('quiz_result');
     var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
     var val=map[k]||k||'';
     if(sel&&val)sel.value=val;
-    if(qf&&val)qf.value=val;
     if(window.location.hash==='#contact-form'){
       var ft=document.getElementById('contact-form');
       if(ft){requestAnimationFrame(function(){
@@ -428,6 +426,15 @@
         else ft.querySelector('input,select,textarea')&&ft.querySelector('input,select,textarea').focus({preventScroll:true});
       });}
     }
+  })();
+
+  // Carry the quiz result into the hidden quiz_result field. Kept separate
+  // from the pre-fill above so neither can silently drop the other in a merge.
+  (function(){
+    var qf=document.getElementById('quiz_result');
+    var k=new URLSearchParams(window.location.search).get('service');
+    var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
+    if(qf&&k)qf.value=map[k]||k;
   })();
 
 </script>
