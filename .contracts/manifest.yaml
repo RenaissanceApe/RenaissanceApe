@@ -1,0 +1,177 @@
+# .contracts/manifest.yaml — copy to the ROOT of each member repo.
+#
+# This file is the repo's promise to the rest of the stack. If it disagrees with
+# the code, the warden files a finding. That is the point.
+#
+# Fill it from what the code ACTUALLY does today, not from what it should do.
+# An aspirational manifest produces a permanent stream of false findings.
+#
+# ---------------------------------------------------------------------------
+# Filled on 2026-09-09 by reading this repo only. Each entry carries a comment
+# naming the file, and the lines, the evidence came from.
+#
+#   status: verified — read out of a file in this repo.
+#   status: assumed  — inferred. Nothing in this repo proves it. Needs a ruling.
+#
+# Nothing outside this file was changed, and nothing that looked wrong was
+# fixed. This describes today, including the parts of today that are untidy.
+# ---------------------------------------------------------------------------
+
+version: 1
+
+# Evidence: lp-warden/stacks/brain.stack.yaml lists this repo as `renaissance-ape`
+# under `repos:`. The git remote for this working copy is
+# RenaissanceApe/RenaissanceApe, so the stack name and the GitHub repo name are
+# not the same string. The template requires this field to equal the name in the
+# stack file, so the stack name is what is used here. Recorded, not resolved.
+repo: renaissance-ape
+stack: brain
+
+# What this repo offers to the others. If nothing consumes it, it does not
+# belong here — this is not documentation.
+publishes:
+  # Evidence: _n8n/newsletter-double-opt-in.json — the workflow definition, with
+  # three webhook nodes: POST newsletter-signup, GET newsletter-confirm, GET
+  # newsletter-unsubscribe. Endpoint table at _n8n/README.md:27-33; subscriber
+  # record shape at _n8n/README.md:90-104.
+  #
+  # Marked `assumed`, for two reasons, both about this entry's right to exist
+  # rather than its content:
+  #   1. No repo in the brain stack was verified to consume this. There is no
+  #      reference to lp-brain, automata, or any sibling repo anywhere in this
+  #      repo — a grep across every tracked file returns nothing. The template
+  #      says an artifact nothing consumes does not belong here. It is listed
+  #      because it is the one versioned, machine-readable, cross-boundary
+  #      artifact the repo owns, but that is a judgement, not a fact.
+  #   2. The version below is read from nothing. Neither the JSON, nor
+  #      _tools/package.json, nor CHANGELOG.md declares a version for this
+  #      artifact. 1.0.0 is a starting point, not a finding.
+  #
+  # Also recorded, not fixed: what serves traffic is the copy imported into n8n
+  # Cloud, not this file. _n8n/README.md:17-25 describes the import as a manual
+  # step, so this file can drift from the live workflow with nothing noticing.
+  # Hashing it detects changes to the file, not to n8n.
+  - id: newsletter-double-opt-in
+    version: 1.0.0
+    paths:
+      - "_n8n/newsletter-double-opt-in.json"
+    description: >
+      The n8n workflow behind the site's newsletter form: a POST signup endpoint
+      that validates and records, a GET confirm endpoint that redeems a
+      single-use token, and a GET unsubscribe endpoint. A consumer gets the
+      three endpoint paths and the subscriber record shape (email, status of
+      pending|confirmed|unsubscribed, token, consent, consent_text, consent_at,
+      consent_ip, language, source, entry_page, requested_at, confirmed_at,
+      unsubscribed_at).
+    status: assumed
+
+# What this repo needs from the others, and the shape it expects.
+consumes:
+  # Evidence: about.html:428 and pt/about.html:397 declare
+  # ENDPOINT = 'https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead'; the
+  # POST is fired at about.html:513 and pt/about.html:482. The payload literal is
+  # about.html:485-494 and pt/about.html:454-463:
+  #   { name, company, email, service, message, source, entry_page, quiz_result }
+  # with source 'Website' (EN) and 'Website PT' (PT). `service` is one of the
+  # five English <option> values shared by both languages (about.html:340-345,
+  # pt/about.html:310-315). `quiz_result` is the quiz's winning code SD|SC|SA|TD
+  # expanded to a service name — quiz.html:650 sets the ?service= param, the
+  # qmap at about.html:484 expands it. The page treats any non-2xx as failure
+  # (about.html:515-521).
+  #
+  # Marked `assumed`, and the assumption is the `repo:` field, not the
+  # dependency. The dependency is verified: this site's contact form does not
+  # work without that endpoint. What is not verified is who owns it. The endpoint
+  # has no definition anywhere in this repo — unlike newsletter-signup, which
+  # does, in _n8n/. `automata` is named here because lp-warden/lumen-and-pixel.md
+  # describes it as the L&P automations builder and it is the only brain-stack
+  # repo that could plausibly hold the workflow. Nothing was checked against that
+  # repo. If the workflow was in fact built by hand in the n8n Cloud UI and lives
+  # in no repo at all, this entry is wrong, and the honest resolution is
+  # architectural rather than a manifest edit.
+  #
+  # range is "*" because the code declares no version constraint of any kind.
+  # There is no version in the request, no version check on the response, and no
+  # negotiation anywhere. A narrower range would be a claim this repo does not
+  # make.
+  #
+  # Also recorded, not fixed: README.md:81-105 states this endpoint is public and
+  # unauthenticated, that anyone can POST arbitrary payloads to it, that the only
+  # protections (the honeypot at about.html:354-356, a 3-second minimum fill
+  # time, format validation) live in the page and so do not apply to a request
+  # that does not come from the page — and that this posture "is not currently a
+  # decision".
+  - repo: automata
+    id: inbound-lead
+    range: "*"
+    used_by:
+      - "about.html"
+      - "pt/about.html"
+    status: assumed
+
+# Cross-cutting rules this repo must not violate. The warden reports these but
+# never enforces them mechanically.
+invariants:
+  # Evidence: lp-warden/lumen-and-pixel.md, "Governing constraints". Nothing in
+  # this repo states this rule, so it is assumed as applied here. The nearest
+  # thing this repo does state is the browser rule below, which is narrower.
+  - id: locked-stack
+    statement: "No net-new software outside the locked stack."
+    applies_to: [renaissance-ape]
+    status: assumed
+
+  # Evidence: README.md:73-79. Verified by inspection of every served HTML file:
+  # no <script src>, <link rel="stylesheet">, <img>, <iframe> or <source> points
+  # off-origin. Fonts are self-hosted (fonts.css, fonts/*.woff2; CHANGELOG.md:339
+  # records Google Fonts being removed, CHANGELOG.md:327 records MailerLite).
+  # The only off-origin URLs in the HTML are anchor hrefs (cal.com, gumroad,
+  # instagram, linkedin) and canonical/hreflang metadata, none of which load on
+  # page view. Form submission is deliberately outside this rule —
+  # README.md:81-105.
+  - id: no-off-origin-page-load
+    statement: >
+      A page load makes zero off-origin requests, so the site sets no cookies
+      and needs no consent banner. Anything new that runs in the visitor's
+      browser changes the site's legal position and requires updating
+      legal.html and pt/legal.html.
+    applies_to: [renaissance-ape]
+    status: verified
+
+  # Evidence: _tools/checks/parity.mjs (check 3), run in CI by
+  # .github/workflows/checks.yml. README.md:122-128 states the rule. The two
+  # standing exceptions are encoded at _tools/checks/parity.mjs:13-16:
+  # articles/index.html (EN only) and pt/field-notes.html (PT only, a
+  # meta-refresh redirect stub).
+  - id: en-pt-parity
+    statement: >
+      Every English page has a Portuguese counterpart and vice versa, and each
+      declares an hreflang pair pointing at the other.
+    applies_to: [renaissance-ape]
+    status: verified
+
+  # Evidence: _tools/checks/shared-logic.mjs:11-16 (banned patterns:
+  # IntersectionObserver, the hamburger toggle, classList.toggle('open'), the
+  # body scroll lock) and _tools/checks/base-css.mjs, both run in CI by
+  # .github/workflows/checks.yml. README.md:25-55 states the rule and why it
+  # exists: base.css used to be pasted into 20 files, so one page got fixed and
+  # the others stayed broken.
+  - id: shared-logic-stays-shared
+    statement: >
+      Scroll-reveal and mobile-menu behaviour live only in site.js, and shared
+      design-system rules live only in base.css. Neither may be pasted back into
+      a page.
+    applies_to: [renaissance-ape]
+    status: verified
+
+  # Evidence: README.md:107-120 and _n8n/README.md:6-8. _tools/ and _n8n/ are
+  # unpublished only because GitHub Pages runs Jekyll and Jekyll skips
+  # `_`-prefixed paths. There is no .gitignore-style guarantee. Adding a
+  # .nojekyll file, or moving off Pages, makes both directories publicly
+  # readable — including the workflow definitions in _n8n/.
+  - id: no-nojekyll
+    statement: >
+      No .nojekyll file, and no move off GitHub Pages, without first relocating
+      _tools/ and _n8n/ — their privacy is a host behaviour, not a repo
+      guarantee.
+    applies_to: [renaissance-ape]
+    status: verified

@@ -6,6 +6,81 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.52 — September 2026
+
+### EN/PT quiz divergence: measured, and much smaller than it looked (issue #10)
+
+The issue reported `quiz.html` at 683 lines against `pt/quiz.html` at 574, with
+25 fewer lines of CSS and 5 fewer of JavaScript on the Portuguese side.
+
+Compared structurally rather than by line count — CSS as a set of selectors and
+sorted declarations, JavaScript as a statement skeleton with string literals
+masked so translated copy does not register — the two files were **already
+equivalent**:
+
+- **50 CSS rules each**, all identical
+- **288 JavaScript statements each**, differing in exactly one token
+
+The 109-line gap was formatting. The English file is expanded, the Portuguese
+one minified. That is also why it went unnoticed for so long: the files could
+not usefully be diffed, so nobody could see that they agreed.
+
+Two real differences, both cosmetic:
+
+- `pt/quiz.html` called the service table `SERVICES_PT` where EN called it
+  `SERVICES`. Renamed to match.
+- `quiz.html` set `margin-bottom: 0` on `.result-mode`, which the `*` reset in
+  `base.css` already does. Removed as dead.
+
+Everything functional was verified identical: the same 17 scoring vectors, the
+same `TOTAL_Q`, and the same `?service=` construction on both sides.
+
+### Real EN/PT drift found elsewhere, by the new check
+
+Extending the CI parity check to compare structure rather than file existence
+immediately found drift the issue had not looked for.
+
+**`pt/index.html` was missing `.service-card{padding:40px 28px}` inside its
+900px media query.** Portuguese service cards kept desktop padding on phones:
+52px/48px instead of 40px/28px, making the page 221px taller than its English
+counterpart. A real mobile layout bug. Fixed, and the two now render
+identically at 375px.
+
+`.hero-learn-more` transitioned `background` in EN, but only `border-color`
+changes on hover, so it animated a property that never moves. PT was right.
+
+**`about.html` carried three statements `pt/about.html` did not, and PT was the
+better implementation in every one.** English read a `#quiz_result` element
+that does not exist anywhere in the repo — dead code from an earlier form
+version, harmless but misleading. English also hardcoded `behavior:'smooth'`
+on the contact-form scroll, ignoring `prefers-reduced-motion`, which PT
+respected. English is now reconciled to the Portuguese version.
+
+Taking the better of the two rather than assuming English is authoritative was
+the issue's instruction, and on this page English lost every point.
+
+### CI: EN/PT parity now compares structure
+
+`_tools/checks/parity.mjs` previously only checked that counterpart files
+existed and cross-linked. It now also compares the CSS rule set and the
+JavaScript statement skeleton of every EN/PT pair, with string literals masked
+so translation is invisible and only structure counts. Relative asset paths are
+normalised, since a `pt/` page legitimately writes `../images/x` where the root
+writes `images/x`.
+
+### Verification
+
+Computed styles and geometry for every element on all 22 pages at 1280px and
+375px, before and after. **The only differences were on `pt/index.html` at
+375px** — the service-card padding fix, confirmed to bring it to exactly the
+English geometry. Every other page, and every page at desktop, is unchanged.
+
+Both quizzes were then run end to end for all four answer patterns. Each
+produces the same service, the same result URL and the same history state in
+both languages, with no JavaScript errors.
+
+---
+
 ## v1.51 — September 2026
 
 ### Tab scroll-spy moved into site.js (issue #11)
@@ -82,78 +157,53 @@ itself.
 
 ---
 
-## v1.52 — September 2026
+## v1.50 — September 2026
 
-### EN/PT quiz divergence: measured, and much smaller than it looked (issue #10)
+### Field Notes text contrast raised to WCAG AA (issue #6)
 
-The issue reported `quiz.html` at 683 lines against `pt/quiz.html` at 574, with
-25 fewer lines of CSS and 5 fewer of JavaScript on the Portuguese side.
+The third pass at this bug, and the first one measured rather than eyeballed.
 
-Compared structurally rather than by line count — CSS as a set of selectors and
-sorted declarations, JavaScript as a statement skeleton with string literals
-masked so translated copy does not register — the two files were **already
-equivalent**:
+v1.49 claimed the 3.2:1 meta colour was "raised to 0.55 on both new pages". It
+was not. `rgba(255,255,255,0.35)` was still live on `.fn-back`, `.article-date`
+and `.article-read-time`, and 0.35 turned out not to be the only failing value.
 
-- **50 CSS rules each**, all identical
-- **288 JavaScript statements each**, differing in exactly one token
+Rather than grep for one literal, every text node in the six Field Notes files
+was measured in a headless browser: foreground composited over the effective
+background chain, WCAG AA threshold selected per element from its own computed
+font size and weight. That found **seven** failing colours, not one:
 
-The 109-line gap was formatting. The English file is expanded, the Portuguese
-one minified. That is also why it went unnoticed for so long: the files could
-not usefully be diffed, so nobody could see that they agreed.
+| Selector | Was | Measured | Now |
+|---|---|---|---|
+| `.fn-item-date` | 0.3 | 2.66:1 | 0.55 |
+| `.fn-back` | 0.35 | 3.18:1 | 0.55 |
+| `.article-date` | 0.35 | 3.18:1 | 0.55 |
+| `.article-read-time` | 0.35 | 3.18:1 | 0.55 |
+| `.article-footer-back` | 0.4 | 3.78:1 | 0.55 |
+| `.fn-filter` | 0.45 | 4.45:1 | 0.55 |
+| `.article-eyebrow` | 0.45 | 4.45:1 | 0.55 |
 
-Two real differences, both cosmetic:
+Also raised: `.fn-lang-note` and `.fn-empty` (both 0.3, not rendered at audit
+time but reachable states), and the `·` separator on `.article-read-time::before`.
 
-- `pt/quiz.html` called the service table `SERVICES_PT` where EN called it
-  `SERVICES`. Renamed to match.
-- `quiz.html` set `margin-bottom: 0` on `.result-mode`, which the `*` reset in
-  `base.css` already does. Removed as dead.
+Both `article-template.html` files are fixed, so the next article starts correct
+instead of inheriting the bug a fourth time.
 
-Everything functional was verified identical: the same 17 scoring vectors, the
-same `TOTAL_Q`, and the same `?service=` construction on both sides.
+### Decorative SVGs hidden from assistive tech
 
-### Real EN/PT drift found elsewhere, by the new check
+Five SVG arrows in the Field Notes tree carried no `aria-hidden`, so screen
+readers announced them inside links that already have their own text. The two
+published articles were correct and both templates were wrong, which is the
+same template-drift pattern as the contrast bug.
 
-Extending the CI parity check to compare structure rather than file existence
-immediately found drift the issue had not looked for.
+### Still failing, deliberately not fixed here
 
-**`pt/index.html` was missing `.service-card{padding:40px 28px}` inside its
-900px media query.** Portuguese service cards kept desktop padding on phones:
-52px/48px instead of 40px/28px, making the page 221px taller than its English
-counterpart. A real mobile layout bug. Fixed, and the two now render
-identically at 375px.
+Nine more colours fail AA, all in `base.css` and page-level CSS rather than the
+Field Notes tree: the footer wordmark, social links and copyright at 3.83:1
+(`--gray-500`, `#6b7485`), the nav quiz link and language switch at 4.21-4.47:1,
+and `.hero-scope` and `.tab-link.active` elsewhere. These render on all 24
+pages. Fixing them is a site-wide restyle and belongs in its own change, not
+inside an issue scoped to six files.
 
-`.hero-learn-more` transitioned `background` in EN, but only `border-color`
-changes on hover, so it animated a property that never moves. PT was right.
-
-**`about.html` carried three statements `pt/about.html` did not, and PT was the
-better implementation in every one.** English read a `#quiz_result` element
-that does not exist anywhere in the repo — dead code from an earlier form
-version, harmless but misleading. English also hardcoded `behavior:'smooth'`
-on the contact-form scroll, ignoring `prefers-reduced-motion`, which PT
-respected. English is now reconciled to the Portuguese version.
-
-Taking the better of the two rather than assuming English is authoritative was
-the issue's instruction, and on this page English lost every point.
-
-### CI: EN/PT parity now compares structure
-
-`_tools/checks/parity.mjs` previously only checked that counterpart files
-existed and cross-linked. It now also compares the CSS rule set and the
-JavaScript statement skeleton of every EN/PT pair, with string literals masked
-so translation is invisible and only structure counts. Relative asset paths are
-normalised, since a `pt/` page legitimately writes `../images/x` where the root
-writes `images/x`.
-
-### Verification
-
-Computed styles and geometry for every element on all 22 pages at 1280px and
-375px, before and after. **The only differences were on `pt/index.html` at
-375px** — the service-card padding fix, confirmed to bring it to exactly the
-English geometry. Every other page, and every page at desktop, is unchanged.
-
-Both quizzes were then run end to end for all four answer patterns. Each
-produces the same service, the same result URL and the same history state in
-both languages, with no JavaScript errors.
 
 ---
 
