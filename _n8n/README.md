@@ -26,6 +26,13 @@ Without it imported and **active**, signups fail on the live site.
 
 ### The three endpoints
 
+> **Not called by the site since v1.53.** The newsletter form now posts to
+> `/webhook/inbound-lead` with `form_type=newsletter`. This workflow only runs
+> again if `inbound-lead` hands newsletter signups on to it. The site now
+> expects `inbound-lead` to redirect newsletter signups to
+> `/check-your-inbox.html` (or `/pt/check-your-inbox.html`); the confirm
+> link below still lands on `/thank-you.html`.
+
 | Method | Path | Purpose |
 |---|---|---|
 | `POST` | `/webhook/newsletter-signup` | Called by the site's form. Records the request and sends a confirmation email. |

@@ -107,6 +107,9 @@
   .contact-right{background:var(--blue-700);padding:96px 64px;display:flex;flex-direction:column;justify-content:center;}
   .form-title{font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:40px;}
   .contact-form{display:flex;flex-direction:column;gap:20px;scroll-margin-top:96px;}
+  .form-consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;color:var(--gray-300);cursor:pointer;}
+  .form-consent input{margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:var(--green-500);}
+  .form-consent a{text-decoration:underline;}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .form-group{display:flex;flex-direction:column;gap:8px;}
   .form-group label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-300);}
@@ -298,10 +301,14 @@
   </div>
   <div class="contact-right reveal" style="transition-delay:0.1s">
     <h2 class="form-title">Enviar mensagem</h2>
-    <form class="contact-form" id="contact-form" tabindex="-1" novalidate>
+    <form class="contact-form" id="contact-form" tabindex="-1" action="https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead" method="POST">
+      <input type="hidden" name="form_type" value="contact" />
+      <input type="hidden" name="lang" value="pt" />
+      <input type="hidden" name="source_page" value="/pt/about.html" />
+      <input type="hidden" id="quiz_result" name="quiz_result" value="" />
       <div class="form-row">
-        <div class="form-group"><label for="contact_person">O seu nome</label><input type="text" id="contact_person" name="contact_person" placeholder="João Silva" maxlength="100" autocomplete="name" required /></div>
-        <div class="form-group"><label for="organization">Empresa / Organização</label><input type="text" id="organization" name="organization" placeholder="A Sua Empresa" maxlength="120" autocomplete="organization" /></div>
+        <div class="form-group"><label for="contact_person">O seu nome</label><input type="text" id="contact_person" name="name" placeholder="João Silva" maxlength="100" autocomplete="name" required /></div>
+        <div class="form-group"><label for="organization">Empresa / Organização</label><input type="text" id="organization" name="company" placeholder="A Sua Empresa" maxlength="120" autocomplete="organization" /></div>
       </div>
       <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="joao@suaempresa.com" maxlength="254" autocomplete="email" required /></div>
       <div class="form-group">
@@ -316,12 +323,16 @@
         </select>
       </div>
       <div class="form-group"><label for="message">Fale-nos do seu projeto</label><textarea id="message" name="message" placeholder="Conte-nos um pouco sobre o seu projeto, evento ou desafio." rows="5" maxlength="4000" required></textarea></div>
-      <!-- Honeypot. Off-screen rather than display:none, which many bots skip.
-           Deliberately not named "website"/"url" so browser autofill leaves it alone. -->
+      <!-- Honeypot. Hidden from humans by .hp-field in site.css (not type=hidden,
+           which bots skip). Named lp_ref_code, not "website", so browser autofill leaves it alone. -->
       <div class="hp-field" aria-hidden="true">
         <label for="lp_ref_code">Não preencher</label>
         <input type="text" id="lp_ref_code" name="lp_ref_code" tabindex="-1" autocomplete="off" />
       </div>
+      <label class="form-consent">
+        <input type="checkbox" id="contact-consent" name="consent" value="yes" />
+        <span>Enviem-me emails ocasionais da Lumen and Pixel. Pode cancelar a subscrição a qualquer momento. Consulte a nossa <a href="legal.html#privacy">Política de Privacidade</a>.</span>
+      </label>
       <div class="form-submit">
         <button type="submit" id="form-submit-btn">Enviar mensagem</button>
         <p class="form-note">Ao submeter este formulário, concorda que podemos processar os seus dados para responder ao seu pedido, conforme descrito na nossa <a href="legal.html#privacy">Política de Privacidade</a>.</p>
@@ -387,118 +398,13 @@
     }
   })();
 
-  // n8n form submission
+  // Carry the quiz result into the hidden quiz_result field. Kept separate
+  // from the pre-fill above so neither can silently drop the other in a merge.
   (function(){
-    var form   = document.getElementById('contact-form');
-    var btn    = document.getElementById('form-submit-btn');
-    var status = document.getElementById('contact-form-status');
-    if(!form) return;
-
-    var ENDPOINT    = 'https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead';
-    var TIMEOUT_MS  = 15000;  // n8n hanging must not strand the button on "A enviar…"
-    var MIN_FILL_MS = 3000;   // nobody types a name, email and message faster than this
-    var MAX_MESSAGE = 4000;   // mirrors the maxlength attributes
-
-    // The endpoint is public and metered per execution, so submissions are
-    // screened here before one is spent: an untouched honeypot and a plausible
-    // time-on-page are both required.
-    var loadedAt   = Date.now();
-    var submitting = false;
-
-    function setStatus(type, text){
-      status.textContent = text;
-      status.style.color = type === 'success' ? 'var(--green-500)' : '#e05c5c';
-      if(type === 'success') setTimeout(function(){ status.textContent = ''; }, 8000);
-    }
-
-    function resetButton(){
-      submitting = false;
-      btn.disabled = false;
-      btn.textContent = 'Enviar mensagem';
-    }
-
-    // Deliberately permissive: this rejects the obviously-broken (no @, no dot,
-    // whitespace) without second-guessing legitimately unusual addresses.
-    function looksLikeEmail(value){
-      return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(value);
-    }
-
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      if(submitting) return;
-
-      var name  = form.querySelector('#contact_person').value.trim();
-      var email = form.querySelector('#email').value.trim();
-      var msg   = form.querySelector('#message').value.trim();
-      var trap  = form.querySelector('#lp_ref_code');
-
-      // Bot signals. Report success either way — telling a bot why it failed
-      // just teaches it what to change.
-      if((trap && trap.value) || (Date.now() - loadedAt) < MIN_FILL_MS){
-        window.location.href = 'thank-you.html';
-        return;
-      }
-
-      if(!name || !email || !msg){
-        setStatus('error', 'Por favor preencha o seu nome, email e mensagem.');
-        return;
-      }
-      if(!looksLikeEmail(email)){
-        setStatus('error', 'Introduza um endereço de email válido para lhe podermos responder.');
-        form.querySelector('#email').focus();
-        return;
-      }
-
-      var qp=new URLSearchParams(window.location.search);
-      var qmap={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
-      var payload = {
-        name:        name.slice(0, 100),
-        company:     form.querySelector('#organization').value.trim().slice(0, 120),
-        email:       email.slice(0, 254),
-        service:     form.querySelector('#service').value || '',
-        message:     msg.slice(0, MAX_MESSAGE),
-        source:      'Website PT',
-        entry_page:  'Página Sobre (PT)',
-        quiz_result: qmap[qp.get('service')] || qp.get('service') || ''
-      };
-
-      submitting = true;
-      btn.disabled = true;
-      btn.textContent = 'A enviar\u2026';
-      status.textContent = '';
-
-      var controller = window.AbortController ? new AbortController() : null;
-      var timer = setTimeout(function(){
-        if(controller) controller.abort();
-      }, TIMEOUT_MS);
-
-      var options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      };
-      if(controller) options.signal = controller.signal;
-
-      fetch(ENDPOINT, options)
-        .then(function(res){
-          clearTimeout(timer);
-          if(res.ok){
-            window.location.href = 'thank-you.html';
-          } else {
-            setStatus('error', 'Ocorreu um erro. Por favor tente novamente.');
-            resetButton();
-          }
-        })
-        .catch(function(err){
-          clearTimeout(timer);
-          if(err && err.name === 'AbortError'){
-            setStatus('error', 'A ligação demorou demasiado. Tente novamente ou escreva para info@lumenandpixel.com.');
-          } else {
-            setStatus('error', 'Não foi possível enviar a mensagem. Verifique a sua ligação e tente novamente.');
-          }
-          resetButton();
-        });
-    });
+    var qf=document.getElementById('quiz_result');
+    var k=new URLSearchParams(window.location.search).get('service');
+    var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
+    if(qf&&k)qf.value=map[k]||k;
   })();
 
 </script>

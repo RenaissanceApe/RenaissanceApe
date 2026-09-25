@@ -6,6 +6,118 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.53 — September 2026
+
+### Every form posts natively to the n8n intake endpoint
+
+**Not live until the `inbound-lead` workflow is confirmed to handle the new
+fields and redirects.** Built on branch `forms-n8n-intake`.
+
+(v1.51 and v1.52 are claimed by the open scroll-spy and EN/PT parity pull
+requests, so this entry takes v1.53 to avoid a collision.)
+
+Both forms, in both languages, are now plain HTML:
+
+```html
+<form action="https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead" method="POST">
+```
+
+No JavaScript sends anything. The browser enforces `required` and
+`type="email"` and posts the form urlencoded. One endpoint receives every
+form; `form_type` tells them apart. n8n answers with a 303:
+
+| `form_type` | `lang=en` | `lang=pt` |
+|---|---|---|
+| `contact` | `/thank-you.html` | `/pt/thank-you.html` |
+| `newsletter` | `/check-your-inbox.html` | `/pt/check-your-inbox.html` |
+
+#### Field contract
+
+| Field | contact | newsletter | Notes |
+|---|---|---|---|
+| `form_type` | `contact` | `newsletter` | hidden |
+| `lang` | `en` / `pt` | `en` / `pt` | hidden, matches the page |
+| `source_page` | `/about.html`, `/pt/about.html` | `/`, `/pt/` | hidden; the homepage uses its canonical path |
+| `email` | required | required | `type="email"` |
+| `name` | required | not present | was `contact_person` |
+| `company` | optional | not present | was `organization` |
+| `service` | optional | not present | kept: existing select, not in the new spec |
+| `message` | required | not present | |
+| `quiz_result` | hidden, filled from `?service=` | not present | empty unless arriving from the quiz |
+| `consent` | optional checkbox, `yes` | required checkbox, `yes` | absent when unticked; never pre-ticked |
+| `lp_ref_code` | honeypot | honeypot | must arrive empty |
+
+The honeypot keeps the name `lp_ref_code` on all four forms (the newsletter's
+was `nl_ref_code`). A field named `website` gets filled by browser autofill,
+which would silently discard real visitors. It stays a text input hidden by
+`.hp-field` in `site.css`, with `tabindex="-1"` and `autocomplete="off"`.
+
+#### Consent wording
+
+Identical on the contact and newsletter forms. This is the text a subscriber
+agrees to, so it is recorded here exactly:
+
+- EN: `Send me occasional emails from Lumen and Pixel. Unsubscribe at any time. See our Privacy Policy.`
+- PT: `Enviem-me emails ocasionais da Lumen and Pixel. Pode cancelar a subscrição a qualquer momento. Consulte a nossa Política de Privacidade.`
+
+"Privacy Policy" / "Política de Privacidade" is a link to `legal.html#privacy`.
+
+#### Changed
+
+- `about.html`, `pt/about.html`: `action`/`method` added, `novalidate` removed
+  so the browser validates, three hidden fields plus `quiz_result`, field
+  names aligned, an optional consent checkbox added above the submit row, and
+  the `fetch()` submit handler deleted. The pre-fill script stays and fills
+  the service select from `?service=`. `quiz_result` is filled by its own small
+  block, identical in EN and PT, rather than inside the pre-fill: the
+  EN/PT parity work (#20) deletes the old `quiz_result` lines from the English
+  pre-fill as dead code, and git merges that deletion silently. Kept separate,
+  the two changes merge cleanly in either order.
+- `index.html`, `pt/index.html`: `action`/`method` added, `novalidate`
+  removed, hidden fields added, the consent checkbox now has
+  `name="consent" value="yes"` and the wording above, honeypot renamed
+  `nl_ref_code` → `lp_ref_code`, and the whole `fetch()` script deleted.
+- New `check-your-inbox.html` and `pt/check-your-inbox.html`: where a
+  newsletter signup lands. Same layout as the thank-you pages, `noindex`.
+  The heading reuses the message the old homepage script showed after a
+  signup: *Almost there — check your inbox and confirm your subscription.* /
+  *Quase lá — verifique o seu email e confirme a subscrição.*
+- The newsletter no longer calls `…/webhook/newsletter-signup`. Double opt-in
+  now happens only if `inbound-lead` routes `form_type=newsletter` into it.
+
+#### Removed with the JavaScript
+
+- The 3-second minimum fill time. It needed script to enforce; the honeypot
+  now travels to n8n and must be checked there.
+- `consent_text` and `consent_at`. The newsletter used to send the exact
+  wording the visitor agreed to and a timestamp. Neither is in the new field
+  contract, and `legal.html` still says the exact consent wording is kept, so
+  n8n must record it (the strings above, by `lang`) for that to stay true.
+- In-page status messages. The `.contact-form-status` and `.newsletter-status`
+  elements are left in place but nothing writes to them now.
+
+#### Web3Forms
+
+No Web3Forms code, key, hidden input or script remained in any page. The only
+traces were historical entries in this file; one of them still held the old
+access key in plain text, which is now redacted. The key remains in git
+history and should be revoked in the Web3Forms dashboard.
+
+#### Verified without touching the live endpoint
+
+Every form was driven in a headless browser with the n8n host intercepted
+inside the browser and every other off-origin request aborted, so no request
+reached n8n. The browser blocks an empty contact form, an unticked newsletter
+consent and a malformed email; consent is never pre-ticked; the honeypot is
+off-screen and out of the tab order; each form posts urlencoded with exactly
+the fields above; and arriving from the quiz with `?service=SA` sends
+`quiz_result=System Architecture`.
+
+The CI checks report exactly the same findings as `main`: this change adds
+none.
+
+---
+
 ## v1.50 — September 2026
 
 ### Field Notes text contrast raised to WCAG AA (issue #6)
@@ -737,7 +849,7 @@ Apparent encoding issue was a false positive from text extraction. The file uses
 - Pure HTML/CSS/JS. No framework. No build step.
 - Hosted on GitHub Pages. DNS via GoDaddy.
 - Forms: Web3Forms (contact), MailerLite (newsletter).
-- Access key (Web3Forms): `2b0f7125-de63-40f7-9f81-674a1026f915`
+- Access key (Web3Forms): _redacted in v1.53. Web3Forms is no longer used; the key remains in git history and should be revoked in the Web3Forms dashboard._
 - MailerLite account: `2252485`, form ID: `gZXg1D`
 
 ### Brand tokens
