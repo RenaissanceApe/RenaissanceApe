@@ -249,20 +249,24 @@ body{display:flex;flex-direction:column;}
   <p class="section-label">Fique a par</p>
   <h2>Acompanhe as últimas novidades.</h2>
   <p>Subscreva hoje.</p>
-  <form class="newsletter-form" id="newsletter-form" novalidate>
+  <form class="newsletter-form" id="newsletter-form" action="https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead" method="POST">
+    <input type="hidden" name="form_type" value="newsletter" />
+    <input type="hidden" name="lang" value="pt" />
+    <input type="hidden" name="source_page" value="/pt/" />
     <div class="newsletter-row">
       <label class="sr-only" for="newsletter-email">Endereço de email</label>
       <input type="email" id="newsletter-email" name="email" placeholder="voce@empresa.com" maxlength="254" autocomplete="email" required />
       <button type="submit" id="newsletter-btn">Subscrever</button>
     </div>
     <label class="newsletter-consent">
-      <input type="checkbox" id="newsletter-consent" required />
-      <span id="newsletter-consent-text">Concordo em receber emails ocasionais da Lumen and Pixel e compreendo que posso cancelar a subscrição a qualquer momento. Consulte a nossa <a href="legal.html#privacy">Política de Privacidade</a>.</span>
+      <input type="checkbox" id="newsletter-consent" name="consent" value="yes" required />
+      <span id="newsletter-consent-text">Enviem-me emails ocasionais da Lumen &amp; Pixel. Consulte a nossa <a href="legal.html#privacy">Política de Privacidade</a>.</span>
     </label>
-    <!-- Honeypot. Estilizado fora do ecrã pelo site.css; ver o formulário de contacto. -->
+    <!-- Honeypot. Hidden from humans by .hp-field in site.css (not type=hidden,
+         which bots skip). Named "website" because the n8n intake filters on it. -->
     <div class="hp-field" aria-hidden="true">
-      <label for="nl_ref_code">Não preencher</label>
-      <input type="text" id="nl_ref_code" name="nl_ref_code" tabindex="-1" autocomplete="off" />
+      <label for="website">Não preencher</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
     </div>
     <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
   </form>
@@ -284,107 +288,5 @@ body{display:flex;flex-direction:column;}
   </div>
 </footer>
 
-<script>
-// Newsletter signup -> n8n.
-// Mirrors the contact form's screening: the endpoint is public and metered,
-// so an untouched honeypot and a plausible time-on-page are required before
-// a request is spent. Consent is explicit and the exact wording the visitor
-// agreed to is sent with it, so the record is evidence rather than a flag.
-(function(){
-  var form = document.getElementById('newsletter-form');
-  if(!form) return;
-  var btn     = document.getElementById('newsletter-btn');
-  var status  = document.getElementById('newsletter-status');
-  var email   = document.getElementById('newsletter-email');
-  var consent = document.getElementById('newsletter-consent');
-  var trap    = document.getElementById('nl_ref_code');
-
-  var ENDPOINT    = 'https://lumenandpixel.app.n8n.cloud/webhook/newsletter-signup';
-  var TIMEOUT_MS  = 15000;
-  var MIN_FILL_MS = 3000;
-
-  var loadedAt = Date.now();
-  var submitting = false;
-  var consentText = (document.getElementById('newsletter-consent-text') || {})
-                      .textContent.trim().replace(/\s+/g, ' ');
-
-  function setStatus(type, text){
-    status.textContent = text;
-    status.style.color = type === 'success' ? 'var(--green-500)' : '#e05c5c';
-  }
-  function reset(){
-    submitting = false;
-    btn.disabled = false;
-    btn.textContent = 'Subscrever';
-  }
-  function looksLikeEmail(v){
-    return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v);
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if(submitting) return;
-    var value = email.value.trim();
-
-    // Bot signals — acknowledge without sending, so nothing is learned.
-    if((trap && trap.value) || (Date.now() - loadedAt) < MIN_FILL_MS){
-      setStatus('success', 'Quase l\u00e1 \u2014 verifique o seu email e confirme a subscri\u00e7\u00e3o.');
-      form.reset();
-      return;
-    }
-    if(!looksLikeEmail(value)){
-      setStatus('error', 'Introduza um endere\u00e7o de email v\u00e1lido.');
-      email.focus();
-      return;
-    }
-    if(!consent.checked){
-      setStatus('error', 'Assinale a caixa para confirmar que pretende receber estes emails.');
-      consent.focus();
-      return;
-    }
-
-    submitting = true;
-    btn.disabled = true;
-    btn.textContent = 'A enviar\u2026';
-    status.textContent = '';
-
-    var controller = window.AbortController ? new AbortController() : null;
-    var timer = setTimeout(function(){ if(controller) controller.abort(); }, TIMEOUT_MS);
-
-    var options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email:         value.slice(0, 254),
-        consent:       true,
-        consent_text:  consentText,
-        consent_at:    new Date().toISOString(),
-        language:      'pt',
-        source:        'Website newsletter',
-        entry_page:    window.location.pathname
-      })
-    };
-    if(controller) options.signal = controller.signal;
-
-    fetch(ENDPOINT, options)
-      .then(function(res){
-        clearTimeout(timer);
-        if(res.ok){
-          setStatus('success', 'Quase l\u00e1 \u2014 verifique o seu email e confirme a subscri\u00e7\u00e3o.');
-          form.reset();
-          reset();
-        } else {
-          setStatus('error', 'Ocorreu um erro. Por favor tente novamente em breve.');
-          reset();
-        }
-      })
-      .catch(function(err){
-        clearTimeout(timer);
-        setStatus('error', err && err.name === 'AbortError' ? 'A liga\u00e7\u00e3o demorou demasiado. Tente novamente dentro de momentos.' : 'N\u00e3o foi poss\u00edvel subscrever. Verifique a sua liga\u00e7\u00e3o e tente novamente.');
-        reset();
-      });
-  });
-})();
-</script>
 </body>
 </html>

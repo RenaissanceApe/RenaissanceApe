@@ -47,6 +47,10 @@ publishes:
   #      _tools/package.json, nor CHANGELOG.md declares a version for this
   #      artifact. 1.0.0 is a starting point, not a finding.
   #
+  # Recorded in v1.53: the site's newsletter form no longer calls
+  # newsletter-signup; it posts to inbound-lead with form_type=newsletter. This
+  # workflow is only reached if inbound-lead forwards to it.
+  #
   # Also recorded, not fixed: what serves traffic is the copy imported into n8n
   # Cloud, not this file. _n8n/README.md:17-25 describes the import as a manual
   # step, so this file can drift from the live workflow with nothing noticing.
@@ -67,17 +71,20 @@ publishes:
 
 # What this repo needs from the others, and the shape it expects.
 consumes:
-  # Evidence: about.html:428 and pt/about.html:397 declare
-  # ENDPOINT = 'https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead'; the
-  # POST is fired at about.html:513 and pt/about.html:482. The payload literal is
-  # about.html:485-494 and pt/about.html:454-463:
-  #   { name, company, email, service, message, source, entry_page, quiz_result }
-  # with source 'Website' (EN) and 'Website PT' (PT). `service` is one of the
-  # five English <option> values shared by both languages (about.html:340-345,
-  # pt/about.html:310-315). `quiz_result` is the quiz's winning code SD|SC|SA|TD
-  # expanded to a service name — quiz.html:650 sets the ?service= param, the
-  # qmap at about.html:484 expands it. The page treats any non-2xx as failure
-  # (about.html:515-521).
+  # Evidence (updated in v1.53, branch forms-n8n-intake): every form on the
+  # site is a native <form action=".../webhook/inbound-lead" method="POST">,
+  # urlencoded, no JavaScript involved in sending. Contact form: about.html and
+  # pt/about.html. Newsletter: index.html and pt/index.html. Fields:
+  #   all forms:  form_type (contact|newsletter), lang (en|pt), source_page,
+  #               email, website (honeypot, must arrive empty)
+  #   contact:    name, company, service, message, quiz_result, consent (opt.)
+  #   newsletter: consent (required, value "yes")
+  # `consent` is absent when unticked (native checkbox behaviour). `service` is
+  # one of the five English <option> values shared by both languages.
+  # `quiz_result` is the quiz's winning code SD|SC|SA|TD expanded to a service
+  # name by the prefill script in each about page; empty when the visitor did
+  # not come from the quiz. The site expects a 303 redirect to thank-you.html
+  # or pt/thank-you.html chosen by `lang`; it does not inspect the response.
   #
   # Marked `assumed`, and the assumption is the `repo:` field, not the
   # dependency. The dependency is verified: this site's contact form does not
@@ -95,18 +102,20 @@ consumes:
   # negotiation anywhere. A narrower range would be a claim this repo does not
   # make.
   #
-  # Also recorded, not fixed: README.md:81-105 states this endpoint is public and
-  # unauthenticated, that anyone can POST arbitrary payloads to it, that the only
-  # protections (the honeypot at about.html:354-356, a 3-second minimum fill
-  # time, format validation) live in the page and so do not apply to a request
-  # that does not come from the page — and that this posture "is not currently a
-  # decision".
+  # Also recorded, not fixed: README.md ("No third-party code in the browser")
+  # states this endpoint is public and unauthenticated and that anyone can POST
+  # arbitrary payloads to it. Since v1.53 the page does no screening of its own:
+  # the 3-second minimum fill time is gone with the JavaScript, and the honeypot
+  # (`website`) is only useful if n8n discards submissions where it is not
+  # empty. The posture is still "not currently a decision".
   - repo: automata
     id: inbound-lead
     range: "*"
     used_by:
       - "about.html"
       - "pt/about.html"
+      - "index.html"
+      - "pt/index.html"
     status: assumed
 
 # Cross-cutting rules this repo must not violate. The warden reports these but
