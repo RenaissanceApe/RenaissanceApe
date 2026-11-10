@@ -24,6 +24,7 @@ CHANGELOG.md                                             What changed, and why
 INTAKE.md                                                The form → n8n contract
 CLAUDE.md                                                Rules for agents working here
 DESIGN.md                                                Design reference (tokens, components, rules)
+_docs/                                                   Roadmap, parallel workflow, plans (not published)
 ```
 
 ## Shared files — read this before editing a page
@@ -106,7 +107,7 @@ the site elsewhere has to reimplement it or lose it:
 
 | Behaviour | Provided by | If the host changes |
 |---|---|---|
-| `_tools/` is not published | Jekyll skips `_`-prefixed paths | It becomes **publicly readable** (dev tooling only, nothing secret). |
+| `_tools/` and `_docs/` are not published | Jekyll skips `_`-prefixed paths | They become **publicly readable** (dev tooling and planning notes, nothing secret). |
 | `pt/field-notes.html` redirects to `pt/field-notes/` | Nothing — it is a `<meta http-equiv="refresh">` stub, because Pages cannot issue a 301 | Replace with a real redirect and delete the stub |
 | Custom domain and HTTPS | `CNAME` plus the Pages configuration | Reconfigure at the new host |
 
