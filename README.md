@@ -23,6 +23,7 @@ images/                                                  Logos, icons, gradients
 CHANGELOG.md                                             What changed, and why
 INTAKE.md                                                The form → n8n contract
 CLAUDE.md                                                Rules for agents working here
+DESIGN.md                                                Design reference (tokens, components, rules)
 ```
 
 ## Shared files — read this before editing a page

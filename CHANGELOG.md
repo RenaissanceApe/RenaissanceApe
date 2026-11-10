@@ -6,6 +6,39 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.55 — November 2026
+
+### Agent docs: DESIGN.md added, CLAUDE.md extended
+
+No page, style or script changes. Nothing a visitor sees is different.
+
+#### Added
+
+- **`DESIGN.md`** — the machine-readable companion to Brand Book v1.2 (§16):
+  colour, type, spacing and component tokens, patterns, motion, sub-brands and
+  the do's and don'ts. Copied as supplied, unedited. It names three things the
+  repo does not hold yet: `ICONS.md`, `grain-tile-512.png` and the Inter font
+  files.
+
+#### Changed
+
+- **`CLAUDE.md`** — existing rules kept. New sections:
+  - *Design*: `DESIGN.md` is the design reference and the Brand Book wins any
+    conflict. It lists where the site is still behind the book (Nunito instead
+    of Inter, rounded corners, no semantic tokens, no patterns or grain, no
+    Rail Grid) and says each gap is closed in its own PR, never in passing.
+  - *Reading and checking*, *How to work*: what to run before a push, what to
+    look at by hand, how a PR is reported, and that agents never merge.
+  - *When a Dispatcher started you*: the rules for worker sessions when
+    several run at once. Workers still open their PRs straight into `main`.
+- **Brand constants rule** reworded: the typefaces are now "the typefaces in
+  `fonts/`" rather than "Space Mono, Nunito", because Brand Book v1.2 replaces
+  Nunito with Inter. Nothing is swapped here; the rule still forbids changing
+  them outside a PR whose task is to change them.
+- **`README.md`** — `DESIGN.md` added to the layout list.
+
+---
+
 ## v1.54 — September 2026
 
 ### v2 governance: this repo answers to its own rules only
