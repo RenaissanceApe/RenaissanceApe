@@ -116,11 +116,11 @@
   </div>
   <div class="fn-list">
     <div class="fn-filters reveal">
-      <button class="fn-filter label active" data-filter="all">All</button>
-      <button class="fn-filter label" data-filter="article">Articles</button>
-      <button class="fn-filter label" data-filter="case-study">Case Studies</button>
+      <button class="fn-filter label active" data-filter="all" aria-pressed="true">All</button>
+      <button class="fn-filter label" data-filter="article" aria-pressed="false">Articles</button>
+      <button class="fn-filter label" data-filter="case-study" aria-pressed="false">Case Studies</button>
     </div>
-    <div class="fn-article-list reveal" id="articleList">
+    <div class="fn-article-list reveal" id="articleList" aria-live="polite">
       <!-- Add entries here as articles are published. Example:
       <a href="systems-thinking-live-events.html" class="fn-article-item card" data-category="article">
         <div>
@@ -128,7 +128,7 @@
             <span class="tag">Article</span>
             <span class="fn-item-date data">September 2026</span>
           </div>
-          <div class="fn-item-title heading">Systems Thinking in Live Event Production</div>
+          <h2 class="fn-item-title heading">Systems Thinking in Live Event Production</h2>
           <div class="fn-item-excerpt">How applying systems thinking changes the way you approach show design, infrastructure, and coordination.</div>
         </div>
         <svg class="fn-item-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -140,7 +140,7 @@
             <span class="tag">Article</span>
             <span class="fn-item-date data">August 2026</span>
           </div>
-          <div class="fn-item-title heading">AV rental is an eligible cost. Just not for your festival.</div>
+          <h2 class="fn-item-title heading">AV rental is an eligible cost. Just not for your festival.</h2>
           <div class="fn-item-excerpt">Portugal Events applications for 2027 events open 1 September. I went to read the regulation for one specific reason, and found an exception that changes the whole budget.</div>
         </div>
         <svg class="fn-item-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -167,8 +167,9 @@
 document.querySelectorAll('.fn-filter').forEach(function(btn){
   btn.addEventListener('click',function(){
     var f=this.dataset.filter;
-    document.querySelectorAll('.fn-filter').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.fn-filter').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});
     this.classList.add('active');
+    this.setAttribute('aria-pressed','true');
     var items=document.querySelectorAll('.fn-article-item');
     var v=0;
     items.forEach(function(i){
