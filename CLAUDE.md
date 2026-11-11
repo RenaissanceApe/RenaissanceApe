@@ -161,6 +161,9 @@ Every other file in the repo, this one included, is served on the public site.
 - **Every shipping PR adds a section at the top of `CHANGELOG.md`**: `## v1.xx — Month YYYY`,
   newest first, separated by `---`, plain language, same style as the entry below it. A feature
   set ships as one version.
+- **A release that changes `base.css`, `site.css`, `site.js` or `fonts.css` sets `?v=` on those
+  four URLs to its version on every page** (`/base.css?v=1.58`), so visitors don't keep the old
+  file from their cache. `html-structure` fails when a page's version is missing or differs.
 - Commit message style: `<What changed> (<step>) — <version>`, with `(WIP)` for partial commits.
 - No model names in commits, PRs or code.
 

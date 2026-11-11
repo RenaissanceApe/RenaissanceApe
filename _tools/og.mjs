@@ -4,6 +4,7 @@
  *   node _tools/og.mjs
  *   CHROMIUM_PATH=/path/to/chrome node _tools/og.mjs    # if Playwright's browser isn't installed
  *
+ * Written as JPEG (quality 85): the same picture at about a quarter of the PNG weight.
  * Run by hand; the output is committed. Run grain.mjs first: the images use its tile.
  * To add an article image, add a line to IMAGES and run again. Use <br> for a line break.
  *
@@ -17,9 +18,9 @@ import { chromium } from 'playwright';
 const ROOT = path.resolve(import.meta.dirname, '..');
 
 const IMAGES = [
-  { file: 'images/og-image.png', title: 'The creative is ready.<br>Is the system?' },
-  { file: 'images/og/portugal-events-en.png', title: 'The stage is not eligible.<br>The poster is.' },
-  { file: 'images/og/portugal-events-pt.png', title: 'O palco não é elegível.<br>O cartaz é.' },
+  { file: 'images/og-image.jpg', title: 'The creative is ready.<br>Is the system?' },
+  { file: 'images/og/portugal-events-en.jpg', title: 'The stage is not eligible.<br>The poster is.' },
+  { file: 'images/og/portugal-events-pt.jpg', title: 'O palco não é elegível.<br>O cartaz é.' },
 ];
 
 const b64 = f => fs.readFileSync(path.join(ROOT, f)).toString('base64');
@@ -55,7 +56,7 @@ for (const { file, title } of IMAGES) {
   await page.setContent(html(title));
   await page.evaluate(() => document.fonts.ready);
   const out = path.join(ROOT, file);
-  await page.screenshot({ path: out });
+  await page.screenshot({ path: out, type: 'jpeg', quality: 85 });
   console.log(`${file}  ${(fs.statSync(out).size / 1024).toFixed(0)} KB`);
 }
 await browser.close();

@@ -1,4 +1,5 @@
-/* Check 1 — HTML structure: unbalanced container tags and duplicate ids.
+/* Check 1 — HTML structure: unbalanced container tags, duplicate ids, and the
+ * release version on the shared-file URLs.
  *
  * An unclosed <div> is not theoretical here: it shipped twice, and both times
  * it nested the page's own content inside the mobile menu, which is
@@ -19,10 +20,17 @@ const TRACK = new Set(['html','head','body','div','section','main','nav','footer
   'address','time','strong','em']);
 
 export const name = 'html-structure';
-export const title = 'HTML structure (tag balance, duplicate ids)';
+export const title = 'HTML structure (tag balance, duplicate ids, shared-file version)';
+
+/* The four shared files carry the release version (`/base.css?v=1.58`) so a
+   release reaches visitors whose browser cached the previous one (#51). Every
+   page must ask for the same version; a page left behind would get yesterday's
+   stylesheet. Pages that load none of them (the redirect stubs) are skipped. */
+const SHARED = /\s(?:href|src)\s*=\s*"(?:\.\.\/)*\/?((?:fonts|base|site)\.css|site\.js)(?:\?([^"]*))?"/g;
 
 export function run() {
   const out = [];
+  const versions = [];
   for (const file of htmlFiles()) {
     const raw = read(file);
     // Script/style bodies contain `<` inside strings and CSS; never scan them.
@@ -62,6 +70,23 @@ export function run() {
           message: `duplicate id "${v}" (first used on line ${seen.get(v)})` });
       else seen.set(v, lineOf(src, m.index));
     }
+
+    SHARED.lastIndex = 0;
+    while ((m = SHARED.exec(src))) {
+      const v = /^v=([^&]+)$/.exec(m[2] || '');
+      const line = lineOf(src, m.index);
+      if (!v) out.push({ file, line, message: `${m[1]} is loaded without ?v=<release version>` });
+      else versions.push({ file, line, shared: m[1], v: v[1] });
+    }
   }
+
+  // The version most pages use is the release; anything else is left behind.
+  const count = new Map();
+  for (const x of versions) count.set(x.v, (count.get(x.v) || 0) + 1);
+  const release = [...count].sort((a, b) => b[1] - a[1])[0]?.[0];
+  for (const x of versions)
+    if (x.v !== release)
+      out.push({ file: x.file, line: x.line,
+        message: `${x.shared}?v=${x.v} differs from the other pages' ?v=${release}` });
   return out;
 }

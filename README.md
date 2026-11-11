@@ -32,14 +32,18 @@ _docs/                                                   Roadmap, parallel workf
 Stylesheet order matters and is deliberate:
 
 ```html
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/base.css" />   <!-- shared design system -->
-<style> … page-specific … </style>            <!-- can override base -->
-<link rel="stylesheet" href="/site.css" />    <!-- always has the last word -->
+<link rel="stylesheet" href="/fonts.css?v=1.58" />
+<link rel="stylesheet" href="/base.css?v=1.58" />   <!-- shared design system -->
+<style> … page-specific … </style>                   <!-- can override base -->
+<link rel="stylesheet" href="/site.css?v=1.58" />    <!-- always has the last word -->
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(…,4000);</script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=1.58" defer></script>
 ```
+
+`?v=` is the release version, the same on every page. A release that changes one of these four
+files sets it to its own version on every page, so browsers fetch the new file instead of the
+cached one; `html-structure` fails if a page's value is missing or differs.
 
 - **`base.css`** is the design system: tokens, reset, nav, mobile menu, footer,
   accessibility primitives, and the shared classes (type, eyebrow / tag /
@@ -146,7 +150,7 @@ own browser is not installed, point them at one that is:
 
 | Check | Catches |
 |---|---|
-| `html-structure` | unbalanced tags, duplicate ids — an unclosed `<div>` blanked two PT pages in production |
+| `html-structure` | unbalanced tags, duplicate ids — an unclosed `<div>` blanked two PT pages in production; the shared files' `?v=` missing or different between pages |
 | `links` | internal links and assets that do not resolve |
 | `parity` | an EN page with no PT counterpart, and `hreflang` pairs that do not point at each other |
 | `contrast` | text below its WCAG AA threshold, measured in a browser |
