@@ -22,13 +22,16 @@ No page, style or script changes. Nothing a visitor sees is different.
 - **`_docs/ROADMAP.md`** — the only list of what comes next. First feature
   set: the brand refresh (BR1–BR7), which brings the site up to Brand Book
   v1.2 and closes #16 and #27.
+  After it: the copy review (CR1–CR6), the previz maturity quadrant as a
+  live tool (PQ1–PQ3), German, French and Spanish beside English and
+  Portuguese (TR1–TR5), and standing discovery jobs (DS1–DS3).
 - **`_docs/PARALLEL.md`** — how a feature set is built: a Dispatcher session
   starts one worker session per step, worker PRs are squashed into `test`,
   and `test` reaches `main` as one PR with a merge commit once every check
   has passed on the whole set. The owner merges it.
 - **`_docs/BRAND_REFRESH.md`**, **`_docs/SESSION_PROMPTS.md`**,
   **`_docs/PENDING.md`** — the brand refresh plan, one prompt per step, and
-  the decisions and setup waiting on the owner (D1–D11).
+  the decisions and setup waiting on the owner (D1–D21).
 - **`.github/pull_request_template.md`** — Changed · Found, not changed ·
   Needs your decision · Tests run · For the owner.
 
