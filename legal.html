@@ -31,37 +31,30 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-/* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
   /* ── LEGAL PAGE ── */
-  .page-hero{padding:160px 48px 56px;max-width:900px;margin:0 auto;text-align:center;}
-  .section-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-500);margin-bottom:20px;}
-  .page-hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;font-weight:700;letter-spacing:-0.01em;margin-bottom:18px;overflow-wrap:break-word;word-break:break-word;}
-  .page-hero p{color:var(--gray-300);font-size:17px;font-weight:300;line-height:1.75;max-width:640px;margin:0 auto;}
-  /* Sticky internal tabs */
-  .legal-tabs{position:sticky;top:68px;z-index:80;background:rgba(2,24,41,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);}
-  .legal-tabs-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;gap:4px;overflow-x:auto;}
-  .tab-link{flex:0 0 auto;display:inline-flex;align-items:center;height:52px;padding:0 20px;font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(240,241,243,0.55);border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s;}
-  .tab-link:hover{color:var(--green-500);}
-  .tab-link.active{color:var(--green-500);border-bottom-color:var(--green-500);}
+  .page-hero{padding:calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-3xl);max-width:900px;margin:0 auto;text-align:center;}
+  .page-hero .eyebrow{margin-bottom:var(--space-md);}
+  .page-hero h1{margin-bottom:var(--space-md);overflow-wrap:break-word;}
+  .page-hero .lead{color:var(--text-muted);max-width:640px;margin:0 auto;}
+  /* Sticky internal tabs (DESIGN.md "service-tab-nav": 52 px bar on surface, Space Mono labels) */
+  .legal-tabs{position:sticky;top:68px;z-index:80;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .legal-tabs-inner{max-width:1200px;margin:0 auto;padding:0 var(--space-2xl);display:flex;gap:var(--space-xxs);overflow-x:auto;}
+  .tab-link{flex:0 0 auto;display:inline-flex;align-items:center;height:52px;padding:0 var(--space-md);font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--dur-micro) var(--ease-fade),border-color var(--dur-micro) var(--ease-fade);}
+  .tab-link:hover{color:var(--accent);}
+  .tab-link.active{color:var(--accent);border-bottom-color:var(--accent);}
   /* Content */
-  .legal-wrap{max-width:860px;margin:0 auto;padding:56px 48px 100px;}
-  .legal-section{scroll-margin-top:140px;padding:32px 0 48px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .legal-wrap{max-width:860px;margin:0 auto;padding:var(--space-3xl) var(--space-2xl) var(--space-4xl);}
+  .legal-section{scroll-margin-top:140px;padding:var(--space-xl) 0 var(--space-2xl);border-bottom:1px solid var(--border);}
   .legal-section:last-child{border-bottom:none;}
-  .legal-section h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;letter-spacing:-0.01em;margin-bottom:20px;overflow-wrap:break-word;word-break:break-word;}
-  .legal-section h3{font-family:var(--font-display);font-size:1rem;font-weight:700;letter-spacing:0.04em;color:var(--gray-100);margin:28px 0 10px;}
-  .legal-section p{font-size:15px;font-weight:300;color:var(--gray-300);line-height:1.8;margin-bottom:14px;}
-  .legal-section ul{margin:10px 0 18px 20px;display:flex;flex-direction:column;gap:10px;color:var(--gray-300);font-size:15px;font-weight:300;line-height:1.8;}
-  .legal-section li strong{color:var(--gray-100);}
+  .legal-section h2{margin-bottom:var(--space-md);overflow-wrap:break-word;}
+  .legal-section h3{margin:var(--space-lg) 0 var(--space-xs);}
+  .legal-section p{color:var(--text-muted);margin-bottom:var(--space-sm);}
+  .legal-section ul{margin:var(--space-xs) 0 var(--space-md) 20px;display:flex;flex-direction:column;gap:var(--space-xs);color:var(--text-muted);}
+  .legal-section li strong{color:var(--text);}
   .legal-section a{color:var(--blue-300);text-decoration:underline;}
-  /* ── FOOTER ── */
   @media(max-width:900px){
-    .page-hero{padding:120px 24px 40px;}.legal-tabs-inner{padding:0 24px;}.legal-wrap{padding:40px 24px 80px;}
+    .page-hero{padding:calc(68px + var(--space-2xl)) var(--space-lg) var(--space-2xl);}.legal-tabs-inner{padding:0 var(--space-lg);}.legal-wrap{padding:var(--space-2xl) var(--space-lg) var(--space-3xl);}
   }
-  /* Quiz nav link */
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -105,9 +98,9 @@
 </div>
 
 <header class="page-hero" id="main-content">
-  <p class="section-label">Legal</p>
-  <h1>Clear terms. Minimal friction. Full transparency.</h1>
-  <p>Everything relevant to privacy, website usage, cookies, and general disclaimers — in one place.</p>
+  <p class="eyebrow">Legal</p>
+  <h1 class="display-lg">Clear terms. Minimal friction. Full transparency.</h1>
+  <p class="lead">Everything relevant to privacy, website usage, cookies, and general disclaimers — in one place.</p>
 </header>
 
 <div class="legal-tabs" data-scrollspy data-scrollspy-threshold="0.05">
@@ -122,29 +115,29 @@
 <main class="legal-wrap">
 
   <section class="legal-section" id="privacy">
-    <h2>Privacy Policy</h2>
+    <h2 class="display-md">Privacy Policy</h2>
     <p>This section explains what data we collect through the website, why we collect it, which third-party services are involved, and how we handle it.</p>
-    <h3>Who we are</h3>
+    <h3 class="heading">Who we are</h3>
     <p>Lumen and Pixel is a live event production studio based in Portugal. This website is used to present our services, collect project enquiries, and allow visitors to subscribe to our newsletter.</p>
-    <h3>What we collect</h3>
+    <h3 class="heading">What we collect</h3>
     <ul>
       <li>Contact form submissions, including name, company or organisation, email address, selected service, and project message.</li>
       <li>Newsletter sign-ups: your email address, the date and time you subscribed, and the exact consent wording you agreed to.</li>
       <li>Basic technical information required for website delivery, such as the IP address recorded in server logs by our host.</li>
     </ul>
-    <h3>Why we use it</h3>
+    <h3 class="heading">Why we use it</h3>
     <ul>
       <li>To respond to project enquiries and other messages sent through the website.</li>
       <li>To send newsletter updates to users who explicitly subscribe.</li>
       <li>To deliver resources or redirect visitors to external purchase pages where relevant.</li>
     </ul>
-    <h3>Legal bases</h3>
+    <h3 class="heading">Legal bases</h3>
     <ul>
       <li>Project enquiries are processed on the basis of legitimate interest, so we can respond to incoming requests.</li>
       <li>Newsletter subscriptions are processed on the basis of consent.</li>
       <li>Where purchases happen through Gumroad, payment and checkout data are handled on Gumroad&#8217;s side under their own terms and privacy practices.</li>
     </ul>
-    <h3>Third-party services used on this website</h3>
+    <h3 class="heading">Third-party services used on this website</h3>
     <p>No third-party code runs in your browser on this website. Fonts are served from this domain, and there is no analytics, advertising, tracking, or embedded marketing script on any page. The services below are used, but your browser only contacts them if you submit a form or follow a link to them.</p>
     <ul>
       <li><strong>GitHub Pages</strong> — hosts this website. Requests, including IP addresses, are processed by GitHub to deliver pages.</li>
@@ -152,16 +145,16 @@
       <li><strong>cal.com</strong> — only if you choose to book a call. Booking happens on their site under their own terms.</li>
       <li><strong>Gumroad</strong> — only if you follow a link to our store. Purchases, payment and checkout data are handled entirely on Gumroad's side under their own terms.</li>
     </ul>
-    <h3>How long we keep data</h3>
+    <h3 class="heading">How long we keep data</h3>
     <p>We keep enquiry and newsletter data only for as long as it is reasonably necessary for communication, operational follow-up, or legal and administrative purposes.</p>
-    <h3>Your rights</h3>
+    <h3 class="heading">Your rights</h3>
     <p>You may request access to, correction of, or deletion of your personal data, or object to certain types of processing, as applicable under relevant law. Newsletter emails also include an unsubscribe option.</p>
-    <h3>How to contact us</h3>
+    <h3 class="heading">How to contact us</h3>
     <p>For privacy-related requests, use the contact form on the <a href="about.html#contact-form">About page</a>.</p>
   </section>
 
   <section class="legal-section" id="terms">
-    <h2>Terms of Use</h2>
+    <h2 class="display-md">Terms of Use</h2>
     <p>These terms govern the use of this website and the content published on it.</p>
     <ul>
       <li><strong>Website purpose.</strong> This website is intended to present Lumen and Pixel, describe services, and provide access to contact, newsletter, and external resource links.</li>
@@ -175,7 +168,7 @@
   </section>
 
   <section class="legal-section" id="cookies">
-    <h2>Cookies</h2>
+    <h2 class="display-md">Cookies</h2>
     <p>This website sets no cookies of its own and loads no third-party code into your browser.</p>
     <ul>
       <li><strong>No analytics, advertising, or tracking of any kind is used on this website.</strong></li>
@@ -187,7 +180,7 @@
   </section>
 
   <section class="legal-section" id="disclaimer">
-    <h2>Disclaimer</h2>
+    <h2 class="display-md">Disclaimer</h2>
     <p>This disclaimer sets expectations around the website and the information published on it.</p>
     <ul>
       <li>Website content is provided on an &#8220;as is&#8221; basis for informational purposes.</li>

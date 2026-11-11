@@ -32,25 +32,17 @@
 <link rel="stylesheet" href="/base.css" />
 <style>
 body{min-height:100vh;display:flex;flex-direction:column;}
-  /* Simplified nav — no hamburger needed on this page */
-  nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1200px)/2 + 48px));height:68px;background:rgba(223,233,240,0.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(46,52,65,0.6);left:auto;right:auto;}
-  .nav-home{font-size:13px;font-weight:600;letter-spacing:0.04em;color:rgba(15,25,45,0.78);transition:color 0.2s;}
-  .nav-home:hover{color:var(--blue-700);}
-  main{flex:1;display:grid;place-items:center;padding:72px 24px;}
-  .card{width:min(720px,100%);background:var(--blue-900);border:1px solid rgba(130,178,215,0.2);padding:48px;border-radius:2px;}
-  .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-500);margin-bottom:20px;}
-  h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;margin-bottom:20px;overflow-wrap:break-word;word-break:break-word;}
-  p{color:var(--gray-300);font-size:15px;line-height:1.8;}
-  .actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:32px;}
-  .primary,.secondary{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:3px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
-  .primary{background:var(--green-500);color:var(--blue-700);transition:background 0.2s;}
-  .primary:hover{background:var(--green-300);}
-  .secondary{border:1px solid rgba(130,178,215,0.25);color:var(--gray-100);transition:border-color 0.2s,color 0.2s;}
-  .secondary:hover{border-color:var(--green-500);color:var(--green-500);}
-  /* ── FOOTER ── */
-  @media(max-width:700px){nav{padding:0 24px;}.card{padding:36px 24px;}.actions{flex-direction:column;}}
-
-  /* Quiz nav link */
+  /* Short nav: the bar itself is the shared one in base.css */
+  .nav-home{font-size:14px;font-weight:500;color:var(--nav-text);}
+  .nav-home:hover{text-decoration:underline;}
+  /* MAIN: Pixel Field ground (.pixel-field) under sand grain (.grain) */
+  main{flex:1;display:grid;place-items:center;padding:calc(68px + var(--space-3xl)) var(--space-lg) var(--space-3xl);}
+  main .card{width:min(720px,100%);padding:var(--space-2xl);}
+  main .eyebrow{margin-bottom:var(--space-md);}
+  h1{margin-bottom:var(--space-md);overflow-wrap:break-word;}
+  main p{color:var(--text-muted);}
+  .actions{display:flex;gap:var(--space-md);flex-wrap:wrap;margin-top:var(--space-xl);}
+  @media(max-width:700px){main .card{padding:var(--space-xl) var(--space-lg);}.actions{flex-direction:column;}}
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -69,15 +61,15 @@ body{min-height:100vh;display:flex;flex-direction:column;}
     </div>
   </div>
 </nav>
-<main>
+<main class="pixel-field grain">
   <section class="card" aria-labelledby="ty-title">
     <p class="eyebrow">Mensagem recebida</p>
-    <h1 id="ty-title">Obrigado &#8212; a sua submissão foi recebida.</h1>
+    <h1 id="ty-title" class="display-lg">Obrigado &#8212; a sua submissão foi recebida.</h1>
     <p>Recebemos a sua mensagem.<br>Se entrou em contacto sobre um projeto, responderemos em breve.<br>Se subscreveu para receber novidades, verifique a sua caixa de entrada para confirmar a subscrição.</p>
     <p style="margin-top:12px;">Se não vir o email, verifique a sua pasta de spam ou promoções.</p>
     <div class="actions">
-      <a class="primary" href="index.html">Voltar ao início</a>
-      <a class="secondary" href="services.html">Explorar serviços</a>
+      <a class="btn-primary" href="index.html">Voltar ao início</a>
+      <a class="btn-secondary" href="services.html">Explorar serviços</a>
     </div>
   </section>
 </main>
