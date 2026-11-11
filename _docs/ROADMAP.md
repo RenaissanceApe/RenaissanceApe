@@ -9,27 +9,7 @@ each step still to run is in [SESSION_PROMPTS.md](SESSION_PROMPTS.md).
 
 ## Next
 
-### 1. Upkeep 2: defects fixed before the copy review
-
-Agent-only, and can start now. Placed first because it needs no content from the owner, fixes real
-defects (a quiz that is blank without JavaScript, a 404 that breaks below a folder, a stale
-stylesheet after each release, controls a screen reader can't use), and touches pages the copy
-review is about to rewrite: done first, the two sets never own a page at the same time. From
-discovery run 1: the challenger's quick fixes QF1–QF9 ([DISCOVERY.md](DISCOVERY.md)) and the open
-`ready-for-agent` issues #51, #37 and #40. Plan: [UPKEEP_2.md](UPKEEP_2.md). Ships as v1.58.
-
-| Step | What | Needs | Owns |
-|---|---|---|---|
-| **UP1** | Quiz and About scripts: a no-JavaScript line on the quiz (QF2); the result heading read as two words (QF6); `?service=` accepts only `SD`/`SC`/`SA`/`TD` (QF3); About's three control-less labels become text (QF5, About part) | — | `quiz.html`, `about.html`, EN + PT |
-| **UP2** | 404, confirmation pages, Legal, Services: root-absolute paths on the 404 (QF1); skip link and `main-content` on thank-you and check-your-inbox, Legal's tab bar in a landmark, Services' image paths (QF5, rest) | — | `404.html`, `thank-you.html`, `check-your-inbox.html`, `legal.html`, `services.html`, EN + PT |
-| **UP3** | Field Notes hub and Resources: article titles as `<h2>` (QF4); the active filter announced (#37); the Academy button no longer a dead link (#40) | — | `field-notes/index.html`, `resources.html`, EN + PT |
-| **UP4** | Every page's `<head>`: a release version on the shared-file URLs and a check that every page carries the same one (#51); `og:locale`, `og:image:alt`, PT home `og:url`, OG cards as JPEG (QF7); Organisation data on the PT home (QF8); `robots.txt` (QF9) | UP1–UP3 merged | the `<head>` of every page, `robots.txt`, `_tools/og.mjs`, `_tools/checks/html-structure.mjs`, `_tools/selftest.mjs`, the release lines in `CLAUDE.md`, `README.md`, `_docs/PARALLEL.md` |
-
-Runs: UP1, UP2, UP3 together → UP4 alone (it edits every page). Owner first: nothing to start;
-the few new words (the quiz's no-JavaScript line, two `aria-label`/`alt` texts) are approved in the
-PR, and the old PNG cards are deleted only on a yes (D68).
-
-### 2. Copy review: every word, humanised
+### 1. Copy review: every word, humanised
 
 All visitor-facing text on the site, EN and PT: pages, Field Notes articles, form labels and
 messages, meta titles and descriptions, alt text, OG text. Removes AI telltales and makes it read
@@ -48,7 +28,7 @@ brand refresh (built, v1.56) because both touch every page.
 Runs: CR1 alone → CR2, CR3, CR4, CR5 together → CR6 alone. Every rewrite PR carries a
 before/after table per page so the owner approves text, not diffs (D12, D13).
 
-### 3. Previz maturity quadrant: the 3D previsualization assessment, live on the site
+### 2. Previz maturity quadrant: the 3D previsualization assessment, live on the site
 
 The assessment is built in its own repository (issue #13). This set brings it onto the site as a
 tool visitors use, linked from Resources, in the site's brand and languages.
@@ -61,7 +41,7 @@ tool visitors use, linked from Resources, in the site's brand and languages.
 
 Runs: PQ1 → PQ2 → PQ3, one at a time.
 
-### 4. Languages: DE, FR and ES beside EN and PT
+### 3. Languages: DE, FR and ES beside EN and PT
 
 The whole site in five languages. Runs after the copy review (translate the final text, once) and
 after the quadrant tool (so it is translated with the rest). Strongly better after **Markup**
@@ -77,7 +57,7 @@ after the quadrant tool (so it is translated with the rest). Strongly better aft
 
 Runs: TR1 alone → TR2, TR3, TR4 together → TR5 alone.
 
-### 5. Contact and enquiry path (proposed)
+### 4. Contact and enquiry path (proposed)
 
 **Proposed by discovery run 1 (v1.57); not started until the owner picks it.** Closes the leaks
 between reading and asking: Services and Home have no contact link at the moment a buyer decides,
@@ -100,7 +80,7 @@ CR2–CR5 start or after CR6. Much cheaper after **Markup** (#12), which makes C
 Owner first: the button labels (D49); the email address in the footer (D50); "Contact" in the nav
 (D51, relates to D22/#35); the quiz button order (D52); CE5 yes or no (D53).
 
-### 6. Proof of work (proposed)
+### 5. Proof of work (proposed)
 
 **Proposed by discovery run 1 (v1.57); not started until the owner picks it.** The gap every
 discovery lens found: one anonymous story, six unlinked logos, an empty Case Studies filter, no
@@ -123,7 +103,7 @@ Owner first: 3–4 projects with facts and photos, and which clients may be name
 founder (D32) and the photo and bio facts (D55); 3–4 figures (D56); cleared documents (D64). A
 showreel (D63) and a studio PDF (D62) come after this set, from its content.
 
-### 7. Working with us (proposed)
+### 6. Working with us (proposed)
 
 **Proposed by discovery run 1 (v1.57); not started until the owner picks it.** A few short blocks
 that answer an agency's first questions: how a quote is built, what the studio supplies, how early
@@ -170,18 +150,16 @@ Proof of work ships, so the scouts judge the site with its proof in place.
 
 ### Suggested order
 
-1. **Upkeep 2**: fixes real defects with no owner content, and must finish before the copy review
-   rewrites the same pages.
-2. **Contact and enquiry path**: the cheapest change that closes a real leak, and it runs best
+1. **Contact and enquiry path**: the cheapest change that closes a real leak, and it runs best
    before the copy review takes the same pages.
-3. **Copy review**, with **Working with us** folded in as owner-approved meaning changes if the
+2. **Copy review**, with **Working with us** folded in as owner-approved meaning changes if the
    owner agrees (D67): one pass over Services, About and the article instead of two.
-4. **Proof of work**, once the owner's projects, photos and permissions are in: the largest gain,
+3. **Proof of work**, once the owner's projects, photos and permissions are in: the largest gain,
    gated only by material that should start being collected now.
-5. **Previz quadrant**: brings the studio's own tool on site, after the copy it links from is
+4. **Previz quadrant**: brings the studio's own tool on site, after the copy it links from is
    final.
-6. **Languages**: translate the final text once, the quadrant included.
-7. **Layout, Icons and motion**: visual sets that wait on D3 and `ICONS.md`.
+5. **Languages**: translate the final text once, the quadrant included.
+6. **Layout, Icons and motion**: visual sets that wait on D3 and `ICONS.md`.
 
 **Markup** and **Legal** (Later sets) slot in whenever the owner decides them; both are best done
 before Languages.
@@ -190,6 +168,7 @@ before Languages.
 
 | Version | What | How it works |
 |---|---|---|
+| v1.58 | Upkeep 2 (UP0–UP4): the quiz without JavaScript, a 404 that works below a folder, `?service=` limited to the four codes, screen-reader fixes, JPEG link-preview cards, `og:locale` and `og:image:alt`, Organisation data on the PT home, `robots.txt` without `Disallow`, the release version on the shared-file URLs with its check, and a CI install that survives an apt outage. Closed #37, #40, #51 | [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.57 | Discovery run 1 (DS1–DS3): four scouts, a challenger's ranked list, and this plan: Upkeep 2 ready to run, three proposed sets waiting on the owner, decisions D48–D69 | [DISCOVERY.md](DISCOVERY.md), `_docs/discovery/`, [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.56 | Brand refresh (BR1–BR7): the site on Brand Book v1.2. Inter, tokens and shared classes in `base.css`; nav, menu and footer to spec; Patch, Pixel Field, grain and OG images from generator scripts; every page restyled, EN and PT; the `brand` check in CI. Closed #16, #27, #32, #34, #46 | [BRAND_REFRESH.md](BRAND_REFRESH.md); the comment at the top of `base.css` |
 | v1.55 | Agent rules, design reference, roadmap, parallel workflow | `CLAUDE.md`, `DESIGN.md`, `_docs/` |
