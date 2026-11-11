@@ -62,9 +62,9 @@ Every other file in the repo, this one included, is served on the public site.
 ## Commands
 
 - `cd _tools && npm ci`: once per session
-- `npm run check` (in `_tools/`): all six checks. **Run before every commit you push.**
+- `npm run check` (in `_tools/`): all seven checks. **Run before every commit you push.**
 - `node check.mjs --only <name>`: one check (`html-structure`, `links`, `parity`, `contrast`,
-  `shared-logic`, `base-css`)
+  `shared-logic`, `base-css`, `brand`)
 - `node selftest.mjs`: proves each check still fires; run it when you change a check
 - `node extract-base-css.mjs --check`: reports shared rules sitting in pages
 - `python3 -m http.server 8000` (repo root): the site at http://localhost:8000
@@ -82,6 +82,11 @@ Every other file in the repo, this one included, is served on the public site.
 - **Text meets WCAG AA**, measured in a browser at its rendered size. Never use colour or hover
   as the only signal.
 - **Balanced tags, no duplicate ids.** An unclosed `<div>` once blanked two live pages.
+- **The brand rules a stylesheet can break** (`brand`): corners are `0` or `var(--radius)`; no
+  `box-shadow`, `text-shadow`, blur or `backdrop-filter`; typefaces only as `var(--font-display)`
+  and `var(--font-body)`; raw colours only in the `:root` block of `base.css`, everything else
+  `var(--token)`, `transparent`, `currentColor` or `inherit`. Inline `<svg>` icons and the files
+  in `images/` are not read.
 
 ## Rules no check enforces (so you must)
 
@@ -120,21 +125,17 @@ Every other file in the repo, this one included, is served on the public site.
 - **Brand constants:** the name "Lumen and Pixel", the logo files in `images/`, the typefaces in
   `fonts/`, and the colour scales in the `:root` block of `base.css`. They change only in a step
   whose stated task is to change them.
-- **The site has not caught up with `DESIGN.md` yet.** The brand refresh (BR1–BR7 in
-  `_docs/ROADMAP.md`, plan in `_docs/BRAND_REFRESH.md`) closes these gaps:
+- **The site follows `DESIGN.md` except in two places.** The brand refresh closed the rest; these
+  remain, and each is a later set on the roadmap (`_docs/ROADMAP.md`), not something to fix on
+  the way to something else:
 
   | Area | Site today | `DESIGN.md` |
   |---|---|---|
-  | Body typeface | Nunito | Inter |
-  | Corners | 1–3 px in many places, a pill and a circle on `services.html` and `404.html` | 0 px everywhere |
-  | Tokens | colour scales only | semantic aliases, spacing, motion |
-  | Patterns and texture | none | Patch, Pixel Field, sand grain |
   | Layout | per-page | Rail Grid |
-  | Files `DESIGN.md` names | missing: `ICONS.md`, `grain-tile-512.png`, Inter fonts | present |
+  | Files `DESIGN.md` names | missing: `ICONS.md` | present |
 
-  **Don't close a gap in passing.** Outside the brand refresh, new work follows `DESIGN.md`
-  wherever that needs no change to shared tokens, fonts or other pages, and otherwise matches the
-  page it sits on.
+  **Don't close a gap in passing.** New work follows `DESIGN.md` wherever that needs no change to
+  shared tokens, fonts or other pages, and otherwise matches the page it sits on.
 
 ## A page or feature is done only when
 
