@@ -6,6 +6,62 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.55 — November 2026
+
+### Agent rules rebuilt, design reference, roadmap and the `test` branch workflow
+
+No page, style or script changes. Nothing a visitor sees is different.
+
+#### Added
+
+- **`DESIGN.md`** — the machine-readable companion to Brand Book v1.2 (§16):
+  colour, type, spacing and component tokens, patterns, motion, sub-brands and
+  the do's and don'ts. Copied as supplied, unedited. It names three things the
+  repo does not hold yet: `ICONS.md`, `grain-tile-512.png` and the Inter font
+  files.
+- **`_docs/ROADMAP.md`** — the only list of what comes next. First feature
+  set: the brand refresh (BR1–BR7), which brings the site up to Brand Book
+  v1.2 and closes #16 and #27.
+  After it: the copy review (CR1–CR6), the previz maturity quadrant as a
+  live tool (PQ1–PQ3), German, French and Spanish beside English and
+  Portuguese (TR1–TR5), and standing discovery jobs (DS1–DS3).
+- **`_docs/PARALLEL.md`** — how a feature set is built: a Dispatcher session
+  starts one worker session per step, worker PRs are squashed into `test`,
+  and `test` reaches `main` as one PR with a merge commit once every check
+  has passed on the whole set. The owner merges it.
+- **`_docs/BRAND_REFRESH.md`**, **`_docs/SESSION_PROMPTS.md`**,
+  **`_docs/PENDING.md`** — the brand refresh plan, one prompt per step, and
+  the decisions and setup waiting on the owner (D1–D21).
+- **`.github/pull_request_template.md`** — Changed · Found, not changed ·
+  Needs your decision · Tests run · For the owner.
+
+`_docs/` starts with `_` so GitHub Pages does not publish it, the same way
+`_tools/` is kept off the site.
+
+#### Changed
+
+- **`CLAUDE.md`** rewritten on the model of the AVX one. Every earlier rule is
+  kept. New: a reading budget, a map of the repo, the commands, the rules the
+  checks enforce and the ones they don't, the forms contract, design and
+  brand, what "done" means for a page, releases and git, how to work, a
+  session start to finish, and the worker rules.
+- **"Every PR targets `main`"** becomes: a solo session's PR targets `main`;
+  in a feature set, worker PRs target `test` and only `test` targets `main`.
+  A PR into another session's branch is still never allowed, which is what
+  the old rule was protecting against.
+- **Brand constants rule** reworded: "the typefaces in `fonts/`" instead of
+  "Space Mono, Nunito", because Brand Book v1.2 replaces Nunito with Inter.
+  Nothing is swapped here; BR1 does it.
+- **`README.md`** — `DESIGN.md` and `_docs/` added to the layout list and the
+  host-dependencies table.
+
+#### Known, not changed
+
+- The `contrast` check fails on `main` today with the nine findings of #16.
+  BR1 fixes them first, so every later step is held to a green run.
+
+---
+
 ## v1.54 — September 2026
 
 ### v2 governance: this repo answers to its own rules only
