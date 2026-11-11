@@ -33,12 +33,33 @@ jobs:
         working-directory: _tools
         run: npm ci
 
-      # Only Chromium, and only the browser itself. The contrast check renders
-      # each page to measure what the browser actually computed; a static CSS
-      # reading of it produced ~90% false positives.
+      # Only Chromium. The contrast check renders each page to measure what the
+      # browser actually computed; a static CSS reading of it produced ~90%
+      # false positives. The browser itself comes from Playwright's download
+      # host, not apt, so an unreachable Ubuntu mirror can't stop it.
       - name: Install Chromium
         working-directory: _tools
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
+
+      # The system libraries Chromium needs, from apt. ubuntu-latest already
+      # carries them, so this is a top-up: it refreshes apt and retries three
+      # times, then warns instead of failing if the mirror stays unreachable.
+      # Each command has a time limit because an unreachable mirror can make
+      # apt hang rather than fail. If a library really is missing, the
+      # self-test and the contrast check below fail loudly, which is the
+      # outcome we want.
+      - name: Install Chromium system libraries
+        working-directory: _tools
+        run: |
+          for attempt in 1 2 3; do
+            if timeout -k 10 90 sudo apt-get update \
+              && timeout -k 10 180 npx playwright install-deps chromium; then
+              exit 0
+            fi
+            echo "apt attempt $attempt failed"
+            [ "$attempt" -lt 3 ] && sleep 20
+          done
+          echo "::warning::Could not install Chromium's system libraries from apt after 3 attempts; continuing with the runner's preinstalled ones."
 
       # Proves each check still fires on a known defect before trusting a
       # green run. A check that never fires reports green and is believed.
