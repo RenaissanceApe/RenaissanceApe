@@ -652,10 +652,11 @@ a.card:hover,a.card-raised:hover {
 
    .grain       sand grain over the element's own background (a gradient or
                 a full-bleed dark field). Content stays above the grain.
-   .patch-tone  the Patch, tone on dark, as a section ground. One per view,
-                never animated. Pick another seed with --patch-image.
-   .pixel-field the quiet square-dot ground. Coarse and fine sizes:
-                --pixel-field-image.
+   .patch-tone  the Patch, tone on dark (seed 77, 1920 x 1152, seamless), as
+                a section ground. One per view, never animated. Another
+                Patch file: set --patch-image on the element.
+   .pixel-field the quiet square-dot ground (standard size, 1152 x 1152,
+                seamless). Another file: set --pixel-field-image.
    Patterns tile at their own size: they are cropped, never scaled.          */
 .grain {
   position: relative;
@@ -672,8 +673,7 @@ a.card:hover,a.card-raised:hover {
 .patch-tone {
   background-color: var(--bg);
   background-image: var(--patch-image, url('/images/patterns/patch-tone-dark-s77.svg'));
-  background-repeat: no-repeat;
-  background-position: right top;
+  background-repeat: repeat;
 }
 .pixel-field {
   background-image: var(--pixel-field-image, url('/images/patterns/pixel-field-standard-dark.svg'));

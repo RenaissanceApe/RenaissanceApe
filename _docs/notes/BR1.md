@@ -45,9 +45,8 @@ step relies on".
 - Turn on "reduce motion" in the OS and reload the home page: nothing should slide or loop.
 
 ## Pending: new questions (section 3)
-- **Patch seed.** `.patch-tone` points at `/images/patterns/patch-tone-dark-s77.svg` (77 is the
-  default seed in `DESIGN.md`). If BR2 made a different seed, change the one URL in `base.css` or
-  set `--patch-image` on the element. Assumed: s77.
+- **Patch seed.** Settled with BR2, no question left: `.patch-tone` uses
+  `/images/patterns/patch-tone-dark-s77.svg` (seed 77), repeated at its natural size.
 - **One filled green button per viewport.** The nav's "Get started" is filled green on every
   page, so any page with its own green button shows two. Options: make the nav button secondary
   (outlined), or count the nav as outside the rule. Assumed: left as it is.
