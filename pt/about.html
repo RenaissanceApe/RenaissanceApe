@@ -110,7 +110,20 @@
     .contact-section{grid-template-columns:1fr;padding:0 var(--space-lg) var(--space-3xl);margin-bottom:0;}
     .contact-left{padding:var(--space-2xl) var(--space-lg);}
     .contact-right{padding:var(--space-2xl) var(--space-lg);border-left:1px solid var(--border);border-top:0;}
+    /* Every route to the form arrives at #contact-form. Stacked on a phone, the reply
+       promise and "Book a discovery call" sit above the form, so land on the promise
+       (.intro) instead: the page script scrolls there; without JavaScript the margin
+       on the form lifts the landing point by the distance between the two (84px
+       below the top, plus the promise-to-form distance measured at each width; the
+       text wraps more on narrower screens). */
+    .contact-left .intro{scroll-margin-top:84px;}
+    #contact-form{scroll-margin-top:812px;}
   }
+  @media(max-width:479px){ #contact-form{scroll-margin-top:838px;} }
+  @media(max-width:374px){ #contact-form{scroll-margin-top:894px;} }
+  @media(max-width:369px){ #contact-form{scroll-margin-top:920px;} }
+  @media(max-width:359px){ #contact-form{scroll-margin-top:952px;} }
+  @media(max-width:334px){ #contact-form{scroll-margin-top:1004px;} }
   @media(max-width:639px){
     .big-quote{font-size:19px;line-height:1.2;}
   }
@@ -282,10 +295,10 @@
       <input type="hidden" name="source_page" value="/pt/about.html" />
       <input type="hidden" id="quiz_result" name="quiz_result" value="" />
       <div class="form-row">
-        <div class="form-group"><label for="contact_person">O seu nome</label><input type="text" id="contact_person" name="name" placeholder="João Silva" maxlength="100" autocomplete="name" required /></div>
+        <div class="form-group"><label for="contact_person">O seu nome <span aria-hidden="true">(obrigatório)</span></label><input type="text" id="contact_person" name="name" placeholder="João Silva" maxlength="100" autocomplete="name" required /></div>
         <div class="form-group"><label for="organization">Empresa / Organização</label><input type="text" id="organization" name="company" placeholder="A Sua Empresa" maxlength="120" autocomplete="organization" /></div>
       </div>
-      <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="joao@suaempresa.com" maxlength="254" autocomplete="email" required /></div>
+      <div class="form-group"><label for="email">Email <span aria-hidden="true">(obrigatório)</span></label><input type="email" id="email" name="email" placeholder="joao@suaempresa.com" maxlength="254" autocomplete="email" required /></div>
       <div class="form-group">
         <label for="service">Serviço de interesse</label>
         <select id="service" name="service">
@@ -297,7 +310,7 @@
           <option value="Not sure yet">Ainda não tenho a certeza</option>
         </select>
       </div>
-      <div class="form-group"><label for="message">Fale-nos do seu projeto</label><textarea id="message" name="message" placeholder="Conte-nos um pouco sobre o seu projeto, evento ou desafio." rows="5" maxlength="4000" required></textarea></div>
+      <div class="form-group"><label for="message">Fale-nos do seu projeto <span aria-hidden="true">(obrigatório)</span></label><textarea id="message" name="message" placeholder="Conte-nos um pouco sobre o seu projeto, evento ou desafio." rows="5" maxlength="4000" required></textarea></div>
       <!-- Honeypot. Hidden from humans by .hp-field in site.css (not type=hidden,
            which bots skip). Named lp_ref_code, not "website", so browser autofill leaves it alone. -->
       <div class="hp-field" aria-hidden="true">
@@ -339,15 +352,30 @@
   var prefersReducedMotion = window.matchMedia
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Smooth scroll for #contact-form.
+  // Every route to the form arrives at #contact-form. On a phone (one column) the
+  // reply promise and "Book a discovery call" sit above the form, so land on the
+  // promise (.intro): the booking button follows, then the form. Side by side
+  // (wider screens) the form itself is the target, as before. Focus goes to the
+  // form, or to the field given, without scrolling again.
+  var stacked = window.matchMedia && window.matchMedia('(max-width:900px)');
+  function landOnContact(focusTarget){
+    var form=document.getElementById('contact-form');
+    if(!form)return;
+    var section=form.closest('.contact-section');
+    if(section)section.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+    var intro=section&&section.querySelector('.intro');
+    var target=(stacked&&stacked.matches&&intro)?intro:form;
+    target.scrollIntoView({behavior:prefersReducedMotion?'auto':'smooth',block:'start'});
+    (focusTarget||form).focus({preventScroll:true});
+  }
+
+  // Links to #contact-form on this same page scroll instead of jumping.
   // Closing the mobile menu is handled by site.js, which owns that state.
-  document.querySelectorAll('a[href="#contact-form"]').forEach(function(link){
+  document.querySelectorAll('a[href$="#contact-form"]').forEach(function(link){
+    if(link.pathname!==location.pathname||link.search!==location.search)return;
     link.addEventListener('click',function(e){
       e.preventDefault();
-      var t=document.getElementById('contact-form');
-      if(!t)return;
-      t.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
-      t.scrollIntoView({behavior:prefersReducedMotion?'auto':'smooth'});
+      landOnContact();
     });
   });
 
@@ -364,13 +392,12 @@
     if(sel&&val)sel.value=val;
     if(window.location.hash==='#contact-form'){
       var ft=document.getElementById('contact-form');
-      if(ft){requestAnimationFrame(function(){
-        var section=ft.closest('.contact-section');
-        if(section)section.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
-        ft.scrollIntoView({behavior:prefersReducedMotion?'auto':'smooth',block:'start'});
-        var target=(sel&&sel.value)?sel:ft.querySelector('input,select,textarea');
-        if(target)target.focus({preventScroll:true});
-      });}
+      // After load: web fonts reflow the text after the browser's own jump to the
+      // anchor, so the landing is measured again once they are in.
+      var land=function(){requestAnimationFrame(function(){
+        landOnContact((sel&&sel.value)?sel:ft.querySelector('input:not([type=hidden]),select,textarea'));
+      });};
+      if(ft){if(document.readyState==='complete')land();else window.addEventListener('load',land);}
     }
   })();
 
