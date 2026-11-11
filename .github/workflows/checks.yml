@@ -44,13 +44,16 @@ jobs:
       # The system libraries Chromium needs, from apt. ubuntu-latest already
       # carries them, so this is a top-up: it refreshes apt and retries three
       # times, then warns instead of failing if the mirror stays unreachable.
-      # If a library really is missing, the self-test and the contrast check
-      # below fail loudly, which is the outcome we want.
+      # Each command has a time limit because an unreachable mirror can make
+      # apt hang rather than fail. If a library really is missing, the
+      # self-test and the contrast check below fail loudly, which is the
+      # outcome we want.
       - name: Install Chromium system libraries
         working-directory: _tools
         run: |
           for attempt in 1 2 3; do
-            if sudo apt-get update && npx playwright install-deps chromium; then
+            if timeout -k 10 90 sudo apt-get update \
+              && timeout -k 10 180 npx playwright install-deps chromium; then
               exit 0
             fi
             echo "apt attempt $attempt failed"
