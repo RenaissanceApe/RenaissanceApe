@@ -116,11 +116,11 @@
   </div>
   <div class="fn-list">
     <div class="fn-filters reveal">
-      <button class="fn-filter label active" data-filter="all">Todos</button>
-      <button class="fn-filter label" data-filter="article">Artigos</button>
-      <button class="fn-filter label" data-filter="case-study">Casos de Estudo</button>
+      <button class="fn-filter label active" data-filter="all" aria-pressed="true">Todos</button>
+      <button class="fn-filter label" data-filter="article" aria-pressed="false">Artigos</button>
+      <button class="fn-filter label" data-filter="case-study" aria-pressed="false">Casos de Estudo</button>
     </div>
-    <div class="fn-article-list reveal" id="articleList">
+    <div class="fn-article-list reveal" id="articleList" aria-live="polite">
       <!-- Mirror of EN list — same slugs, links to PT article pages -->
       <a href="portugal-events.html" class="fn-article-item card" data-category="article">
         <div>
@@ -128,7 +128,7 @@
             <span class="tag">Artigo</span>
             <span class="fn-item-date data">Agosto 2026</span>
           </div>
-          <div class="fn-item-title heading">O aluguer de AV é despesa elegível. Menos para o teu festival.</div>
+          <h2 class="fn-item-title heading">O aluguer de AV é despesa elegível. Menos para o teu festival.</h2>
           <div class="fn-item-excerpt">As candidaturas do Portugal Events para eventos em 2027 abrem a 1 de setembro. Fui ler a portaria porque queria saber uma coisa concreta, e encontrei uma excepção que muda o orçamento todo.</div>
         </div>
         <svg class="fn-item-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -155,8 +155,9 @@
 document.querySelectorAll('.fn-filter').forEach(function(btn){
   btn.addEventListener('click',function(){
     var f=this.dataset.filter;
-    document.querySelectorAll('.fn-filter').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.fn-filter').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});
     this.classList.add('active');
+    this.setAttribute('aria-pressed','true');
     var items=document.querySelectorAll('.fn-article-item');
     var v=0;
     items.forEach(function(i){
