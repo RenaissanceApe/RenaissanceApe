@@ -31,103 +31,88 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-/* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
+  /* Page styles only. Tokens, type classes (.display-*, .heading, .lead),
+     .eyebrow, .card, .btn-*, .grain and .patch-tone come from base.css. */
 
-  /* ── UTILITIES ── */
-  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-500); margin-bottom: 16px; }
+  /* ── SHARED-CLASS PLACEMENT ON THIS PAGE ── */
+  main .eyebrow { margin-bottom: var(--space-md); }
+  main h1 em, main h2 em { font-style: normal; color: var(--accent); }
 
-  /* ── HERO ── */
-  .services-hero { padding: 168px 48px 80px; max-width: 1200px; margin: 0 auto; }
-  .services-hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; max-width: 860px; }
-  .services-hero h1 em { font-style: italic; color: var(--green-500); }
-  .services-hero p { margin-top: 28px; font-size: 17px; font-weight: 300; color: var(--gray-300); max-width: 560px; line-height: 1.75; }
+  /* ── HERO: Patch, tone on dark, plus grain ── */
+  .services-hero { padding: calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-4xl); }
+  .services-hero-inner { max-width: 1104px; margin: 0 auto; }
+  .services-hero h1 { max-width: 860px; }
+  .services-hero .lead { margin-top: var(--space-lg); color: var(--text-muted); max-width: 560px; }
 
-  /* ── STICKY TABS ── */
-  .service-tabs { position: sticky; top: 68px; z-index: 80; background: rgba(223,233,240,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(46,52,65,0.8); overflow-x: auto; }
-  .service-tabs-inner { display: flex; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
-  .tab-link { font-family: var(--font-body); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(15,25,45,0.92); padding: 18px 20px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
-  .tab-link:hover { color: var(--blue-700); }
-  .tab-link.active { color: var(--blue-700); border-bottom-color: var(--green-500); }
+  /* ── STICKY TABS (DESIGN.md "service-tab-nav") ── */
+  .service-tabs { position: sticky; top: 68px; z-index: 80; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .service-tabs-inner { display: flex; max-width: 1200px; margin: 0 auto; padding: 0 var(--space-2xl); }
+  .tab-link { display: flex; align-items: center; height: 52px; font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); padding: 0 var(--space-md); white-space: nowrap; border-bottom: 2px solid transparent; transition: color var(--dur-micro) var(--ease-fade), border-color var(--dur-micro) var(--ease-fade); }
+  .tab-link:first-child { padding-left: 0; }
+  .tab-link:hover { color: var(--text); }
+  .tab-link.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab-link:focus-visible { outline-offset: -3px; }
 
   /* ── SERVICE SECTION ── */
-  .service-section { max-width: 1200px; margin: 0 auto; padding: 96px 48px; border-bottom: 1px solid rgba(46,52,65,0.8); scroll-margin-top: 136px; }
+  .service-section { max-width: 1200px; margin: 0 auto; padding: var(--space-4xl) var(--space-2xl); border-bottom: 1px solid var(--border); scroll-margin-top: 136px; }
   .service-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  .service-header-text h2 { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 20px; }
-  .service-header-text h2 em { font-style: italic; color: var(--green-500); }
-  .service-header-text .lead { font-size: 16px; font-weight: 300; color: var(--gray-300); line-height: 1.8; }
-  .service-img { display: none; }
-  .service-panel { width: 100%; aspect-ratio: 4/3; border-radius: 2px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+  .service-header-text h2 { margin-bottom: var(--space-lg); }
+  .service-header-text .lead { color: var(--text-muted); }
+  .service-panel { width: 100%; aspect-ratio: 4/3; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
   .service-panel-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
   .service-panel-icon { position: relative; z-index: 1; width: 120px; height: 120px; filter: invert(1); opacity: 0.85; }
 
   /* ── ALWAYS-VISIBLE INTRO ── */
-  .service-intro { margin-top: 48px; padding-top: 40px; border-top: 1px solid rgba(46,52,65,0.8); }
-  .service-intro h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em; color: var(--gray-100); margin-bottom: 16px; }
-  .service-intro p { font-size: 15px; font-weight: 300; color: var(--gray-300); line-height: 1.8; max-width: 720px; margin-bottom: 16px; }
+  .service-intro { margin-top: var(--space-2xl); padding-top: var(--space-2xl); border-top: 1px solid var(--border); }
+  .service-intro h3 { margin-bottom: var(--space-md); }
+  .service-intro p { font-size: 16px; line-height: 1.6; color: var(--text-muted); max-width: 720px; margin-bottom: var(--space-md); }
 
   /* ── ACCORDION ROWS ── */
-  .service-accordions { margin-top: 8px; }
-  details.sub-accordion { border-top: 1px solid rgba(46,52,65,0.8); }
-  details.sub-accordion:last-of-type { border-bottom: 1px solid rgba(46,52,65,0.8); }
-  details.sub-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; cursor: pointer; list-style: none; user-select: none; }
+  .service-accordions { margin-top: var(--space-xs); }
+  details.sub-accordion { border-top: 1px solid var(--border); }
+  details.sub-accordion:last-of-type { border-bottom: 1px solid var(--border); }
+  details.sub-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); padding: var(--space-lg) 0; cursor: pointer; list-style: none; user-select: none; }
   details.sub-accordion summary::-webkit-details-marker { display: none; }
   details.sub-accordion summary::marker { display: none; }
-  .sub-accordion-label { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-300); transition: color 0.2s; }
-  .sub-accordion-icon { width: 28px; height: 28px; flex-shrink: 0; border: 1px solid rgba(130,178,215,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; position: relative; }
-  .sub-accordion-icon::before, .sub-accordion-icon::after { content: ''; position: absolute; background: var(--gray-300); border-radius: 1px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.2s, opacity 0.3s; }
-  .sub-accordion-icon::before { width: 10px; height: 1.5px; }
-  .sub-accordion-icon::after { width: 1.5px; height: 10px; }
-  details.sub-accordion:hover summary .sub-accordion-label { color: var(--gray-100); }
-  details.sub-accordion:hover .sub-accordion-icon { border-color: rgba(130,178,215,0.5); }
-  details.sub-accordion[open] summary .sub-accordion-label { color: var(--green-500); }
-  details.sub-accordion[open] .sub-accordion-icon { border-color: var(--green-500); background: rgba(51,251,49,0.06); }
-  details.sub-accordion[open] .sub-accordion-icon::before { background: var(--green-500); }
-  details.sub-accordion[open] .sub-accordion-icon::after { background: var(--green-500); transform: rotate(90deg) scaleY(0); opacity: 0; }
-  @keyframes subOpen { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
-  .sub-accordion-body p { font-size: 15px; font-weight: 300; color: var(--gray-300); line-height: 1.8; margin-bottom: 16px; max-width: 720px; }
+  .sub-accordion-label { font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); transition: color var(--dur-micro) var(--ease-fade); }
+  .sub-accordion-icon { width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color var(--dur-micro) var(--ease-fade); position: relative; }
+  .sub-accordion-icon::before, .sub-accordion-icon::after { content: ''; position: absolute; background: var(--text-muted); transition: transform var(--dur-control) var(--ease-enter), background var(--dur-micro) var(--ease-fade), opacity var(--dur-control) var(--ease-fade); }
+  .sub-accordion-icon::before { width: 10px; height: 2px; }
+  .sub-accordion-icon::after { width: 2px; height: 10px; }
+  details.sub-accordion:hover summary .sub-accordion-label { color: var(--text); }
+  details.sub-accordion:hover .sub-accordion-icon { border-color: var(--blue-300); }
+  details.sub-accordion[open] summary .sub-accordion-label { color: var(--accent); }
+  details.sub-accordion[open] .sub-accordion-icon { border-color: var(--accent); }
+  details.sub-accordion[open] .sub-accordion-icon::before { background: var(--accent); }
+  details.sub-accordion[open] .sub-accordion-icon::after { background: var(--accent); transform: rotate(90deg) scaleY(0); opacity: 0; }
+  .sub-accordion-body { padding-bottom: var(--space-lg); }
+  .sub-accordion-body p:not(.eyebrow) { font-size: 16px; line-height: 1.6; color: var(--text-muted); margin-bottom: var(--space-md); max-width: 720px; }
 
   /* ── ALWAYS-VISIBLE ENGAGE ── */
-  .service-engage { margin-top: 32px; padding-top: 40px; border-top: 1px solid rgba(46,52,65,0.8); }
-  .service-engage h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em; color: var(--gray-100); margin-bottom: 24px; }
-  .engage-box { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-  .engage-option { background: var(--blue-900); padding: 36px 32px; }
-  .engage-option h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--green-500); margin-bottom: 10px; }
-  .engage-option p { font-size: 14px; font-weight: 300; color: var(--gray-300); line-height: 1.7; margin: 0; }
+  .service-engage { margin-top: var(--space-xl); padding-top: var(--space-2xl); border-top: 1px solid var(--border); }
+  .service-engage h3 { margin-bottom: var(--space-lg); }
+  .engage-box { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .engage-option h4 { color: var(--accent); margin-bottom: var(--space-sm); }
 
-  /* ── TABLE ── */
-  .data-table { width: 100%; border-collapse: collapse; margin: 0 0 8px; font-size: 14px; }
-  .data-table th { text-align: left; font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-500); padding: 12px 16px; border-bottom: 1px solid rgba(130,178,215,0.25); }
-  .data-table td { padding: 16px; border-bottom: 1px solid rgba(46,52,65,0.6); color: var(--gray-300); vertical-align: top; line-height: 1.6; }
-  .data-table td:first-child { font-weight: 500; color: var(--gray-100); white-space: nowrap; }
+  /* ── CARDS INSIDE THE ACCORDIONS (shared .card + page layout) ── */
+  .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .maturity-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+  .quadrant-card h4, .maturity-card h4 { margin-bottom: var(--space-sm); }
+  .quadrant-card .eyebrow, .maturity-card .eyebrow { margin-bottom: var(--space-sm); }
+  .engage-option p, .quadrant-card p:not(.eyebrow), .maturity-card p:not(.eyebrow) { font-size: 14px; line-height: 1.55; color: var(--text-muted); margin: 0; max-width: none; }
+
+  /* ── TABLE (DESIGN.md "data-table"; header in --text-muted, not --text-subtle: D2) ── */
+  .data-table { width: 100%; border-collapse: collapse; margin: 0 0 var(--space-xs); font-size: 14px; }
+  .data-table th { text-align: left; font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border); }
+  .data-table td { padding: var(--space-md); border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; line-height: 1.55; }
+  .data-table td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
   .data-table td em { font-style: italic; color: var(--text-muted); }
   .data-table tr:last-child td { border-bottom: none; }
 
-  /* ── QUADRANT ── */
-  .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-  .quadrant-card { background: var(--blue-900); padding: 32px 28px; }
-  .quadrant-card .q-label { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-500); margin-bottom: 10px; }
-  .quadrant-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
-  .quadrant-card p { font-size: 13px; font-weight: 300; color: var(--gray-300); line-height: 1.65; margin: 0; }
-
-  /* ── MATURITY ── */
-  .maturity-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  .maturity-card { background: var(--blue-900); padding: 28px 24px; }
-  .maturity-level { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-500); margin-bottom: 10px; }
-  .maturity-card h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
-  .maturity-card p { font-size: 13px; font-weight: 300; color: var(--gray-300); line-height: 1.65; margin: 0; }
-
   /* ── CTA ── */
-  .services-cta { background: var(--blue-900); padding: 100px 48px; text-align: center; }
-  .services-cta h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; margin-bottom: 18px; overflow-wrap: break-word; word-break: break-word; }
-  .services-cta p + h2 + .services-cta-copy { max-width: 560px; margin: 0 auto 28px; font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-300); }
-  .cta-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 14px 32px; background: var(--green-500); color: var(--blue-700); border-radius: 3px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s, transform 0.15s; }
-  .cta-button:hover { background: var(--green-300); transform: translateY(-1px); }
-
-  /* ── MOBILE MENU ── */
+  .services-cta { background: var(--surface); padding: var(--space-4xl) var(--space-2xl); text-align: center; }
+  .services-cta h2 { margin-bottom: var(--space-md); overflow-wrap: break-word; }
+  .services-cta-copy { max-width: 560px; margin: 0 auto var(--space-xl); font-size: 16px; line-height: 1.6; color: var(--text-muted); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
@@ -135,49 +120,22 @@
     .engage-box { grid-template-columns: 1fr; }
   }
   @media (max-width: 900px) {
-
-    .services-hero { padding: 120px 24px 60px; }
-    .services-hero h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
-    .service-tabs-inner { padding: 0 24px; }
-    .service-section { padding: 72px 24px; }
-    .service-header { grid-template-columns: 1fr; gap: 28px; }
+    .services-hero { padding: calc(68px + var(--space-3xl)) var(--space-lg) var(--space-3xl); }
+    .service-tabs-inner { padding: 0 var(--space-lg); }
+    .service-section { padding: var(--space-3xl) var(--space-lg); }
+    .service-header { grid-template-columns: 1fr; gap: var(--space-xl); }
     .quadrant-grid { grid-template-columns: 1fr; }
     .maturity-row { grid-template-columns: 1fr; }
-    .engage-box { grid-template-columns: 1fr; }
-    .services-cta { padding: 72px 24px; }
+    .services-cta { padding: var(--space-3xl) var(--space-lg); }
 
     .data-table, .data-table thead, .data-table tbody, .data-table tr, .data-table th, .data-table td { display: block; width: 100%; }
     .data-table thead { display: none; }
-    .data-table tbody tr { background: var(--blue-900); border-radius: 3px; padding: 20px 20px 16px; margin-bottom: 8px; border-bottom: none; }
-    .data-table td { padding: 0; border-bottom: none; line-height: 1.6; }
-    .data-table td:first-child { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-500); white-space: normal; margin-bottom: 8px; }
-    .data-table td:nth-child(2) { font-size: 14px; color: var(--gray-100); margin-bottom: 8px; }
-    .data-table td:nth-child(3) { font-size: 13px; color: var(--gray-300); padding-top: 6px; border-top: 1px solid rgba(46,52,65,0.6); margin-top: 4px; }
+    .data-table tbody tr { background: var(--surface); border: 1px solid var(--border); padding: var(--space-md); margin-bottom: var(--space-xs); }
+    .data-table td { padding: 0; border-bottom: none; }
+    .data-table td:first-child { font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); white-space: normal; margin-bottom: var(--space-xs); }
+    .data-table td:nth-child(2) { color: var(--text); margin-bottom: var(--space-xs); }
+    .data-table td:nth-child(3) { padding-top: var(--space-xs); border-top: 1px solid var(--border); margin-top: var(--space-xxs); }
   }
-  @media (max-width: 480px) {
-    h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-    h2 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
-  }
-  /* ── FOOTER ── */
-  @media(max-width:1024px){.maturity-row{grid-template-columns:repeat(2,1fr);}.engage-box{grid-template-columns:1fr;}}
-  @media(max-width:900px){
-    .services-hero{padding:120px 24px 60px;}.services-hero h1{font-size:clamp(1.8rem,7vw,2.8rem);}
-    .service-tabs-inner{padding:0 24px;}.service-section{padding:72px 24px;}
-    .service-header{grid-template-columns:1fr;gap:28px;}.quadrant-grid{grid-template-columns:1fr;}
-    .maturity-row{grid-template-columns:1fr;}.engage-box{grid-template-columns:1fr;}
-    .services-cta{padding:72px 24px;}
-    .data-table,.data-table thead,.data-table tbody,.data-table tr,.data-table th,.data-table td{display:block;width:100%;}
-    .data-table thead{display:none;}.data-table tbody tr{background:var(--blue-900);border-radius:3px;padding:20px 20px 16px;margin-bottom:8px;border-bottom:none;}
-    .data-table td{padding:0;border-bottom:none;line-height:1.6;}.data-table td:first-child{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green-500);white-space:normal;margin-bottom:8px;}
-    .data-table td:nth-child(2){font-size:14px;color:var(--gray-100);margin-bottom:8px;}.data-table td:nth-child(3){font-size:13px;color:var(--gray-300);padding-top:6px;border-top:1px solid rgba(46,52,65,0.6);margin-top:4px;}
-  }
-  @media(max-width:480px){
-    h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;}
-    h2{font-size:clamp(1.4rem,6vw,2rem)!important;}
-    .error-code{font-size:clamp(5rem,22vw,7rem)!important;}
-  }
-
-  /* Quiz nav link */
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -220,10 +178,12 @@
 </div>
 
 <main id="main-content">
-<div class="services-hero reveal">
-  <p class="section-label">Serviços</p>
-  <h1>Desenhamos e controlamos como os sistemas visuais se <em>comportam</em> nos eventos ao vivo.</h1>
-  <p>Do primeiro conceito à última deixa — fazemos a ponte entre a intenção criativa e a execução técnica para que cada sistema funcione exatamente como foi concebido.</p>
+<div class="services-hero patch-tone grain">
+<div class="services-hero-inner reveal">
+  <p class="eyebrow">Serviços</p>
+  <h1 class="display-xl">Desenhamos e controlamos como os sistemas visuais se <em>comportam</em> nos eventos ao vivo.</h1>
+  <p class="lead">Do primeiro conceito à última deixa — fazemos a ponte entre a intenção criativa e a execução técnica para que cada sistema funcione exatamente como foi concebido.</p>
+</div>
 </div>
 
 <div class="service-tabs">
@@ -242,18 +202,18 @@
 <div class="service-section" id="show-design">
   <div class="service-header">
     <div class="service-header-text reveal">
-      <p class="section-label">Serviço 01</p>
-      <h2>Show<br><em>Design</em></h2>
+      <p class="eyebrow">Serviço 01</p>
+      <h2 class="display-lg">Show<br><em>Design</em></h2>
       <p class="lead">Traduzimos a ambição criativa em sistemas tecnicamente executáveis — dando a cada ideia um caminho claro da visão ao palco.</p>
     </div>
     <div class="service-panel reveal" style="transition-delay:0.1s">
-      <div class="service-panel-bg" style="background-image:url('../../images/gradients/show-design.svg')"></div>
+      <div class="service-panel-bg grain" style="background-image:url('../../images/gradients/show-design.svg')"></div>
       <img class="service-panel-icon" src="../../images/icons/show-design.png" alt="" aria-hidden="true" width="397" height="368" loading="lazy" decoding="async" />
     </div>
   </div>
 
   <div class="service-intro">
-    <h3>Onde o design encontra a realidade</h3>
+    <h3 class="heading">Onde o design encontra a realidade</h3>
     <p>A maioria dos espetáculos falha antes de começar — não por falta de criatividade, mas porque a criatividade nunca foi ancorada no que a tecnologia consegue realmente fazer. O Design de Espetáculo fecha essa lacuna. Pegamos no seu conceito e testamo-lo contra a física da sala, as limitações do equipamento e as exigências do calendário. O resultado é um design que é não só belo, mas executável — um espetáculo que a equipa consegue construir, o sistema consegue correr e o público vai sentir.</p>
     <p>A pré-visualização está incorporada neste processo: modelamos o espaço em 3D, programamos os ambientes de iluminação, mapeamos as superfícies LED e validamos a linguagem visual antes de qualquer coisa tocar o mundo real. Os clientes aprovam exatamente o que vão ver. As equipas têm uma referência partilhada que elimina a ambiguidade. Os espetáculos são construídos bem desde a primeira vez.</p>
   </div>
@@ -286,10 +246,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="maturity-row">
-          <div class="maturity-card"><p class="maturity-level">Fase 1</p><h4>Design de Conceito</h4><p>Direção criativa, linguagem visual, mapeamento de superfícies e modelo 3D inicial. Estabelece o quadro estético do espetáculo.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Fase 2</p><h4>Design Técnico</h4><p>Seleção de equipamento, estratégia de rigging, análise de linhas de visão e programação de pré-viz. A criatividade torna-se uma especificação.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Fase 3</p><h4>Design de Produção</h4><p>Pacote técnico completo — plots, calendários, briefings de fornecedores e estrutura do ficheiro de show. Pronto para construção.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Fase 4</p><h4>Suporte de Design</h4><p>Presença contínua durante a produção para adaptar decisões de design à medida que o espetáculo evolui no local.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Fase 1</p><h4 class="heading">Design de Conceito</h4><p>Direção criativa, linguagem visual, mapeamento de superfícies e modelo 3D inicial. Estabelece o quadro estético do espetáculo.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Fase 2</p><h4 class="heading">Design Técnico</h4><p>Seleção de equipamento, estratégia de rigging, análise de linhas de visão e programação de pré-viz. A criatividade torna-se uma especificação.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Fase 3</p><h4 class="heading">Design de Produção</h4><p>Pacote técnico completo — plots, calendários, briefings de fornecedores e estrutura do ficheiro de show. Pronto para construção.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Fase 4</p><h4 class="heading">Suporte de Design</h4><p>Presença contínua durante a produção para adaptar decisões de design à medida que o espetáculo evolui no local.</p></div>
         </div>
       </div>
     </details>
@@ -301,10 +261,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="quadrant-grid">
-          <div class="quadrant-card"><p class="q-label">Visualização</p><h4>Pré-Visualização 3D</h4><p>Modelo digital totalmente navegável da sala com iluminação programada, superfícies de vídeo mapeadas e ângulos de câmara validados antes do load-in.</p></div>
-          <div class="quadrant-card"><p class="q-label">Identidade Visual</p><h4>Sistema Visual do Evento</h4><p>Uma linguagem gráfica e de movimento coerente que governa cada ecrã, estado de iluminação e elemento de conteúdo ao longo do espetáculo.</p></div>
-          <div class="quadrant-card"><p class="q-label">Documentação</p><h4>Pacote de Design</h4><p>Plots CAD, desenhos de rigging, mapas de pixéis, especificações de conteúdo e uma bíblia visual para a equipa de produção.</p></div>
-          <div class="quadrant-card"><p class="q-label">Aprovação</p><h4>Apresentação ao Cliente</h4><p>Stills renderizados, percursos animados e opções comparativas — tudo o que um cliente precisa para tomar uma decisão confiante.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Visualização</p><h4 class="heading">Pré-Visualização 3D</h4><p>Modelo digital totalmente navegável da sala com iluminação programada, superfícies de vídeo mapeadas e ângulos de câmara validados antes do load-in.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Identidade Visual</p><h4 class="heading">Sistema Visual do Evento</h4><p>Uma linguagem gráfica e de movimento coerente que governa cada ecrã, estado de iluminação e elemento de conteúdo ao longo do espetáculo.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Documentação</p><h4 class="heading">Pacote de Design</h4><p>Plots CAD, desenhos de rigging, mapas de pixéis, especificações de conteúdo e uma bíblia visual para a equipa de produção.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Aprovação</p><h4 class="heading">Apresentação ao Cliente</h4><p>Stills renderizados, percursos animados e opções comparativas — tudo o que um cliente precisa para tomar uma decisão confiante.</p></div>
         </div>
       </div>
     </details>
@@ -312,10 +272,10 @@
   </div>
 
   <div class="service-engage">
-    <h3>Duas formas de trabalhar connosco</h3>
+    <h3 class="heading">Duas formas de trabalhar connosco</h3>
     <div class="engage-box">
-      <div class="engage-option"><h4>Líder de Design</h4><p>Lideramos o design visual e técnico do seu espetáculo desde o conceito até à entrega. Traz a ambição criativa — nós traduzimo-la num sistema que pode ser construído, programado e executado.</p></div>
-      <div class="engage-option"><h4>Suporte de Design</h4><p>Já tem uma equipa de produção — entramos como o especialista responsável pela pré-viz, o sistema visual ou a documentação técnica. Dimensionado ao que precisa, não ao serviço completo.</p></div>
+      <div class="engage-option card"><h4 class="heading">Líder de Design</h4><p>Lideramos o design visual e técnico do seu espetáculo desde o conceito até à entrega. Traz a ambição criativa — nós traduzimo-la num sistema que pode ser construído, programado e executado.</p></div>
+      <div class="engage-option card"><h4 class="heading">Suporte de Design</h4><p>Já tem uma equipa de produção — entramos como o especialista responsável pela pré-viz, o sistema visual ou a documentação técnica. Dimensionado ao que precisa, não ao serviço completo.</p></div>
     </div>
   </div>
 </div>
@@ -327,18 +287,18 @@
 <div class="service-section" id="show-control">
   <div class="service-header">
     <div class="service-header-text reveal">
-      <p class="section-label">Serviço 02</p>
-      <h2>Controlo de Cena<br><em>&amp; Automação</em></h2>
+      <p class="eyebrow">Serviço 02</p>
+      <h2 class="display-lg">Controlo de Cena<br><em>&amp; Automação</em></h2>
       <p class="lead">Sincronizamos iluminação, vídeo e efeitos num sistema unificado — para que o espetáculo corra com precisão, não com sorte.</p>
     </div>
     <div class="service-panel reveal" style="transition-delay:0.1s">
-      <div class="service-panel-bg" style="background-image:url('../../images/gradients/show-control.svg')"></div>
+      <div class="service-panel-bg grain" style="background-image:url('../../images/gradients/show-control.svg')"></div>
       <img class="service-panel-icon" src="../../images/icons/show-control.png" alt="" aria-hidden="true" width="239" height="434" loading="lazy" decoding="async" />
     </div>
   </div>
 
   <div class="service-intro">
-    <h3>A sincronização é o diferenciador</h3>
+    <h3 class="heading">A sincronização é o diferenciador</h3>
     <p>Os momentos mais espetaculares nos eventos ao vivo não são acidentes — são o resultado de múltiplos sistemas técnicos a disparar em coordenação precisa. Uma mudança de estado de iluminação que aterra exatamente no tempo forte. Uma revelação de vídeo que dispara no mesmo milissegundo que o efeito prático. Uma sequência de deixas que toca de forma idêntica em cinco representações. É isto que o controlo de cena e a automação tornam possível.</p>
     <p>Programamos os sistemas, definimos a lógica e construímos o ficheiro de show — para que a tecnologia se torne invisível e apenas a experiência permaneça. Para produções complexas, a automação também elimina o ponto único de falha humana: quando uma deixa precisa de aterrar, aterra, independentemente do que mais esteja a acontecer na sala.</p>
   </div>
@@ -371,10 +331,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="quadrant-grid">
-          <div class="quadrant-card"><p class="q-label">Sistema Único / Manual</p><h4>Ficheiro de Show</h4><p>Um sistema — iluminação ou vídeo — com uma pilha de deixas estruturada e operação por botão de avanço. Fiável, consistente e um passo significativo acima do improviso.</p></div>
-          <div class="quadrant-card"><p class="q-label">Multi-Sistema / Manual</p><h4>Sistemas Ligados</h4><p>Iluminação e vídeo disparados a partir de uma lista mestra única, chamada manualmente por um operador. Um ponto de controlo, múltiplos sistemas a mover em conjunto.</p></div>
-          <div class="quadrant-card"><p class="q-label">Sistema Único / Timecoded</p><h4>Show com Timecode</h4><p>Um sistema sincronizado com timecode. Cada deixa dispara automaticamente com a música ou uma click track — sem gatilhos manuais durante a reprodução.</p></div>
-          <div class="quadrant-card"><p class="q-label">Multi-Sistema / Timecoded</p><h4>Controlo Total de Cena</h4><p>Todos os sistemas — iluminação, vídeo, áudio e cenário — sincronizados com um único relógio. O show corre por si mesmo. A equipa gere o que muda.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Sistema Único / Manual</p><h4 class="heading">Ficheiro de Show</h4><p>Um sistema — iluminação ou vídeo — com uma pilha de deixas estruturada e operação por botão de avanço. Fiável, consistente e um passo significativo acima do improviso.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Multi-Sistema / Manual</p><h4 class="heading">Sistemas Ligados</h4><p>Iluminação e vídeo disparados a partir de uma lista mestra única, chamada manualmente por um operador. Um ponto de controlo, múltiplos sistemas a mover em conjunto.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Sistema Único / Timecoded</p><h4 class="heading">Show com Timecode</h4><p>Um sistema sincronizado com timecode. Cada deixa dispara automaticamente com a música ou uma click track — sem gatilhos manuais durante a reprodução.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Multi-Sistema / Timecoded</p><h4 class="heading">Controlo Total de Cena</h4><p>Todos os sistemas — iluminação, vídeo, áudio e cenário — sincronizados com um único relógio. O show corre por si mesmo. A equipa gere o que muda.</p></div>
         </div>
       </div>
     </details>
@@ -386,10 +346,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="maturity-row">
-          <div class="maturity-card"><p class="maturity-level">Iluminação</p><h4>Consolas</h4><p>GrandMA2, GrandMA3, família ETC Eos e Avolites.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Vídeo</p><h4>Servidores de Média</h4><p>Resolume Arena &amp; Avenue, Disguise (d3) e QLab.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Controlo de Cena</p><h4>Protocolos</h4><p>SMPTE Timecode, MIDI, OSC e controlo baseado em Ethernet.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Áudio</p><h4>Reprodução</h4><p>Áudio QLab, click tracks e distribuição de timecode.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Iluminação</p><h4 class="heading">Consolas</h4><p>GrandMA2, GrandMA3, família ETC Eos e Avolites.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Vídeo</p><h4 class="heading">Servidores de Média</h4><p>Resolume Arena &amp; Avenue, Disguise (d3) e QLab.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Controlo de Cena</p><h4 class="heading">Protocolos</h4><p>SMPTE Timecode, MIDI, OSC e controlo baseado em Ethernet.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Áudio</p><h4 class="heading">Reprodução</h4><p>Áudio QLab, click tracks e distribuição de timecode.</p></div>
         </div>
       </div>
     </details>
@@ -397,10 +357,10 @@
   </div>
 
   <div class="service-engage">
-    <h3>Duas formas de trabalhar connosco</h3>
+    <h3 class="heading">Duas formas de trabalhar connosco</h3>
     <div class="engage-box">
-      <div class="engage-option"><h4>Programação de Pré-Produção</h4><p>Programamos o ficheiro completo de show — deixas, mapas de timecode, estados de contingência e documentação de operador — e entregamo-lo antes de entrar na sala. O show está pronto no primeiro dia de load-in.</p></div>
-      <div class="engage-option"><h4>Programação e Operação no Local</h4><p>Programamos na sala durante o load-in, adaptamo-nos a mudanças de última hora e operamos o sistema durante o show. A escolha certa para produções complexas onde a flexibilidade importa tanto quanto a precisão.</p></div>
+      <div class="engage-option card"><h4 class="heading">Programação de Pré-Produção</h4><p>Programamos o ficheiro completo de show — deixas, mapas de timecode, estados de contingência e documentação de operador — e entregamo-lo antes de entrar na sala. O show está pronto no primeiro dia de load-in.</p></div>
+      <div class="engage-option card"><h4 class="heading">Programação e Operação no Local</h4><p>Programamos na sala durante o load-in, adaptamo-nos a mudanças de última hora e operamos o sistema durante o show. A escolha certa para produções complexas onde a flexibilidade importa tanto quanto a precisão.</p></div>
     </div>
   </div>
 </div>
@@ -412,18 +372,18 @@
 <div class="service-section" id="system-architecture">
   <div class="service-header">
     <div class="service-header-text reveal">
-      <p class="section-label">Serviço 03</p>
-      <h2>System<br><em>Architecture</em></h2>
+      <p class="eyebrow">Serviço 03</p>
+      <h2 class="display-lg">System<br><em>Architecture</em></h2>
       <p class="lead">Definimos a espinha dorsal técnica — fluxo de sinal, topologia de equipamentos e lógica de integração — antes de qualquer cabo ser passado.</p>
     </div>
     <div class="service-panel reveal" style="transition-delay:0.1s">
-      <div class="service-panel-bg" style="background-image:url('../../images/gradients/system-architecture.svg')"></div>
+      <div class="service-panel-bg grain" style="background-image:url('../../images/gradients/system-architecture.svg')"></div>
       <img class="service-panel-icon" src="../../images/icons/system-architecture.png" alt="" aria-hidden="true" width="349" height="385" loading="lazy" decoding="async" />
     </div>
   </div>
 
   <div class="service-intro">
-    <h3>A infraestrutura não é um afterthought</h3>
+    <h3 class="heading">A infraestrutura não é um afterthought</h3>
     <p>Todo o espetáculo tem uma espinha dorsal técnica. Caminhos de sinal que transportam vídeo do servidor ao ecrã. Redes de dados que ligam as consolas de controlo aos fixtures. Distribuição de energia que determina o que pode correr simultaneamente. Quando esta arquitetura é bem concebida, é invisível — o show funciona, os problemas são raros e a recuperação de falhas é rápida. Quando não é concebida, os problemas acumulam-se silenciosamente até ao dia do show, quando se tornam visíveis e caros.</p>
     <p>A Arquitetura de Sistemas é a disciplina de conceber essa espinha dorsal corretamente antes de o load-in começar. Mapeamos cada caminho de sinal, definimos cada ponto de interface, especificamos o equipamento que satisfaz os requisitos reais de desempenho do show e documentamos todo o sistema para que qualquer técnico qualificado o consiga entender, diagnosticar e entregar.</p>
   </div>
@@ -456,10 +416,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="quadrant-grid">
-          <div class="quadrant-card"><p class="q-label">Fluxo de Sinal</p><h4>Vídeo &amp; Data Paths</h4><p>Mapeamento de ponta a ponta de cada sinal de vídeo — fonte, conversão, distribuição e display — com redundância integrada em cada ponto crítico.</p></div>
-          <div class="quadrant-card"><p class="q-label">Redes de Controlo</p><h4>DMX, ArtNet &amp; sACN</h4><p>Iluminação control network design — universe allocation, node placement, and data flow from console to fixture.</p></div>
-          <div class="quadrant-card"><p class="q-label">Especificação de Equipamento</p><h4>Seleção de Equipamento</h4><p>Especificação de equipamento baseada no desempenho, alinhada com os requisitos reais do show — não uma lista de kit padrão.</p></div>
-          <div class="quadrant-card"><p class="q-label">Documentação</p><h4>Dossier Técnico</h4><p>Documentação completa do sistema — diagramas de rack, folhas de patch, mapas de rede e um documento de entrega que qualquer membro da equipa pode usar.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Fluxo de Sinal</p><h4 class="heading">Vídeo &amp; Data Paths</h4><p>Mapeamento de ponta a ponta de cada sinal de vídeo — fonte, conversão, distribuição e display — com redundância integrada em cada ponto crítico.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Redes de Controlo</p><h4 class="heading">DMX, ArtNet &amp; sACN</h4><p>Iluminação control network design — universe allocation, node placement, and data flow from console to fixture.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Especificação de Equipamento</p><h4 class="heading">Seleção de Equipamento</h4><p>Especificação de equipamento baseada no desempenho, alinhada com os requisitos reais do show — não uma lista de kit padrão.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Documentação</p><h4 class="heading">Dossier Técnico</h4><p>Documentação completa do sistema — diagramas de rack, folhas de patch, mapas de rede e um documento de entrega que qualquer membro da equipa pode usar.</p></div>
         </div>
       </div>
     </details>
@@ -471,10 +431,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="maturity-row">
-          <div class="maturity-card"><p class="maturity-level">Cedo</p><h4>Fase de Design</h4><p>Ideal. Informamos escolhas de equipamento, negociações com a sala e briefings de fornecedores antes de os custos estarem fechados.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Pré-Produção</p><h4>Revisão de Especificação</h4><p>Auditamos a lista de equipamento e o fluxo de sinal face ao design — identificando lacunas enquanto ainda há tempo para as resolver.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Load-In</p><h4>Auditoria no Local</h4><p>Verificamos o sistema instalado face ao design e diagnosticamos discrepâncias antes de afetarem o show.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Pós-Show</p><h4>Documentação</h4><p>Documentamos o sistema tal como foi construído para eventos recorrentes, equipas futuras ou entrega ao cliente.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Cedo</p><h4 class="heading">Fase de Design</h4><p>Ideal. Informamos escolhas de equipamento, negociações com a sala e briefings de fornecedores antes de os custos estarem fechados.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Pré-Produção</p><h4 class="heading">Revisão de Especificação</h4><p>Auditamos a lista de equipamento e o fluxo de sinal face ao design — identificando lacunas enquanto ainda há tempo para as resolver.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Load-In</p><h4 class="heading">Auditoria no Local</h4><p>Verificamos o sistema instalado face ao design e diagnosticamos discrepâncias antes de afetarem o show.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Pós-Show</p><h4 class="heading">Documentação</h4><p>Documentamos o sistema tal como foi construído para eventos recorrentes, equipas futuras ou entrega ao cliente.</p></div>
         </div>
       </div>
     </details>
@@ -482,10 +442,10 @@
   </div>
 
   <div class="service-engage">
-    <h3>Duas formas de trabalhar connosco</h3>
+    <h3 class="heading">Duas formas de trabalhar connosco</h3>
     <div class="engage-box">
-      <div class="engage-option"><h4>Arquitetura Completa</h4><p>Concebemos o sistema técnico completo de raiz — caminhos de sinal, redes de controlo, especificação de equipamento e pacote de documentação. Entregue como um briefing técnico pronto para produção para os seus fornecedores e equipa.</p></div>
-      <div class="engage-option"><h4>Auditoria &amp; Revisão</h4><p>Tem um sistema em funcionamento — revemos face aos requisitos do seu show, identificamos riscos e produzimos um documento claro de recomendações. Eficaz em qualquer fase da produção e muitas vezes a forma mais rápida de encontrar e resolver problemas ocultos.</p></div>
+      <div class="engage-option card"><h4 class="heading">Arquitetura Completa</h4><p>Concebemos o sistema técnico completo de raiz — caminhos de sinal, redes de controlo, especificação de equipamento e pacote de documentação. Entregue como um briefing técnico pronto para produção para os seus fornecedores e equipa.</p></div>
+      <div class="engage-option card"><h4 class="heading">Auditoria &amp; Revisão</h4><p>Tem um sistema em funcionamento — revemos face aos requisitos do seu show, identificamos riscos e produzimos um documento claro de recomendações. Eficaz em qualquer fase da produção e muitas vezes a forma mais rápida de encontrar e resolver problemas ocultos.</p></div>
     </div>
   </div>
 </div>
@@ -497,18 +457,18 @@
 <div class="service-section" id="technical-direction">
   <div class="service-header">
     <div class="service-header-text reveal">
-      <p class="section-label">Serviço 04</p>
-      <h2>Technical<br><em>Direction</em></h2>
+      <p class="eyebrow">Serviço 04</p>
+      <h2 class="display-lg">Technical<br><em>Direction</em></h2>
       <p class="lead">Somos o único ponto de autoridade técnica no seu evento — garantindo que tudo o que foi concebido é o que o público experiencia.</p>
     </div>
     <div class="service-panel reveal" style="transition-delay:0.1s">
-      <div class="service-panel-bg" style="background-image:url('../../images/gradients/technical-direction.svg')"></div>
+      <div class="service-panel-bg grain" style="background-image:url('../../images/gradients/technical-direction.svg')"></div>
       <img class="service-panel-icon" src="../../images/icons/technical-direction.png" alt="" aria-hidden="true" width="358" height="418" loading="lazy" decoding="async" />
     </div>
   </div>
 
   <div class="service-intro">
-    <h3>A lacuna entre o design e a entrega</h3>
+    <h3 class="heading">A lacuna entre o design e a entrega</h3>
     <p>Todo o espetáculo tem uma lacuna entre o que foi concebido e o que o público vê. A Direção Técnica é a disciplina de fechar essa lacuna. Significa ser a pessoa que compreende tanto a intenção criativa como a infraestrutura técnica — e que tem autoridade para tomar decisões quando divergem. No dia do show, essa clareza é o que mantém as produções no rumo certo e o público alheio à maquinaria por detrás da experiência.</p>
     <p>A Direção Técnica não é o mesmo que ser suporte AV no local. Um Diretor Técnico não espera pelos problemas — antecipa-os, concebe para os evitar e resolve-os antes de surgirem. Gere a relação entre a equipa criativa, a equipa técnica, a sala e os fornecedores com uma única referência partilhada: o show tal como foi concebido para ser.</p>
   </div>
@@ -541,10 +501,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="maturity-row">
-          <div class="maturity-card"><p class="maturity-level">Load-In</p><h4>Montagem &amp; Verificação</h4><p>Verificações de sistema, validação de sinal, mapeamento de ecrãs e briefing de equipa. Tudo confirmado face ao design antes de as portas abrirem.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Ensaio</p><h4>Passagem Dirigida</h4><p>Ensaio técnico estruturado com notas com timecode, verificações por departamento e aprovação final da folha de deixas.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Show</p><h4>Execução ao Vivo</h4><p>Tomada de decisões em tempo real, supervisão de deixas, resolução de problemas ao vivo e coordenação de departamentos durante todo o evento.</p></div>
-          <div class="maturity-card"><p class="maturity-level">Desmontagem</p><h4>Conclusão &amp; Entrega</h4><p>Supervisão de desmontagem, arquivo do ficheiro de show e debriefing técnico pós-show em 48 horas.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Load-In</p><h4 class="heading">Montagem &amp; Verificação</h4><p>Verificações de sistema, validação de sinal, mapeamento de ecrãs e briefing de equipa. Tudo confirmado face ao design antes de as portas abrirem.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Ensaio</p><h4 class="heading">Passagem Dirigida</h4><p>Ensaio técnico estruturado com notas com timecode, verificações por departamento e aprovação final da folha de deixas.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Show</p><h4 class="heading">Execução ao Vivo</h4><p>Tomada de decisões em tempo real, supervisão de deixas, resolução de problemas ao vivo e coordenação de departamentos durante todo o evento.</p></div>
+          <div class="maturity-card card"><p class="eyebrow">Desmontagem</p><h4 class="heading">Conclusão &amp; Entrega</h4><p>Supervisão de desmontagem, arquivo do ficheiro de show e debriefing técnico pós-show em 48 horas.</p></div>
         </div>
       </div>
     </details>
@@ -556,10 +516,10 @@
       </summary>
       <div class="sub-accordion-body">
         <div class="quadrant-grid">
-          <div class="quadrant-card"><p class="q-label">Pequeno / Baixa Complexidade</p><h4>Produtor Técnico</h4><p>Ponto único de contacto para a especificação AV, ligação com fornecedores e supervisão do dia do show. O âmbito certo para produções focadas e bem definidas.</p></div>
-          <div class="quadrant-card"><p class="q-label">Pequeno / Alta Complexidade</p><h4>Chamador de Show</h4><p>Chamada de deixas em tempo real e gestão de show ao vivo para produções tecnicamente complexas que precisam de atenção dedicada nas comunicações.</p></div>
-          <div class="quadrant-card"><p class="q-label">Grande / Baixa Complexidade</p><h4>Suporte de Produção</h4><p>Recurso AV integrado numa estrutura de gestão de produção maior — responsável pelo fluxo de trabalho técnico desde a especificação até à desmontagem.</p></div>
-          <div class="quadrant-card"><p class="q-label">Grande / Alta Complexidade</p><h4>Direção Técnica Completa</h4><p>Liderança de ponta a ponta: gestão de fornecedores, visitas ao local, briefing de equipa, direção de ensaios, chamada ao vivo e conclusão pós-show.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Pequeno / Baixa Complexidade</p><h4 class="heading">Produtor Técnico</h4><p>Ponto único de contacto para a especificação AV, ligação com fornecedores e supervisão do dia do show. O âmbito certo para produções focadas e bem definidas.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Pequeno / Alta Complexidade</p><h4 class="heading">Chamador de Show</h4><p>Chamada de deixas em tempo real e gestão de show ao vivo para produções tecnicamente complexas que precisam de atenção dedicada nas comunicações.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Grande / Baixa Complexidade</p><h4 class="heading">Suporte de Produção</h4><p>Recurso AV integrado numa estrutura de gestão de produção maior — responsável pelo fluxo de trabalho técnico desde a especificação até à desmontagem.</p></div>
+          <div class="quadrant-card card"><p class="eyebrow">Grande / Alta Complexidade</p><h4 class="heading">Direção Técnica Completa</h4><p>Liderança de ponta a ponta: gestão de fornecedores, visitas ao local, briefing de equipa, direção de ensaios, chamada ao vivo e conclusão pós-show.</p></div>
         </div>
       </div>
     </details>
@@ -567,21 +527,21 @@
   </div>
 
   <div class="service-engage">
-    <h3>Duas formas de trabalhar connosco</h3>
+    <h3 class="heading">Duas formas de trabalhar connosco</h3>
     <div class="engage-box">
-      <div class="engage-option"><h4>Direção no Dia do Show</h4><p>Juntamo-nos à equipa para o load-in, ensaio e o show ao vivo — assumindo a responsabilidade técnica do dia. A escolha certa quando a pré-produção está tratada mas quer liderança experiente na sala quando conta.</p></div>
-      <div class="engage-option"><h4>Ciclo Completo de Produção</h4><p>Entramos na fase de planeamento — responsáveis pelo rider técnico, participando nas visitas ao local, fazendo o briefing de fornecedores e construindo o calendário de ensaios — até à conclusão pós-show. O serviço completo de Direção Técnica.</p></div>
+      <div class="engage-option card"><h4 class="heading">Direção no Dia do Show</h4><p>Juntamo-nos à equipa para o load-in, ensaio e o show ao vivo — assumindo a responsabilidade técnica do dia. A escolha certa quando a pré-produção está tratada mas quer liderança experiente na sala quando conta.</p></div>
+      <div class="engage-option card"><h4 class="heading">Ciclo Completo de Produção</h4><p>Entramos na fase de planeamento — responsáveis pelo rider técnico, participando nas visitas ao local, fazendo o briefing de fornecedores e construindo o calendário de ensaios — até à conclusão pós-show. O serviço completo de Direção Técnica.</p></div>
     </div>
   </div>
 </div>
 
 
 <!-- CTA -->
-<div class="services-cta reveal">
-  <p class="section-label">Trabalhe connosco</p>
-  <h2>Não sabe qual serviço se adequa ao seu projeto?</h2>
+<div class="services-cta grain reveal">
+  <p class="eyebrow">Trabalhe connosco</p>
+  <h2 class="display-md">Não sabe qual serviço se adequa ao seu projeto?</h2>
   <p class="services-cta-copy">Responda a algumas perguntas rápidas e descubra o serviço que faz mais sentido para a sua fase atual.</p>
-  <a href="quiz.html" class="cta-button">Descubra o seu serviço
+  <a href="quiz.html" class="btn-primary">Descubra o seu serviço
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
 </div>
