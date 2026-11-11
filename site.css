@@ -3,7 +3,8 @@
    rules win on cascade order without the inline CSS needing to change.
 
    Scope is deliberately narrow: motion preferences, mobile-menu focus
-   safety, and viewport-unit correctness. Everything else still lives in
+   safety, and viewport-unit correctness. Durations and easings are the
+   motion tokens in base.css. Everything else still lives in
    each page's own <style> block for now.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -19,12 +20,12 @@
    and undelayed on open so it is focusable immediately.                     */
 .mobile-menu {
   visibility: hidden;
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  transition: opacity var(--dur-control) var(--ease-fade), visibility 0s linear var(--dur-control);
 }
 
 .mobile-menu.open {
   visibility: visible;
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0s;
+  transition: opacity var(--dur-control) var(--ease-fade), visibility 0s linear 0s;
 }
 
 
@@ -63,9 +64,13 @@
 
 
 /* ── Reduced motion ───────────────────────────────────────────────────────
-   Honours the OS-level "reduce motion" setting. The marquee matters most:
-   it loops indefinitely, which is a WCAG 2.2.2 (Pause, Stop, Hide) failure
-   for moving content lasting more than five seconds with no pause control.
+   Honours the OS-level "reduce motion" setting (DESIGN.md "Motion"): show
+   final states, replace movement with an opacity or colour change of at most
+   150 ms, and run no loops.
+
+   The marquee matters most: it loops indefinitely, which is a WCAG 2.2.2
+   (Pause, Stop, Hide) failure for moving content lasting more than five
+   seconds with no pause control.
 
    Reveal-on-scroll is resolved to its final state rather than disabled, so
    content is present immediately instead of fading in.                      */
@@ -73,18 +78,23 @@
 
   html { scroll-behavior: auto; }
 
+  /* Animations jump to their last frame and play once. Transitions keep only
+     opacity and colour, at 150 ms; anything that moves or resizes snaps. */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property: opacity, color, background-color, border-color !important;
+    transition-duration: var(--dur-micro) !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
   }
 
   .marquee-inner { animation: none !important; }

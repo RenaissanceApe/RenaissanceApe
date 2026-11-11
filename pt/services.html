@@ -51,7 +51,7 @@
   .service-tabs-inner { display: flex; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
   .tab-link { font-family: var(--font-body); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(15,25,45,0.92); padding: 18px 20px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
   .tab-link:hover { color: var(--blue-700); }
-  .tab-link.active { color: var(--green-700); border-bottom-color: var(--green-500); }
+  .tab-link.active { color: var(--blue-700); border-bottom-color: var(--green-500); }
 
   /* ── SERVICE SECTION ── */
   .service-section { max-width: 1200px; margin: 0 auto; padding: 96px 48px; border-bottom: 1px solid rgba(46,52,65,0.8); scroll-margin-top: 136px; }
@@ -103,7 +103,7 @@
   .data-table th { text-align: left; font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-500); padding: 12px 16px; border-bottom: 1px solid rgba(130,178,215,0.25); }
   .data-table td { padding: 16px; border-bottom: 1px solid rgba(46,52,65,0.6); color: var(--gray-300); vertical-align: top; line-height: 1.6; }
   .data-table td:first-child { font-weight: 500; color: var(--gray-100); white-space: nowrap; }
-  .data-table td em { font-style: italic; color: var(--gray-500); }
+  .data-table td em { font-style: italic; color: var(--text-muted); }
   .data-table tr:last-child td { border-bottom: none; }
 
   /* ── QUADRANT ── */
@@ -199,7 +199,7 @@
   <div class="nav-actions">
     <a href="about.html#contact-form" class="nav-cta">Começar</a>
     <div class="lang-switch" aria-label="Seletor de idioma">
-      <a href="../services.html">EN</a><span>/</span><a href="services.html" class="active">PT</a>
+      <a href="../services.html">EN</a><span>/</span><a href="services.html" class="active" aria-current="true">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobileMenu">
@@ -208,14 +208,14 @@
 </nav>
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu de navegação" aria-modal="true">
   <ul>
-    <li><a href="services.html">Serviços</a></li>
+    <li><a href="services.html" aria-current="page">Serviços</a></li>
     <li><a href="about.html">Sobre</a></li>
     <li><a href="field-notes/index.html">Notas de Campo</a></li>
     <li><a href="quiz.html">Qual é o meu serviço?</a></li>
   </ul>
   <a href="about.html#contact-form" class="mobile-cta">Começar</a>
   <div class="mobile-lang-switch">
-    <a href="../services.html">EN</a><span>/</span><a href="services.html" class="active">PT</a>
+    <a href="../services.html">EN</a><span>/</span><a href="services.html" class="active" aria-current="true">PT</a>
   </div>
 </div>
 
