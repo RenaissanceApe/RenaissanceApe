@@ -147,7 +147,9 @@ the worker messages the Dispatcher at once, and the Dispatcher tells the owner a
    *"Fold every file in `_docs/notes/` (except README.md) into CHANGELOG.md (one section for this
    version, a heading per step), `_docs/ROADMAP.md`, `_docs/PENDING.md` sections 2 and 3, and
    `_docs/SESSION_PROMPTS.md` (remove the prompts carried out, update the 'built' line). Delete
-   the notes files. Run `npm run check`. Open the PR into `test`."* Merge it when green.
+   the notes files. If the set changed `base.css`, `site.css`, `site.js` or `fonts.css`, set
+   `?v=` on those four URLs to this version on every page. Run `npm run check`. Open the PR into
+   `test`."* Merge it when green.
 8. **Verify the whole set on `test`.** `npm run check` and `node selftest.mjs` on `test` itself.
    Then the **preview**: screenshots of every page from `test` at 375 px and 1440 px, in EN and
    PT, beside the same page from `main`, published as a private page and sent to the owner. This
@@ -155,7 +157,8 @@ the worker messages the Dispatcher at once, and the Dispatcher tells the owner a
 9. **Promote.** Open the PR `test` → `main` with the summary above. When its checks are green,
    tell the owner it's ready and send the preview link.
 10. **Next.** When the owner has merged it (merge commit), load the live site once to see the
-    change arrived, close the tracking issue and the issues the set fixed, move `test` to `main`,
+    change arrived (request pages only, or add a throwaway query string to static files, so a
+    cached copy doesn't hide the new one), close the tracking issue and the issues the set fixed, move `test` to `main`,
     and go back to 1.
 
 If the Dispatcher's conversation gets long, start a new one with the prompt below: everything it
