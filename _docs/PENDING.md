@@ -13,6 +13,30 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
+### v1.58 Upkeep 2
+
+- [ ] Open the Actions tab: the `checks` runs should be green; a yellow warning on "Install
+      Chromium system libraries" means the Ubuntu mirror was down that day and nothing more.
+- [ ] Quiz with JavaScript off (EN and PT): the line "The fit finder needs JavaScript." /
+      "O questionário precisa de JavaScript." shows under question 1, and both buttons open
+      Services and the contact form.
+- [ ] `about.html?service=TD#contact-form` (EN and PT): Technical Direction is selected.
+      `about.html?service=XX#contact-form`: the menu stays on "Select a service…".
+- [ ] After v1.58 is live, open `https://www.lumenandpixel.com/field-notes/nope` and
+      `https://www.lumenandpixel.com/pt/nope`: the 404 shows with its logo, and every menu,
+      button and footer link opens the right page.
+- [ ] On "Thank you" (after sending the contact form) press Tab once: a "Skip to main content"
+      link appears at the top; Enter moves to the message.
+- [ ] Field Notes hub, EN and PT, with a screen reader: Tab to the filters, choose "Case
+      Studies"; it should say "pressed" and read the "Articles are on their way" message.
+- [ ] Resources, EN and PT: press Tab through the page; the Academy button is skipped and looks
+      as before.
+- [ ] After v1.58 is live, open any page with DevTools → Network: `base.css`, `site.css`,
+      `site.js` and `fonts.css` are requested with `?v=1.58` and return 200.
+- [ ] After v1.58 is live, paste `https://www.lumenandpixel.com/` and
+      `https://www.lumenandpixel.com/field-notes/portugal-events.html` into a LinkedIn or
+      WhatsApp message: the preview still shows the card.
+
 ### v1.56 brand refresh
 
 Everywhere:
@@ -75,7 +99,8 @@ decision.** D12–D20 are still open; D21 was used as assumed by discovery run 1
 of the brand refresh (v1.56): each is built as assumed, and stays that way unless the owner says
 otherwise. D48–D69 came out of discovery run 1 (v1.57, [DISCOVERY.md](DISCOVERY.md)): nothing is
 built on them yet; the proposed sets in ROADMAP wait on them, and "Assumed" says what the
-challenger assumed or what stays as it is meanwhile.
+challenger assumed or what stays as it is meanwhile. D70 came out of Upkeep 2 (v1.58): built as
+assumed.
 
 | # | Question | Assumed until answered |
 |---|---|---|
@@ -146,5 +171,6 @@ challenger assumed or what stays as it is meanwhile.
 | D65 | Newsletter sign-up on Field Notes and Resources too? It grows the list, not enquiries, and needs new `source_page` values in `INTAKE.md`. | No; last on the list |
 | D66 | A Content Security Policy in a `<meta>` tag on every page: the browser would enforce "nothing from another origin" and pin the form to n8n. A wrong policy breaks things silently, and every page needs `'unsafe-inline'`. | Not added |
 | D67 | Fold **Working with us** into the copy review (WW1 into CR3, WW3 into CR5) as meaning changes you approve, instead of a separate set? This relaxes D13 ("wording only") for those blocks only, and WW3 also re-asks D43 (how articles end). | Folded in, if you agree; otherwise it runs after CR6 |
-| D68 | **UP4.** Once the link-preview cards are JPEG (about 200 KB instead of 795 KB), delete the three old PNGs (`images/og-image.png`, `images/og/portugal-events-en.png`, `-pt.png`)? Nothing will use them. | Kept until you say yes |
+| D68 | **UP4.** Once the link-preview cards are JPEG (about 200 KB instead of 795 KB), delete the three old PNGs (`images/og-image.png`, `images/og/portugal-events-en.png`, `-pt.png`)? Nothing will use them. | Kept until you say yes. Since v1.58 the JPEG cards exist and every page uses them: the three PNGs are unused |
 | D69 | Hide the quiz from search results (`noindex`)? A search visitor landing on question 1 gets little context; the Services page answers the same search better. | Left indexed |
+| D70 | **UP1.** Without JavaScript the quiz shows question 1 above the new "needs JavaScript" line, with answer buttons that do nothing. Leave it, or hide the questions when JavaScript is off (a small look change for the copy review or a later upkeep)? | Left as it is |
