@@ -27,4 +27,4 @@ filter buttons carry `aria-pressed`, set by the inline filter script; `#articleL
 - none
 
 ## Session prompt
-UP3 (if a `## UP3` section exists in SESSION_PROMPTS.md, the release worker removes it)
+UP3 (`## UP3 · Field Notes hub and Resources` in SESSION_PROMPTS.md: the release worker removes it)
