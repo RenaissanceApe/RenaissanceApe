@@ -2,8 +2,4 @@
 User-agent: *
 Allow: /
 
-# Superseded URLs kept only as redirects to the current pages.
-Disallow: /articles/
-Disallow: /pt/field-notes.html
-
 Sitemap: https://www.lumenandpixel.com/sitemap.xml
