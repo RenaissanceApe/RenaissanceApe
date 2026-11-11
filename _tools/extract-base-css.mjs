@@ -10,6 +10,13 @@
  *
  * Re-running is safe: pages already carrying the <link> are handled, and rules
  * already lifted simply aren't found again.
+ *
+ * Since the brand refresh base.css is written by hand, and this script is in
+ * practice the report behind the `base-css` check: it knows which selectors
+ * belong to base.css (SHARED below) and reports any that sit in a page. With
+ * nothing inline it writes nothing; with only some shared rules inline it
+ * refuses to rebuild, because a rebuild would drop everything else. Lift a
+ * reported rule by hand: delete the page copy, keep the one in base.css.
  */
 
 import postcss from 'postcss';
@@ -49,15 +56,42 @@ const FOOTER_BLOCK = ['footer', '.footer-inner', '.footer-logo', '.footer-social
                       '.footer-social a', '.footer-social a:hover', '.footer-copy'];
 const MISC_BLOCK = ['.reveal', '.reveal.visible', '.nav-quiz-link', '.nav-quiz-link:hover'];
 
+/* The shared classes added by the brand refresh (BR1–BR7). Listed by the
+   selector a pasted-back copy would carry. A page may still adjust one of
+   these from its own <style> (legal.html narrows .page-hero, 404.html spaces
+   its eyebrow): that is an override, not a copy; see "deliberate overrides"
+   below. Selectors that only exist in base.css inside a longer list (the
+   newsletter field, for one) are left out: pages place those on purpose. */
+const BRAND_BLOCK = [
+  '.display-xl,.display-lg,.display-md,.heading',
+  '.display-xl', '.display-lg', '.display-md', '.heading', '.lead', '.data',
+  'main h1 em,main h2 em', 'main .eyebrow',
+  '.eyebrow,.tag', '.eyebrow', '.tag', '.label',
+  '.btn-primary,.btn-secondary,.btn-text',
+  '.btn-primary', '.btn-primary:hover', '.btn-secondary', '.btn-secondary:hover',
+  '.btn-text', '.btn-text::after', '.btn-text:hover::after', '.btn-text-back::after',
+  '.card,.card-raised', '.card', '.card-raised', '.card-hover', '.card-hover:hover',
+  '.page-hero', '.page-hero-inner',
+  '.nav-home', '.nav-home:hover',
+  '.contact-form', '.form-row', '.form-group', '.form-group label', '.form-input',
+  '.form-group input,.form-group select,.form-group textarea',
+  '.form-group select', '.form-group textarea',
+  '.form-consent', '.form-consent input', '.form-submit', '.form-note',
+  '.contact-form-status',
+  '.data-table', '.data-table th', '.data-table td',
+  '.grain', '.grain::before', '.patch-tone', '.pixel-field',
+];
+
 const SHARED = ['*,*::before,*::after', ':root', 'html', 'a',
-                ...NAV_BLOCK, ...A11Y_BLOCK, ...FOOTER_BLOCK, ...MISC_BLOCK];
+                ...NAV_BLOCK, ...A11Y_BLOCK, ...FOOTER_BLOCK, ...MISC_BLOCK,
+                ...BRAND_BLOCK];
 const SHARED_SET = new Set(SHARED);
 
 /* `body` is split: the declarations every page agrees on move to base.css,
    and a page's extras (min-height / flex) stay inline. */
 const BODY_SHARED = [
   'padding-left:env(safe-area-inset-left)', 'padding-right:env(safe-area-inset-right)',
-  'background:var(--blue-700)', 'color:var(--gray-100)',
+  'background:var(--bg)', 'color:var(--text)',
   'font-family:var(--font-body)', 'font-size:16px', 'line-height:1.6',
   'overflow-x:hidden',
 ];
@@ -157,18 +191,28 @@ const missing = SHARED.filter(s => !canon.has(s));
 /* A page is allowed to override base.css from its own <style> — that is what
    the stylesheet ordering is for, and thank-you.html uses it to make the nav
    sticky instead of fixed. So an inline rule only counts as duplication if
-   base.css does not already say something *different* for that selector.
-   Without this, a deliberate override reads as drift for ever. */
+   it says nothing that base.css does not already say for that selector: a
+   rule with at least one declaration of its own is an override. Without
+   this, a deliberate override reads as drift for ever.
+
+   base.css groups selectors (`.eyebrow,.tag,.label,…`), so what it says for
+   a selector is gathered from every rule that names it, alone or in a list. */
 const baseCssPath = path.join(ROOT, 'base.css');
-const baseSigs = new Map();
+const baseDecls = new Map();    // selector -> Set(declaration)
 if (fs.existsSync(baseCssPath)) {
   postcss.parse(fs.readFileSync(baseCssPath, 'utf8')).each(n => {
-    if (n.type === 'rule') baseSigs.set(normSel(n.selector), sigOf(n));
+    if (n.type !== 'rule') return;
+    const whole = normSel(n.selector);
+    for (const sel of new Set([whole, ...whole.split(',')])) {
+      if (!baseDecls.has(sel)) baseDecls.set(sel, new Set());
+      for (const d of n.nodes) if (d.type === 'decl') baseDecls.get(sel).add(normDecl(d));
+    }
   });
 }
 const overrides = [];
-for (const [sel, { sig }] of canon) {
-  if (baseSigs.has(sel) && baseSigs.get(sel) !== sig) {
+for (const [sel, { rule }] of canon) {
+  const base = baseDecls.get(sel);
+  if (base && rule.nodes.some(d => d.type === 'decl' && !base.has(normDecl(d)))) {
     overrides.push(sel);
     canon.delete(sel);
   }
