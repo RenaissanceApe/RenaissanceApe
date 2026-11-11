@@ -11,15 +11,19 @@
    `node _tools/extract-base-css.mjs --check` reports shared rules that have
    crept back into a page.
 
-   Shared classes (brand refresh, BR1): .btn-primary .btn-secondary .btn-text
-   .eyebrow .tag .card .card-raised .grain .patch-tone .pixel-field, and the
-   type classes .display-xl .display-lg .display-md .heading .lead.
+   Shared classes: .btn-primary .btn-secondary .btn-text (.btn-text-back)
+   .eyebrow .tag .label .data .card .card-raised .card-hover .page-hero
+   .page-hero-inner .data-table .form-input .grain .patch-tone .pixel-field,
+   and the type classes .display-xl .display-lg .display-md .heading .lead.
 
-   Names that pages already used for the same thing, kept as they were. Until
-   BR3–BR6 delete the page copies, the page's own <style> still wins there:
-     .btn-primary, .btn-secondary   404.html, pt/404.html
-     .eyebrow, .card                thank-you.html, check-your-inbox.html (+ pt/)
-     .lead                          services.html, pt/services.html
+   The forms keep the class names their markup already has (.contact-form,
+   .form-row, .form-group, .form-consent, .form-submit, .form-note,
+   .contact-form-status, .newsletter-row, .newsletter-consent): a form's
+   markup is part of the intake contract (INTAKE.md) and is not renamed.
+
+   _tools/checks/brand.mjs holds this file to the brand rules: raw colours
+   only in the :root block below, corners 0 or var(--radius), no shadow or
+   blur, and the two typefaces only through --font-display / --font-body.
    ────────────────────────────────────────────────────────────────────────── */
 
 /* ── Reset, tokens, base elements ────────────────────────────────────── */
@@ -240,6 +244,15 @@ nav .nav-cta:hover {
 nav .nav-cta:active {
   transform: translateY(1px);
 }
+/* The short nav of the confirmation pages: one "Back to home" link. */
+.nav-home {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nav-text);
+}
+.nav-home:hover {
+  text-decoration: underline;
+}
 .lang-switch {
   display: flex;
   align-items: center;
@@ -397,7 +410,7 @@ nav .nav-cta:active {
 .mobile-lang-switch a.active {
   color: var(--nav-text);
   font-weight: 700;
-  box-shadow: inset 0 -2px 0 var(--accent);
+  background: linear-gradient(var(--accent),var(--accent)) bottom / 100% 2px no-repeat;
 }
 
 /* ── Skip link, focus, screen-reader utilities ───────────────────────── */
@@ -547,9 +560,25 @@ footer {
 @media (max-width: 639px) {
   .display-xl { font-size: 28px; line-height: 1.15; }
 }
+/* Headline emphasis is the accent colour, never italic. */
+main h1 em,main h2 em {
+  font-style: normal;
+  color: var(--accent);
+}
+/* DESIGN.md "data": dates, numbers, codes, timecode. */
+.data {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
 
-/* ── Eyebrow and tag (DESIGN.md "label") ─────────────────────────────── */
-.eyebrow,.tag {
+/* ── Eyebrow, tag and label (DESIGN.md "label") ──────────────────────────
+   .label is the label type on its own, for small caps that are not eyebrows
+   (tabs, filters, captions, back links): it sets no colour. Form labels and
+   table headers get the same type without a class.                         */
+.eyebrow,.tag,.label,.form-group label,.data-table th {
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
@@ -559,6 +588,10 @@ footer {
 }
 .eyebrow {
   color: var(--accent);
+}
+/* An eyebrow in page content sits one step above what it labels. */
+main .eyebrow {
+  margin-bottom: var(--space-md);
 }
 .tag {
   display: inline-block;
@@ -622,6 +655,17 @@ footer {
 .btn-text:hover::after {
   transform: translateX(4px);
 }
+/* Going back: the arrow leads. It is the button's own inline icon, so no
+   trailing arrow is drawn; on hover it moves left as the other moves right. */
+.btn-text-back::after {
+  content: none;
+}
+.btn-text-back svg {
+  transition: transform var(--dur-micro) var(--ease-move);
+}
+.btn-text-back:hover svg {
+  transform: translateX(-4px);
+}
 
 /* ── Cards ───────────────────────────────────────────────────────────────
    No shadows. A card that is a link lifts 2 px and its border turns blue.  */
@@ -642,9 +686,178 @@ a.card,a.card-raised {
   display: block;
   transition: border-color var(--dur-micro) var(--ease-fade),transform var(--dur-micro) var(--ease-move);
 }
-a.card:hover,a.card-raised:hover {
+a.card:hover,a.card-raised:hover,.card-hover:hover {
   border-color: var(--blue-300);
   transform: translateY(-2px);
+}
+/* .card-hover: the same lift for a card that is not a link but holds one.
+   On a .reveal card the fade-in keeps its own timing beside the lift. */
+.card-hover {
+  transition: border-color var(--dur-micro) var(--ease-fade),transform var(--dur-micro) var(--ease-move);
+}
+.card-hover.reveal {
+  transition: opacity var(--dur-transition) var(--ease-enter),transform var(--dur-micro) var(--ease-move),border-color var(--dur-micro) var(--ease-fade);
+}
+
+/* ── Page hero (DESIGN.md "hero") ────────────────────────────────────────
+   One padding for every hero band: 96 px under the 68 px bar, 96 px below.
+   The sides are 48 px, not DESIGN.md's 64: with .page-hero-inner that puts
+   the text on the same 1200 px column as the nav. The decoration (.patch-tone
+   and .grain) and any narrower text column are the page's choice.          */
+.page-hero {
+  padding: calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-4xl);
+}
+.page-hero-inner {
+  max-width: 1104px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .page-hero { padding: calc(68px + var(--space-3xl)) var(--space-lg) var(--space-3xl); }
+}
+
+/* ── Forms (DESIGN.md "form-input") ──────────────────────────────────────
+   44 px fields on surface, 1 px border, green border on focus beside the
+   shared focus outline, label above in label type. .form-input is the class
+   for a new field; the two live forms are matched by the names they have.  */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  scroll-margin-top: 96px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  align-items: end;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.form-group label {
+  color: var(--text-muted);
+}
+.form-input,.form-group input,.form-group select,.form-group textarea,.newsletter-row input[type="email"] {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  transition: border-color var(--dur-micro) var(--ease-fade);
+  resize: none;
+}
+/* The arrow's stroke is the value of --gray-300: a token cannot be used
+   inside a data: URI. */
+select.form-input,.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b8bec8' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-sm) center;
+  padding-right: var(--space-xl);
+  cursor: pointer;
+}
+select.form-input option,.form-group select option {
+  background: var(--surface);
+  color: var(--text);
+}
+.form-input::placeholder,.form-group input::placeholder,.form-group textarea::placeholder,.newsletter-row input[type="email"]::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+.form-input:hover,.form-group input:hover,.form-group select:hover,.form-group textarea:hover,.newsletter-row input[type="email"]:hover {
+  border-color: var(--blue-300);
+}
+.form-input:focus,.form-group input:focus,.form-group select:focus,.form-group textarea:focus,.newsletter-row input[type="email"]:focus {
+  border-color: var(--accent);
+}
+textarea.form-input,.form-group textarea {
+  height: auto;
+  min-height: 120px;
+  padding: var(--space-sm);
+}
+.form-consent,.newsletter-consent {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.form-consent input,.newsletter-consent input {
+  margin-top: 3px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+.form-consent a,.newsletter-consent a {
+  text-decoration: underline;
+}
+.form-submit {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+.form-submit button {
+  flex: 0 0 auto;
+}
+.form-note {
+  flex: 1 1 280px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 360px;
+}
+.form-note a {
+  color: var(--blue-300);
+  text-decoration: underline;
+}
+.contact-form-status {
+  min-height: 22px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+@media (max-width: 900px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-submit { flex-direction: column; align-items: flex-start; gap: var(--space-md); }
+}
+
+/* ── Table (DESIGN.md "data-table") ──────────────────────────────────────
+   Label-type header, 1 px row borders, no zebra, square. The header is
+   --text-muted, not the spec's --text-subtle, which fails AA at 11 px.
+   Numbers, codes and dates go in <td class="data">.                        */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.data-table th {
+  text-align: left;
+  color: var(--text-muted);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
 }
 
 /* ── Texture and patterns ────────────────────────────────────────────────

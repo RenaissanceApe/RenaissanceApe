@@ -38,8 +38,7 @@ body{display:flex;flex-direction:column;}
   .hero-content{position:relative;text-align:center;max-width:800px;padding:0 var(--space-lg);animation:heroFadeUp var(--dur-hero) var(--ease-enter) var(--dur-micro) both;}
   @keyframes heroFadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
   .hero-content h1{margin-bottom:var(--space-lg);}
-  .hero-content h1 em,.services-header h2 em{font-style:normal;color:var(--accent);}
-  .hero-scope{font-family:var(--font-display);font-size:13px;font-weight:400;line-height:1.5;color:var(--text-muted);margin-bottom:var(--space-xl);}
+  .hero-scope{color:var(--text-muted);margin-bottom:var(--space-xl);}
   .hero-scope em{font-style:normal;color:var(--accent);}
   .hero-actions{display:flex;gap:var(--space-md);align-items:center;justify-content:center;flex-wrap:wrap;}
   /* ── MARQUEE ── */
@@ -51,7 +50,6 @@ body{display:flex;flex-direction:column;}
   /* ── SERVICES SECTION ── */
   .services{background:var(--surface);padding:var(--space-4xl) var(--space-2xl);}
   .services-header{max-width:1200px;margin:0 auto var(--space-3xl);}
-  .services-header .eyebrow,.newsletter .eyebrow{margin-bottom:var(--space-md);}
   .services-header h2{max-width:500px;}
   .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;max-width:1200px;margin:0 auto;}
   .service-card{position:relative;padding:var(--space-2xl);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;}
@@ -67,7 +65,7 @@ body{display:flex;flex-direction:column;}
   /* ── CLIENTS ── */
   .clients{padding:var(--space-3xl) var(--space-2xl);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
   .clients-inner{max-width:1200px;margin:0 auto;}
-  .clients-label{font-family:var(--font-display);font-size:11px;font-weight:700;line-height:1.3;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-bottom:var(--space-xl);}
+  .clients-label{color:var(--text-muted);text-align:center;margin-bottom:var(--space-xl);}
   .clients-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0;}
   .client-item{display:flex;align-items:center;justify-content:center;padding:14px 28px;opacity:0.42;transition:opacity var(--dur-control) var(--ease-fade);}
   .client-item:hover{opacity:0.72;}
@@ -91,14 +89,10 @@ body{display:flex;flex-direction:column;}
      so nothing here reaches out to another origin. */
   .newsletter-form{max-width:520px;margin:var(--space-xl) auto 0;text-align:left;}
   .newsletter-row{display:flex;gap:var(--space-xs);flex-wrap:wrap;}
-  /* DESIGN.md "form-input": no shared class for it yet */
-  .newsletter-row input[type="email"]{flex:1 1 240px;height:44px;padding:0 var(--space-sm);border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:14px;}
-  .newsletter-row input[type="email"]::placeholder{color:var(--text-muted);}
-  .newsletter-row input[type="email"]:focus{border-color:var(--accent);}
+  /* The field and the consent line are the shared form styles in base.css */
+  .newsletter-row input[type="email"]{flex:1 1 240px;}
   .newsletter-row button:disabled{opacity:0.55;cursor:default;background:var(--accent);}
-  .newsletter-consent{display:flex;gap:var(--space-xs);align-items:flex-start;margin-top:var(--space-md);font-size:14px;line-height:1.55;color:var(--text-muted);cursor:pointer;}
-  .newsletter-consent input{margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:var(--accent);}
-  .newsletter-consent a{text-decoration:underline;}
+  .newsletter-consent{gap:var(--space-xs);margin-top:var(--space-md);}
   .newsletter-status{margin-top:var(--space-sm);font-size:14px;min-height:1.2em;}
   @media(max-width:900px){
     .services,.cta-banner,.newsletter{padding:var(--space-3xl) var(--space-lg);}
@@ -175,7 +169,7 @@ body{display:flex;flex-direction:column;}
 <section class="hero grain">
   <div class="hero-content">
     <h1 class="display-xl">The creative is ready.<br>Is the <em>system?</em></h1>
-    <p class="hero-scope"><em>Corporate conferences</em> &nbsp;·&nbsp; <em>Music festivals</em> &nbsp;·&nbsp; <em>Touring productions</em> &nbsp;·&nbsp; <em>Brand activations</em><br>Based in <em>Portugal</em> &nbsp;·&nbsp; Working <em>worldwide</em> &nbsp;·&nbsp; Pre-production through <em>show day</em></p>
+    <p class="hero-scope data"><em>Corporate conferences</em> &nbsp;·&nbsp; <em>Music festivals</em> &nbsp;·&nbsp; <em>Touring productions</em> &nbsp;·&nbsp; <em>Brand activations</em><br>Based in <em>Portugal</em> &nbsp;·&nbsp; Working <em>worldwide</em> &nbsp;·&nbsp; Pre-production through <em>show day</em></p>
     <div class="hero-actions">
       <a href="#services" class="btn-secondary">
         Explore services
@@ -235,7 +229,7 @@ body{display:flex;flex-direction:column;}
 <!-- CLIENTS -->
 <div class="clients reveal">
   <div class="clients-inner">
-    <p class="clients-label">Trusted by</p>
+    <p class="clients-label label">Trusted by</p>
     <div class="clients-grid">
 
       <div class="client-item">

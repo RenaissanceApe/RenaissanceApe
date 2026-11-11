@@ -10,8 +10,9 @@ import * as parity from './checks/parity.mjs';
 import * as contrast from './checks/contrast.mjs';
 import * as sharedLogic from './checks/shared-logic.mjs';
 import * as baseCss from './checks/base-css.mjs';
+import * as brand from './checks/brand.mjs';
 
-const CHECKS = [htmlStructure, links, parity, contrast, sharedLogic, baseCss];
+const CHECKS = [htmlStructure, links, parity, contrast, sharedLogic, baseCss, brand];
 
 const argv = process.argv.slice(2);
 if (argv.includes('--list')) {

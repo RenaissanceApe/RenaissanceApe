@@ -35,17 +35,17 @@
      holds only what is particular to this page. */
 
   /* ── Hero: Patch (tone on dark) + sand grain ── */
-  .fn-hero{padding:calc(68px + var(--space-4xl)) 0 var(--space-3xl);border-bottom:1px solid var(--border);}
-  .fn-hero-inner{max-width:760px;margin:0 auto;padding:0 var(--space-lg);}
+  /* shared .page-hero; the text keeps the 712 px column of the list below */
+  .fn-hero{border-bottom:1px solid var(--border);}
+  .fn-hero-inner{max-width:712px;}
   .fn-hero .eyebrow{margin-bottom:var(--space-lg);}
   .fn-hero h1{color:var(--text);margin-bottom:var(--space-lg);}
-  .fn-hero h1 em{color:var(--accent);font-style:normal;}
   .fn-hero-sub{color:var(--text-muted);max-width:560px;}
 
   /* ── Filter: label type; the active filter carries a pixel, not only a colour ── */
   .fn-list{max-width:760px;margin:0 auto;padding:var(--space-2xl) var(--space-lg) var(--space-4xl);}
   .fn-filters{display:flex;gap:var(--space-xs);margin-bottom:var(--space-xl);flex-wrap:wrap;}
-  .fn-filter{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;padding:0 var(--space-md);font-family:var(--font-display);font-size:11px;font-weight:700;line-height:1.3;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);background:none;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color var(--dur-micro) var(--ease-fade),color var(--dur-micro) var(--ease-fade);}
+  .fn-filter{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;padding:0 var(--space-md);color:var(--text-muted);background:none;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color var(--dur-micro) var(--ease-fade),color var(--dur-micro) var(--ease-fade);}
   .fn-filter:hover{border-color:var(--blue-300);color:var(--text);}
   .fn-filter.active{border-color:var(--accent);color:var(--text);}
   .fn-filter.active::before{content:'';width:6px;height:6px;background:var(--accent);flex-shrink:0;}
@@ -55,8 +55,7 @@
   .fn-article-item{display:grid;grid-template-columns:1fr auto;align-items:start;gap:var(--space-md);}
   a.fn-article-item.card{display:grid;}
   .fn-item-meta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-sm);}
-  /* DESIGN.md "data": dates, numbers and codes */
-  .fn-item-date{font-family:var(--font-display);font-size:13px;font-weight:400;line-height:1.5;color:var(--text-muted);}
+  .fn-item-date{color:var(--text-muted);}
   .fn-item-title{color:var(--text);margin-bottom:var(--space-xs);}
   .fn-item-excerpt{font-size:14px;line-height:1.55;color:var(--text-muted);max-width:580px;}
   .fn-item-arrow{color:var(--text-muted);align-self:center;flex-shrink:0;transition:color var(--dur-micro) var(--ease-fade),transform var(--dur-micro) var(--ease-move);}
@@ -64,7 +63,6 @@
   .fn-empty{padding:var(--space-3xl) 0;text-align:center;color:var(--text-muted);font-size:14px;line-height:1.55;}
 
   @media(max-width:600px){
-    .fn-hero{padding-top:calc(68px + var(--space-3xl));padding-bottom:var(--space-2xl);}
     .fn-article-item,a.fn-article-item.card{grid-template-columns:1fr;}
     .fn-item-arrow{display:none;}
   }
@@ -109,8 +107,8 @@
   </div>
 </div>
 <main id="main-content">
-  <div class="fn-hero patch-tone grain">
-    <div class="fn-hero-inner reveal">
+  <div class="fn-hero page-hero patch-tone grain">
+    <div class="fn-hero-inner page-hero-inner reveal">
       <p class="eyebrow">Notas de Campo</p>
       <h1 class="display-xl">Do palco.<br>Para a <em>página.</em></h1>
       <p class="lead fn-hero-sub">Artigos sobre produção de eventos ao vivo — controlo de cena, arquitetura de sistemas, direção técnica e o pensamento por detrás do trabalho.</p>
@@ -118,9 +116,9 @@
   </div>
   <div class="fn-list">
     <div class="fn-filters reveal">
-      <button class="fn-filter active" data-filter="all">Todos</button>
-      <button class="fn-filter" data-filter="article">Artigos</button>
-      <button class="fn-filter" data-filter="case-study">Casos de Estudo</button>
+      <button class="fn-filter label active" data-filter="all">Todos</button>
+      <button class="fn-filter label" data-filter="article">Artigos</button>
+      <button class="fn-filter label" data-filter="case-study">Casos de Estudo</button>
     </div>
     <div class="fn-article-list reveal" id="articleList">
       <!-- Mirror of EN list — same slugs, links to PT article pages -->
@@ -128,7 +126,7 @@
         <div>
           <div class="fn-item-meta">
             <span class="tag">Artigo</span>
-            <span class="fn-item-date">Agosto 2026</span>
+            <span class="fn-item-date data">Agosto 2026</span>
           </div>
           <div class="fn-item-title heading">O aluguer de AV é despesa elegível. Menos para o teu festival.</div>
           <div class="fn-item-excerpt">As candidaturas do Portugal Events para eventos em 2027 abrem a 1 de setembro. Fui ler a portaria porque queria saber uma coisa concreta, e encontrei uma excepção que muda o orçamento todo.</div>

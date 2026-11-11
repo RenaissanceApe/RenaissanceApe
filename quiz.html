@@ -68,10 +68,10 @@
   .option-title { font-size: 16px; font-weight: 600; line-height: 1.3; margin-bottom: var(--space-xxs); display: block; }
   .option-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.55; display: block; }
 
-  /* Back / Next. Next is the shared .btn-primary; Back has a leading arrow,
-     which .btn-text (trailing arrow) cannot draw, so it stays here. */
+  /* Back / Next. Next is the shared .btn-primary; Back is the shared
+     .btn-text .btn-text-back (leading arrow), kept quiet here: muted. */
   .q-actions { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-lg); gap: var(--space-md); }
-  .btn-back { font-family: var(--font-body); font-size: 14px; font-weight: 600; line-height: 1; color: var(--text-muted); background: none; border: 0; cursor: pointer; min-height: 44px; padding: 0; transition: color var(--dur-micro) var(--ease-fade); display: inline-flex; align-items: center; gap: var(--space-xs); }
+  .btn-back { color: var(--text-muted); }
   .btn-back:hover { color: var(--text); }
   .btn-back:disabled { opacity: 0; pointer-events: none; }
   .btn-next:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
@@ -182,7 +182,7 @@
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" disabled aria-label="Go back">
+        <button class="btn-back btn-text btn-text-back" disabled aria-label="Go back">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
@@ -229,7 +229,7 @@
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Go back">
+        <button class="btn-back btn-text btn-text-back" aria-label="Go back">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
@@ -276,7 +276,7 @@
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Go back">
+        <button class="btn-back btn-text btn-text-back" aria-label="Go back">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
@@ -323,7 +323,7 @@
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Go back">
+        <button class="btn-back btn-text btn-text-back" aria-label="Go back">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
