@@ -9,28 +9,12 @@ each step still to run is in [SESSION_PROMPTS.md](SESSION_PROMPTS.md).
 
 ## Next
 
-### 1. Brand refresh: bring the site up to Brand Book v1.2
-
-Plan: [BRAND_REFRESH.md](BRAND_REFRESH.md). Closes issues #16 and #27.
-
-| Step | What | Needs | Owns |
-|---|---|---|---|
-| **BR1** | Foundations: Inter replaces Nunito; semantic, spacing, radius and motion tokens; nav, menu, footer, buttons, inputs, tags to spec; the nine contrast failures (#16) fixed so CI is green | — | `base.css`, `site.css`, `site.js`, `fonts.css`, `fonts/`, nav/menu/footer markup in every page |
-| **BR2** | Brand assets: Patch and Pixel Field tiles (seeded generator), sand grain tile, OG images to spec | — | `images/`, `_tools/patch.mjs` |
-| **BR3** | Pages: home, legal, 404, thank-you, check-your-inbox | BR1, BR2 | those pages, EN + PT |
-| **BR4** | Pages: services, about | BR1, BR2 | those pages, EN + PT |
-| **BR5** | Pages: quiz, resources | BR1, BR2 | those pages, EN + PT |
-| **BR6** | Pages: Field Notes hub, article template, articles | BR1, BR2 | `field-notes/`, `pt/field-notes/` |
-| **BR7** | Sweep: a `brand` check in CI (corners, shadows, typefaces, colours outside the scales), leftovers, docs brought up to date | BR3–BR6 | `_tools/checks/`, `CLAUDE.md`, `README.md` |
-
-Runs: BR1 and BR2 together → BR3, BR4, BR5, BR6 together → BR7 alone.
-
-### 2. Copy review: every word, humanised
+### 1. Copy review: every word, humanised
 
 All visitor-facing text on the site, EN and PT: pages, Field Notes articles, form labels and
 messages, meta titles and descriptions, alt text, OG text. Removes AI telltales and makes it read
-as written by the people who run the studio, to the voice rules in Brand Book §10. Runs after the
-brand refresh because both touch every page.
+as written by the people who run the studio, to the voice rules in Brand Book §10. Comes after the
+brand refresh (built, v1.56) because both touch every page.
 
 | Step | What | Needs | Owns |
 |---|---|---|---|
@@ -44,7 +28,7 @@ brand refresh because both touch every page.
 Runs: CR1 alone → CR2, CR3, CR4, CR5 together → CR6 alone. Every rewrite PR carries a
 before/after table per page so the owner approves text, not diffs (D12, D13).
 
-### 3. Previz maturity quadrant: the 3D previsualization assessment, live on the site
+### 2. Previz maturity quadrant: the 3D previsualization assessment, live on the site
 
 The assessment is built in its own repository (issue #13). This set brings it onto the site as a
 tool visitors use, linked from Resources, in the site's brand and languages.
@@ -52,12 +36,12 @@ tool visitors use, linked from Resources, in the site's brand and languages.
 | Step | What | Needs | Owns |
 |---|---|---|---|
 | **PQ1** | Bring the tool in: its files under a tools path, working as static pages with zero off-origin requests, result reachable without giving an email | access to the tool's repository (D14, D15) | the tool's folder |
-| **PQ2** | Brand and languages: tokens, type and components from `base.css`; EN and PT; copy to `_docs/VOICE.md` | PQ1, brand refresh, CR1 | the tool's folder |
+| **PQ2** | Brand and languages: tokens, type and components from `base.css`; EN and PT; copy to `_docs/VOICE.md` | PQ1, CR1 | the tool's folder |
 | **PQ3** | Connect: cards on `resources.html` and `pt/`, nav slot if wanted, sitemap, `hreflang`, OG image; if it collects an email, the form and `INTAKE.md` (D16) | PQ2 | `resources.html`, `sitemap.xml`, `INTAKE.md` |
 
 Runs: PQ1 → PQ2 → PQ3, one at a time.
 
-### 4. Languages: DE, FR and ES beside EN and PT
+### 3. Languages: DE, FR and ES beside EN and PT
 
 The whole site in five languages. Runs after the copy review (translate the final text, once) and
 after the quadrant tool (so it is translated with the rest). Strongly better after **Markup**
@@ -93,17 +77,18 @@ Runs: DS1 scouts together → DS2 → DS3.
 | **Markup** | Stop repeating nav and footer markup: partials or a site generator (#12). Best done before Languages | the owner (`needs-ricardo`) |
 | **Legal** | Privacy, Terms, Cookies and Disclaimer revised for the v2 stack (#28). Before Languages translates them | the owner (`needs-ricardo`) |
 | **Layout** | Rail Grid on every page (DESIGN.md "Layout") | D3 in PENDING; better after #12 |
-| **Icons and motion** | Signal Pixel icons replacing the PNG service icons; Pixel Build logo reveal | `ICONS.md` from the owner (D5) |
+| **Icons and motion** | Signal Pixel icons replacing the PNG service icons; Pixel Build logo reveal; favicon and app icons redrawn in one green (#31) | `ICONS.md` from the owner (D5) |
 | **Upkeep** | U1: keep `CLAUDE.md`, `DESIGN.md`, `INTAKE.md`, `CHANGELOG.md` off the public site (D11) | the owner's yes |
 
 ### Suggested order
 
-Brand refresh (with a first discovery run beside it) → Copy review → Previz quadrant → Markup and
+Copy review (with a first discovery run beside it) → Previz quadrant → Markup and
 Legal (both need the owner) → Languages → Layout, Icons and motion.
 
 ## Built
 
 | Version | What | How it works |
 |---|---|---|
+| v1.56 | Brand refresh (BR1–BR7): the site on Brand Book v1.2. Inter, tokens and shared classes in `base.css`; nav, menu and footer to spec; Patch, Pixel Field, grain and OG images from generator scripts; every page restyled, EN and PT; the `brand` check in CI. Closed #16, #27, #32, #34, #46 | [BRAND_REFRESH.md](BRAND_REFRESH.md); the comment at the top of `base.css` |
 | v1.55 | Agent rules, design reference, roadmap, parallel workflow | `CLAUDE.md`, `DESIGN.md`, `_docs/` |
 | ≤ v1.54 | Everything before the roadmap existed | `CHANGELOG.md` |

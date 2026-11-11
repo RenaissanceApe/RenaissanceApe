@@ -13,12 +13,66 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
-Nothing yet.
+### v1.56 brand refresh
+
+Everywhere:
+
+- [ ] On a phone, open the menu on the home page and on Services (EN and PT): it should cover the
+      page, the current page should show a green square, and Escape / the X should close it.
+- [ ] On a desktop, hover each nav link: a green line slides in under it; the current page keeps
+      it.
+- [ ] Read a long page (Services, a Field Note) and say if Inter reads well at body size.
+- [ ] Turn on "reduce motion" in the OS and reload the home page: nothing should slide or loop.
+- [ ] Home, Services and 404: is the grain the right strength? (Too strong or too faint is a
+      one-number change in `_tools/grain.mjs`.)
+- [ ] After release, paste a page link and the Portugal Events article link (EN and PT) into
+      WhatsApp or LinkedIn: the new card should show. Old cards can stay cached for days.
+
+Home, 404 and the confirmation pages:
+
+- [ ] Home on a phone and a desktop (EN and PT): the hero is a dark blue field with a soft green
+      glow top right, no logo or second headline behind the text.
+- [ ] Home: each of the four service cards shows its green/blue gradient.
+- [ ] Home: move the mouse over the newsletter email field: its border turns light blue, like the
+      contact form's fields.
+- [ ] Subscribe to the newsletter from the home page with a test address: you should land on
+      "Check your inbox", with the same top bar as the rest of the site. (The form was not
+      changed, only its styling and where the styles live.)
+- [ ] Open a wrong address (for example `/nope.html`): the 404 page shows a dotted ground, one
+      green button and one outlined button.
+
+Services and About:
+
+- [ ] Services (EN and PT), phone and desktop: scroll the page and check the tab bar stays under
+      the nav and the highlighted tab follows the section; open each accordion.
+- [ ] About (EN and PT): send one test message from the contact form and confirm it arrives in
+      n8n as before (only the styling changed, and where the styles live).
+- [ ] About: tab through the form with the keyboard: every field shows a green outline.
+
+Quiz and Resources:
+
+- [ ] Take the quiz to a result in EN and in PT, then press "Start a conversation": the contact
+      form should open with the matching service already selected.
+- [ ] In the quiz, pick an answer and check you can tell which one is chosen without relying on
+      the green (filled square on the right, filled letter).
+- [ ] In the quiz, on question 2, hover "Back": the arrow slides slightly to the left.
+- [ ] Resources on a phone and a desktop: say if the Patch behind the headline is too strong.
+
+Field Notes and Legal:
+
+- [ ] Field Notes (EN and PT) on a phone and a desktop: the hero shows the Patch pattern, and the
+      three filter buttons work; the active one has a green square in front of its name.
+- [ ] Read the Portugal Events article on a phone, in both languages, and say if the body text
+      and the pull-quote read well.
+- [ ] Tab through an article with the keyboard: each link and the button show a green outline.
+- [ ] Legal, Field Notes and Resources on a phone and a desktop: the space under the hero is a
+      little larger than before and matches About and Services.
 
 ## 3. Decisions
 
 **D1–D11 were accepted as assumed by the owner on 2026-11-11: the right-hand column is the
-decision.** D12–D21 are still open.
+decision.** D12–D21 are still open. D22–D47 came out of the brand refresh (v1.56): each is
+built as assumed, and stays that way unless the owner says otherwise.
 
 | # | Question | Assumed until answered |
 |---|---|---|
@@ -43,3 +97,29 @@ decision.** D12–D21 are still open.
 | D19 | Languages: forms would send `lang` = `de`, `fr`, `es`. n8n and MailerLite must handle them (reply language, sequences), and you answer enquiries in those languages. Ready for that, or should the new languages' forms say replies come in English? | Needs your answer before TR1 |
 | D20 | Languages: are Field Notes articles and the legal pages translated too, or only the main pages? | Everything except legal, which waits for #28 and a human check |
 | D21 | Discovery: who are the comparable studios to look at, and which markets matter most? Any ideas that are off the table from the start? | Scouts choose 8–10 studios in PT, ES, FR, DE, UK |
+| D22 | **#35.** The nav's "Get started" is filled green on every page, so any page with its own green button shows two, against "one filled green button per viewport". Make the nav button outlined, or count the nav as outside the rule? (On Resources the Academy button became outlined, so page content keeps to one.) | The nav button is chrome, outside the rule, and stays green |
+| D23 | Home hero buttons: "Find your fit" is now the filled green button and "Explore services" the outlined one (before, both were outlined). Swap them if services should lead? | "Find your fit" leads |
+| D24 | Nav width: `DESIGN.md` gives the bar 64 px side padding; it still lines up with the pages' 1200 px column. Change now, or with the Rail Grid? | Keep until the Rail Grid (Layout set) |
+| D25 | The site-wide link-preview image (`images/og-image.png`) needs a title: the home headline, a tagline of yours, or no title (lockup and domain only)? One file serves EN and PT pages. | The home headline "The creative is ready. Is the system?", in English |
+| D26 | The stage photograph that was the home hero's background: keep it for later use, or delete it? | Kept as `images/hero-stage.png` (477 KB, used by nothing) |
+| D27 | **#31.** Favicon and app icons: the mark's pixel is #00ff40 and its body #32ff32; the Brand Book wants one green (#33fb31). Supply corrected files, or have an agent redraw them from the mark in `DESIGN.md`? | Nothing changed; redrawing is in the Icons and motion set |
+| D28 | Home service cards: their gradients were hidden on the live site by a CSS slip (flat dark cards) and are visible again. Were the flat dark cards preferred? | Gradients visible |
+| D29 | Newsletter field text size: `DESIGN.md` sets inputs at 14 px; iPhones zoom the page when a field under 16 px is focused. Use 16 px on phones? | Follow `DESIGN.md` (14 px) |
+| D30 | Home: the full-width green marquee strip is more green than the "about 5% of a surface" rule, and it loops. Keep, tone down, or remove? | Left as it is |
+| D31 | **#41.** About has three lines off the brand voice ("my passion", "world-class design project", "something great"). Rewrite to Brand Book §10, or keep? | Kept (D8, visual only); handled in the copy review |
+| D32 | **#42.** About's HTML holds a hidden founder section with placeholder text ("Add your photo here"). Publish it with a photo, or delete it? | Left hidden |
+| D33 | About: "Book a discovery call", Instagram and LinkedIn are now secondary buttons (grey border, white text, green on hover); before, the call button had a green outline and green text. Keep, or make the call button a text button? | Secondary |
+| D34 | Services: card titles inside the accordions are 19 px (`.heading`); before they were 16 px. Keep 19 px to match the scale, or add a smaller card title to `DESIGN.md`? | 19 px |
+| D35 | Quiz: the Patch and grain sit behind the whole quiz, not a hero band, because the quiz has no hero and D8 rules out adding a headline. The answer cards are solid, so their text stays clean. All right? | Yes |
+| D36 | Resources: the nine software and topic pills use the shared mint `.tag`. It is the `DESIGN.md` tag, but adds more green to the cards than before. Keep, or add an outlined tag variant? | Keep |
+| D37 | Quiz progress indicator: "square segments" was read as four square-cornered bars across the full width (4 px, the current one 8 px), not four small squares. Did you mean squares? | Bars |
+| D38 | **#40.** Resources: the "Academy launching soon" button is a link to "#" that goes nowhere and that the keyboard can still reach. Make it plain text until the Academy has a page, or point it somewhere (the newsletter, the contact form)? | Left as it is (outlined button) |
+| D39 | Field Notes pull-quote: it was three sentences in Space Mono bold; `DESIGN.md` says never a paragraph in Space Mono. Inter (lead size) on a green rule, or shorten the quote to two lines and keep Space Mono? | Inter on a green rule |
+| D40 | Field Notes: "Field Note" above an article title was grey on purpose (to keep green rare); `DESIGN.md` says eyebrows are green. Which? | Green, via the shared `.eyebrow` |
+| D41 | Field Notes: Article and Case Study tags had different colours; the `tag` spec has one style. One style, or two? | One style; the word tells them apart |
+| D42 | Numbers inside sentences (for example "500.000 €" in a paragraph) stay in Inter; the data style is used for dates, reading time and table values. Wrap figures in prose too? | Prose figures stay in Inter |
+| D43 | Field Notes: the published article ends with a green button to cal.com; the template ends with a text link to the contact form. Which ending should new articles use? | Each left as it is |
+| D44 | **#38.** Field Notes hub: the message shown when a filter has no articles is out of date, and EN and PT say different things. What should it say? | Left as it is (D8, visual only); can go with the copy review |
+| D45 | Hero spacing: every hero band now has 96 px below it, as About and Services had. Legal and the Field Notes hub had 64 px. Keep 96 everywhere, or 64 everywhere? | 96 px everywhere |
+| D46 | The `brand` check's colour rule is stricter than first described: a raw colour fails in a page even when it equals a token value, and `base.css` has no allowance for `rgb()` with alpha, because nothing uses one today. Keep it strict, or allow alpha forms of token colours in `base.css`? | Strict |
+| D47 | Tab bars: Services and Legal each style their own, and they differ (hover and active colour is white on Services, green on Legal). Leave, or one shared tab bar? | Leave |

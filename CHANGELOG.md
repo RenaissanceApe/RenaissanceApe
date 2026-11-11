@@ -6,6 +6,274 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.56 — November 2026
+
+### Brand refresh: the site brought up to Brand Book v1.2 (BR1–BR7)
+
+What a visitor sees: body text in Inter instead of Nunito, square corners
+everywhere, a solid navigation bar and mobile menu with no blur, and the
+brand's own grounds behind the page openers: Signal Glow on the home hero,
+the Patch on Services, About, the quiz, Resources and Field Notes, the Pixel
+Field on the 404 and confirmation pages, sand grain on every dark field.
+Small grey text is lighter and now passes WCAG AA. No copy was rewritten, no
+page added or removed, no form field changed, and nothing loads from another
+origin. English and Portuguese changed together throughout.
+
+Closes #16, #27, #32, #34 and #46. How the system works from here on:
+`_docs/BRAND_REFRESH.md`.
+
+### BR1: foundations
+
+#### Added
+
+- **Inter, self-hosted.** Body text is Inter 300–700: one variable file each
+  for latin and latin-ext, copied from the npm package
+  `@fontsource-variable/inter` 5.3.0 into `fonts/`, with its licence in
+  `fonts/inter-LICENSE.txt`.
+- **Design tokens in `base.css`**, beside the colour scales (unchanged):
+  semantic colours (`--bg`, `--surface`, `--accent`, `--text-muted`,
+  `--nav-bg` …), spacing (`--space-xxs` … `--space-section`), `--radius: 0`
+  and motion (`--ease-*`, `--dur-*`), named as `DESIGN.md` names them.
+- **Shared classes in `base.css`** for the page steps: `.btn-primary`,
+  `.btn-secondary`, `.btn-text`, `.eyebrow`, `.tag`, `.card`, `.card-raised`,
+  `.grain`, `.patch-tone`, `.pixel-field`, and the type classes `.display-xl`
+  (56 px), `.display-lg` (40 px), `.display-md` (28 px), `.heading`, `.lead`.
+- **The current page is marked in the mobile menu** (`aria-current="page"`
+  and a green pixel), the quiz link is marked as current on the quiz pages,
+  and the active language carries `aria-current="true"`, in every page.
+
+#### Changed
+
+- **Navigation to spec:** a solid `--nav-bg` bar, 68 px, links in Inter
+  14 px / 500, a 2 px green underline that slides in over 250 ms, square
+  "Get started" button and quiz link.
+- **Mobile menu to spec:** a square overlay that covers the page below the
+  bar and fades in.
+- **Footer to spec:** on `--surface` (Jet Black) with `--text-muted` text at
+  14 px.
+- **Contrast: all nine findings of #16 fixed.** Footer text, the language
+  switcher, the quiz link, the 404 error code, and the table notes and
+  active tab on the services page meet WCAG AA. No brand colour value
+  changed; the semantic tokens are the accessible UI palette #27 asked for.
+- **Motion** uses the tokens; scroll reveal is a 10 px rise over 450 ms.
+  With "reduce motion" on, only opacity and colour change, in at most
+  150 ms, and nothing loops.
+
+#### Removed
+
+- **Nunito:** `fonts/nunito-*.woff2`, its `@font-face` rules and the
+  `--font-body` value.
+
+### BR2: brand assets
+
+#### Added
+
+- **`images/patterns/patch-tone-dark-s77.svg`** and
+  **`patch-signal-dark-s77.svg`** — the Patch (the mark tiled into a maze),
+  tone on dark and signal on dark, seed 77. Each is 1920 × 1152 px (24 px
+  cell, marks 120 px) and repeats with no seam. Signal mode is used nowhere
+  yet (D6).
+- **`images/patterns/pixel-field-standard-dark.svg`** — the Pixel Field dot
+  matrix (18 px grid, 4 px dots, 3.5% lit in green), 1152 × 1152 px,
+  seamless.
+- **`images/grain-tile-512.png`** — the sand grain tile (512 × 512, grain in
+  the alpha channel, seamless), generated to the Brand Book description
+  (D4).
+- **`_tools/patch.mjs`, `_tools/grain.mjs`, `_tools/og.mjs`** — the scripts
+  that make the files above and the OG images. Run by hand; the output is
+  committed. No new dependency.
+- **`images/hero-stage.png`** — a copy of the stage photograph that used to
+  be `og-image.png`, kept so the photo is not lost. Nothing uses it.
+
+#### Changed
+
+- **`images/og-image.png`, `images/og/portugal-events-en.png` and
+  `-pt.png`** redrawn to the `og-image` spec: 1200 × 630, Signal Glow and
+  grain, lockup top-left, title in Space Mono 700, domain in green
+  bottom-right. Same file names, so no page changed. The article images
+  keep their titles; the site image reads "The creative is ready. Is the
+  system?".
+
+### BR3: home, legal, 404, thank-you, check-your-inbox
+
+#### Changed
+
+- **Home hero rebuilt as Signal Glow and sand grain** (#32): a blue-700
+  field with a green radial glow and grain, drawn in CSS. It no longer uses
+  the link-preview card `images/og-image.png` as its background, so the
+  stretched logo and second headline behind the real headline are gone. The
+  `og:image` tags are unchanged.
+- **These five pages follow the page recipe:** tokens instead of raw
+  colours, square corners, the shared button, eyebrow and card classes, and
+  display type on the `DESIGN.md` scale (56 / 40 / 28 px, 19 px card
+  headings).
+- **Home hero buttons:** "Find your fit" is the one filled green button,
+  "Explore services" is secondary. "Read more" on the service cards is the
+  shared text button.
+- **Home service cards show their gradients again.** A CSS ordering slip had
+  been hiding the four service gradients (the cards rendered flat black);
+  they are back, under grain and a navy veil that keeps the text readable.
+- **Home newsletter field** follows the `form-input` spec (44 px, surface
+  background, green border on focus). The form itself is unchanged.
+- **404, Thank you, Check your inbox:** Pixel Field ground with grain. On
+  404 the old grid lines and the green glow behind the number are gone, and
+  "Contact us" is an outlined secondary button.
+- **Legal:** the section tab bar is a solid 52 px bar on `--surface` with
+  Space Mono labels; no decoration, as decided (D6).
+
+#### Fixed
+
+- **Thank you and Check your inbox use the shared navigation bar** (#34).
+  Their own copy of the nav CSS (old blur, raw colours) is removed.
+
+#### Removed
+
+- Page copies of `.btn-primary` / `.btn-secondary` (404) and `.eyebrow` /
+  `.card` (Thank you, Check your inbox), the hero zoom animation, the hover
+  zoom on the service cards, and the `!important` heading sizes on Home and
+  404.
+
+### BR4: services, about
+
+#### Changed
+
+- **Both heroes sit on the Patch** (tone on dark) with sand grain. The
+  emphasised word in a headline is green, never italic.
+- **Services tab bar to spec:** a 52 px bar on Jet Black with Space Mono
+  labels. The current tab is brighter and keeps its green underline.
+- **Square corners on both pages:** the round accordion button, the service
+  panels, the buttons, inputs and the mobile table cards.
+- **Shared classes replace page copies:** eyebrows, cards (phases, "what's
+  included", "two ways to engage", values), the story tag, and the buttons
+  ("Find your fit", "Send message", "Book a discovery call", Instagram,
+  LinkedIn).
+- **Contact form restyled only** (`DESIGN.md` `form-input`): 44 px fields on
+  Jet Black with a 1 px border, a green border and the shared green outline
+  on focus, labels above in Space Mono. No field, name, value, consent
+  wording, honeypot or action changed.
+- **Small grey text is lighter:** table headers, the story byline, the form
+  note and placeholders use `--text-muted` instead of `--text-subtle`.
+- **Body text follows the scale:** 16 px / 1.6 for paragraphs, 14 px / 1.55
+  for cards and tables. Card titles inside the services accordions are
+  19 px (were 16 px).
+
+#### Removed
+
+- Unused page CSS: `@keyframes subOpen`, `.service-img`, `.social-link(s)`,
+  an `.error-code` rule and a duplicated block of media queries.
+- The hover colour change on the three value cards on About: they are not
+  links.
+
+### BR5: quiz, resources
+
+#### Changed
+
+- **Patch and grain.** The quiz sits on the Patch with sand grain behind all
+  of it (it has no hero); the Resources hero is a full-width Patch band.
+- **Quiz answers are outlined choices, not green buttons:** 1 px border,
+  blue on hover. The chosen answer has a green border, a filled letter and a
+  filled square on the right, so it does not depend on colour alone. The
+  progress indicator is four square-cornered segments; the current one is
+  taller.
+- **Resources cards** use the shared card: icon, eyebrow, heading, text,
+  tags, button. Hover is a blue border and a 2 px lift. "Coming soon" is an
+  eyebrow. The Academy button is outlined, so each card view has one filled
+  green button. The software and topic pills use the shared mint `.tag`.
+- **Back, Start over and the result note** use `--text-muted`.
+
+#### Fixed
+
+- **The EN and PT quiz no longer drift.** The two `<style>` blocks are
+  byte-identical and the two scripts differ only in the translated strings.
+  The questions, scoring, result logic and the `?service=` hand-off are
+  unchanged.
+
+### BR6: Field Notes hub, article template, articles
+
+#### Changed
+
+- **Hub:** the hero sits on the Patch with sand grain; the headline is the
+  56 px display size and the intro is the lead style. Each article in the
+  list is a square card that lifts 2 px with a blue border on hover.
+- **Filter:** square buttons in label type, 44 px tall. The active filter
+  shows a green pixel in front of its name as well as a green border. The
+  filter's JavaScript is unchanged.
+- **Article pages and the article template:** the header is a grained
+  gradient from `--surface` to `--bg` (no Patch behind reading text). Title
+  40 px, section headings 28 px, body Inter 16 px / 1.6, standfirst Inter
+  300 18 px / 1.6. Dates and reading time are in the data style. The
+  pull-quote is Inter (lead size) on a green rule, not a Space Mono
+  paragraph. The "Field Note" eyebrow is green, like every eyebrow.
+- **One tag style** for Article and Case Study; the word tells them apart.
+- **The template** carries the same stylesheet as the published article and
+  a comment listing every building block (headings, pull-quote, section
+  break, callout, data table, closing note, button), so a new article
+  starts from the recipe.
+
+#### Removed
+
+- About 170 lines per page of styles left over from the Resources page
+  (`.resources-hero`, `.resource-card` …) that nothing in Field Notes used.
+
+### BR7: sweep
+
+#### Added
+
+- **A seventh check, `brand`** (`_tools/checks/brand.mjs`), run by
+  `npm run check` and in CI. It reads `base.css`, `site.css`, `fonts.css`,
+  every page's `<style>` and every `style="…"` attribute, and fails on: a
+  corner that is not `0` or `var(--radius)`; a `box-shadow`, `text-shadow`
+  or `drop-shadow()`; `blur()` or `backdrop-filter`; a typeface that is not
+  `var(--font-display)` or `var(--font-body)`; and a raw colour anywhere
+  but the `:root` block of `base.css`. It does not read inline `<svg>`
+  icons, the files in `images/`, or anything inside `url(…)` (D5).
+- **24 new self-tests** in `_tools/selftest.mjs` (33 in all): 22 for the
+  `brand` check, one per defect, and two for the `base-css` change below.
+- **More shared classes in `base.css`:** `.label`, `.data`, `.data-table`,
+  `.page-hero` / `.page-hero-inner`, `.card-hover` (the lift for a card that
+  is not a link), `.btn-text-back`, `.form-input` and the form rules,
+  `.nav-home`, headline emphasis (`main h1 em`, `main h2 em`) and eyebrow
+  spacing (`main .eyebrow`).
+
+#### Changed
+
+- **Rules that pages kept in their own `<style>` now live in `base.css`,**
+  and the page copies are deleted: the contact form and the newsletter
+  field, label type on tabs, filters, accordion labels, captions and back
+  links, the data style on dates, the table, the Resources card hover, the
+  quiz Back button, the short nav's "Back to home".
+- **Every hero band has the same padding** (96 px under the bar and 96 px
+  below; 64 / 64 px and 24 px sides under 900 px): About, Services,
+  Resources, Field Notes hub, Legal. Legal and the hub got 32 px more below
+  the hero on desktop; Resources, Legal and the hub changed by 16–32 px on
+  phones and tablets.
+- **`base.css`:** the one shadow (the underline of the active language in
+  the mobile menu) is drawn as a background, so the file has no
+  `box-shadow`.
+- **The `base-css` check knows the shared classes added in this set**
+  (#46). One of them copied back into a page's `<style>` fails the check. A
+  page rule that adds something of its own to a shared class still passes
+  (Legal narrows `.page-hero`, the 404 page spaces its eyebrow): a rule
+  counts as a copy only when every line in it is already in `base.css`.
+- **Field Notes article template:** the second `og:type` tag (`website`) is
+  removed; `article` stays.
+- **`README.md`:** Inter instead of Nunito, seven checks, the `brand` row,
+  `CHROMIUM_PATH`, the three generator scripts, and `base.css` is now
+  written by hand.
+- **`CLAUDE.md`:** seven checks, `brand` in the check names and in "Rules
+  the checks enforce"; the gap table keeps only Layout (Rail Grid) and
+  `ICONS.md`.
+
+### Release
+
+- **`_docs/BRAND_REFRESH.md`** is no longer the plan: it describes how the
+  brand system works on the site and keeps the page recipe as the checklist
+  for any new page.
+- **`_docs/ROADMAP.md`**, **`_docs/PENDING.md`** (things to try by hand, and
+  decisions D22–D47) and **`_docs/SESSION_PROMPTS.md`** brought up to date.
+
+---
+
 ## v1.55 — November 2026
 
 ### Agent rules rebuilt, design reference, roadmap and the `test` branch workflow
