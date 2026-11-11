@@ -82,6 +82,13 @@ const BRAND_CLEAN = {
 const brandCase = (defect, bad) =>
   ({ check: 'brand', defect, clean: BRAND_CLEAN, bad: { ...BRAND_CLEAN, ...bad } });
 
+/* A slice of base.css for the base-css cases: shared classes, grouped the way
+   the real file groups them. */
+const SHARED_CSS = `.eyebrow,.tag,.label,.form-group label,.data-table th{font-size:11px;font-weight:700;letter-spacing:0.24em;}
+main .eyebrow{margin-bottom:16px;}
+.page-hero{padding:164px 48px 96px;}
+.form-input,.form-group input,.form-group select,.form-group textarea{height:44px;}`;
+
 /* Each case: a clean site that must pass, and a broken one that must fail. */
 const CASES = [
   {
@@ -139,6 +146,29 @@ const CASES = [
       ...BASE,
       'a.html': PAGE('<p>ok</p>',
         '.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}'),
+    },
+  },
+  {
+    /* A class the brand refresh added, copied back into a page word for word.
+       The clean site adjusts the same class instead, which a page may do. */
+    check: 'base-css',
+    defect: 'a brand-refresh shared class pasted back into a page',
+    clean: {
+      ...BASE, 'base.css': SHARED_CSS,
+      'a.html': PAGE('<p>ok</p>', '.page-hero{max-width:900px;text-align:center;}main .eyebrow{margin-bottom:24px;}'),
+    },
+    bad: {
+      ...BASE, 'base.css': SHARED_CSS,
+      'a.html': PAGE('<p>ok</p>', '.label{font-size:11px;font-weight:700;letter-spacing:0.24em;}'),
+    },
+  },
+  {
+    check: 'base-css',
+    defect: 'the old form-field rule pasted back into a page',
+    clean: { ...BASE, 'base.css': SHARED_CSS },
+    bad: {
+      ...BASE, 'base.css': SHARED_CSS,
+      'a.html': PAGE('<p>ok</p>', '.form-group input,.form-group select,.form-group textarea{height:44px;}'),
     },
   },
   {

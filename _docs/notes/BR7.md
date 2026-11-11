@@ -36,6 +36,17 @@
 - **`CLAUDE.md`:** seven checks, `brand` in the check names and in "Rules the checks enforce";
   the gap table keeps only Layout (Rail Grid) and `ICONS.md`.
 
+#### Changed (follow-up, fixes #46)
+- **The `base-css` check knows the shared classes added in this set.** The list in
+  `_tools/extract-base-css.mjs` now names the type classes, `.eyebrow` / `.tag` / `.label`,
+  `.data`, the buttons, the cards, `.page-hero`, `.nav-home`, the form rules, `.data-table`, and
+  the grain and pattern classes. One of them copied back into a page's `<style>` fails the check.
+- **What still passes:** a page rule that adds something of its own to a shared class (Legal
+  narrows `.page-hero`, the 404 page spaces its eyebrow). A rule counts as a copy only when every
+  line in it is already in `base.css`.
+- Two more self-tests prove it (33 in all). Run without `--check`, the script writes nothing on
+  the current site. README says `base.css` is now written by hand.
+
 ## Roadmap
 BR7 built: the `brand` check is in CI, shared rules moved from pages into `base.css`, docs up to
 date. How it works: the comment at the top of `_tools/checks/brand.mjs`; the comment at the top
