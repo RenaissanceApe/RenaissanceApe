@@ -40,7 +40,7 @@
 
   /* ── HERO: Patch, tone on dark, plus grain ── */
   .services-hero { padding: calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-4xl); }
-  .services-hero-inner { max-width: 1200px; margin: 0 auto; }
+  .services-hero-inner { max-width: 1104px; margin: 0 auto; }
   .services-hero h1 { max-width: 860px; }
   .services-hero .lead { margin-top: var(--space-lg); color: var(--text-muted); max-width: 560px; }
 
@@ -86,7 +86,7 @@
   details.sub-accordion[open] .sub-accordion-icon::before { background: var(--accent); }
   details.sub-accordion[open] .sub-accordion-icon::after { background: var(--accent); transform: rotate(90deg) scaleY(0); opacity: 0; }
   .sub-accordion-body { padding-bottom: var(--space-lg); }
-  .sub-accordion-body p { font-size: 16px; line-height: 1.6; color: var(--text-muted); margin-bottom: var(--space-md); max-width: 720px; }
+  .sub-accordion-body p:not(.eyebrow) { font-size: 16px; line-height: 1.6; color: var(--text-muted); margin-bottom: var(--space-md); max-width: 720px; }
 
   /* ── ALWAYS-VISIBLE ENGAGE ── */
   .service-engage { margin-top: var(--space-xl); padding-top: var(--space-2xl); border-top: 1px solid var(--border); }
