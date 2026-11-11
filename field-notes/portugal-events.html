@@ -42,15 +42,12 @@
   .article-hero{background:linear-gradient(to bottom,var(--surface),var(--bg));}
   .article-header,.article-body,.article-footer,.fn-cta{max-width:calc(68ch + 48px);margin:0 auto;}
   .article-header{padding:calc(68px + var(--space-2xl)) var(--space-lg) var(--space-2xl);}
-  .fn-back,.article-footer-back{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;font-family:var(--font-display);font-size:11px;font-weight:700;line-height:1.3;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);transition:color var(--dur-micro) var(--ease-fade);}
+  .fn-back,.article-footer-back{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;color:var(--text-muted);transition:color var(--dur-micro) var(--ease-fade);}
   .fn-back{margin-bottom:var(--space-lg);}
   .fn-back:hover,.article-footer-back:hover{color:var(--accent);}
   .fn-back svg,.article-footer-back svg{transition:transform var(--dur-micro) var(--ease-move);}
   .fn-back:hover svg,.article-footer-back:hover svg{transform:translateX(-4px);}
-  .article-header .eyebrow{margin-bottom:var(--space-md);}
   .article-meta{display:flex;align-items:center;gap:var(--space-sm);margin-bottom:var(--space-lg);flex-wrap:wrap;}
-  /* DESIGN.md "data": dates, numbers and codes */
-  .article-date,.article-read-time,.article-body .data{font-family:var(--font-display);font-size:13px;font-weight:400;line-height:1.5;}
   .article-date,.article-read-time{color:var(--text-muted);}
   .article-read-time::before{content:'·';margin-right:var(--space-sm);}
   .article-header h1{color:var(--text);margin-bottom:var(--space-lg);}
@@ -84,13 +81,9 @@
   .article-disclaimer p{margin-bottom:var(--space-sm);}
   .article-disclaimer p:last-child{margin-bottom:0;}
   .article-disclaimer strong{color:var(--text);}
-  /* DESIGN.md "data-table": label-type header, 1 px row borders, no zebra, square.
-     Put numbers, codes and dates in <td class="data">. */
+  /* Tables are the shared .data-table (base.css), in a wrapper that scrolls
+     sideways on a phone. Put numbers, codes and dates in <td class="data">. */
   .article-table{overflow-x:auto;margin:var(--space-xl) 0;}
-  .article-body table{width:100%;border-collapse:collapse;}
-  .article-body th,.article-body td{padding:var(--space-sm) var(--space-md) var(--space-sm) 0;text-align:left;vertical-align:top;border-bottom:1px solid var(--border);}
-  .article-body th{font-family:var(--font-display);font-size:11px;font-weight:700;line-height:1.3;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);}
-  .article-body td{font-size:14px;line-height:1.55;color:var(--text);}
 
   /* ── After the article ── */
   .fn-cta{padding:0 var(--space-lg) var(--space-3xl);}
@@ -157,11 +150,11 @@
 <main id="main-content">
   <div class="article-hero grain">
   <div class="article-header">
-    <a href="index.html" class="fn-back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Field Notes</a>
+    <a href="index.html" class="fn-back label"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Field Notes</a>
     <p class="eyebrow">Field Note</p>
     <div class="article-meta">
-      <time class="article-date" datetime="2026-08-23">23 AUG 2026</time>
-      <span class="article-read-time">6 min read</span>
+      <time class="article-date data" datetime="2026-08-23">23 AUG 2026</time>
+      <span class="article-read-time data">6 min read</span>
     </div>
     <h1 class="display-lg">AV rental is an eligible cost.<br>Just not for your festival.</h1>
     <p class="lead article-lede">Portugal Events applications for 2027 events open 1 September. I went to read the regulation for one specific reason, and found an exception that changes the whole budget.</p>
@@ -241,7 +234,7 @@
     <a class="btn-primary" href="https://cal.com/lumenandpixel" target="_blank" rel="noopener">Talk through a technical budget</a>
   </div>
   <div class="article-footer">
-    <a href="index.html" class="article-footer-back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to Field Notes</a>
+    <a href="index.html" class="article-footer-back label"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to Field Notes</a>
   </div>
 </main>
 <footer>

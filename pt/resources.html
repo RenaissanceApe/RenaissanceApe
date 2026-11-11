@@ -33,20 +33,17 @@
 <style>
   /* Kept identical in resources.html and pt/resources.html: change both together. */
 
-  /* ── HERO ── full-bleed Patch (tone on dark) + grain; text in the 1200 px column */
-  .resources-hero { padding: calc(68px + var(--space-4xl)) 0 var(--space-4xl); border-bottom: 1px solid var(--border); }
-  .resources-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-2xl); }
-  .resources-hero h1 { max-width: 760px; margin-top: var(--space-md); }
-  .resources-hero h1 em { font-style: normal; color: var(--accent); }
+  /* ── HERO ── shared .page-hero on the Patch (tone on dark) + grain */
+  .resources-hero { border-bottom: 1px solid var(--border); }
+  .resources-hero h1 { max-width: 760px; }
   .resources-hero .lead { margin-top: var(--space-lg); color: var(--text-muted); max-width: 520px; }
 
-  /* ── CARDS ── shared .card; these are not links, so the hover lives here */
+  /* ── CARDS ── shared .card and .card-hover (they are not links) */
   .resources-grid { max-width: 1200px; margin: 0 auto; padding: var(--space-3xl) var(--space-2xl) var(--space-4xl); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
-  .resource-card { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2xl); transition: opacity var(--dur-transition) var(--ease-enter), transform var(--dur-micro) var(--ease-move), border-color var(--dur-micro) var(--ease-fade); }
-  .resource-card.visible:hover { border-color: var(--blue-300); transform: translateY(-2px); }
+  .resource-card { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2xl); }
+  .resource-card .eyebrow { margin-bottom: 0; }
   .resource-card-icon { display: block; width: 48px; height: 48px; color: var(--accent); margin-bottom: var(--space-lg); }
   .resource-card h2 { margin: var(--space-sm) 0 var(--space-md); }
-  .resource-card h2 em { font-style: normal; color: var(--accent); }
   .resource-card p:not(.eyebrow) { font-size: 16px; font-weight: 400; color: var(--text-muted); line-height: 1.6; max-width: 420px; }
   .resource-card-pills { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-lg); }
   .resource-card-cta { align-self: flex-start; }
@@ -56,8 +53,6 @@
   .resource-card.coming-soon .resource-card-cta { color: var(--text-muted); border-color: var(--border); cursor: default; pointer-events: none; }
 
   @media (max-width: 900px) {
-    .resources-hero { padding: calc(68px + var(--space-2xl)) 0 var(--space-2xl); }
-    .resources-hero-inner { padding: 0 var(--space-lg); }
     .resources-grid { grid-template-columns: 1fr; padding: var(--space-2xl) var(--space-lg) var(--space-3xl); }
   }
 </style>
@@ -106,8 +101,8 @@
 
 <main id="main-content">
 
-  <header class="resources-hero patch-tone grain">
-    <div class="resources-hero-inner reveal">
+  <header class="resources-hero page-hero patch-tone grain">
+    <div class="resources-hero-inner page-hero-inner reveal">
       <p class="eyebrow">Recursos</p>
       <h1 class="display-xl">Ferramentas e conhecimento para uma melhor <em>produção ao vivo.</em></h1>
       <p class="lead">Recursos de produção prontos a usar na loja. Aprendizagem mais aprofundada na Academia. Ambos construídos a partir de experiência real em espetáculos.</p>
@@ -117,7 +112,7 @@
   <div class="resources-grid">
 
     <!-- STORE CARD -->
-    <div class="resource-card card reveal">
+    <div class="resource-card card card-hover reveal">
       <div>
         <!-- Box / package icon -->
         <svg class="resource-card-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -150,7 +145,7 @@
       when it goes live. Current value is a placeholder.
       e.g. href="https://lumenandpixel.gumroad.com/l/academy"
     -->
-    <div class="resource-card card coming-soon reveal">
+    <div class="resource-card card card-hover coming-soon reveal">
       <div>
         <!-- Mortarboard / diploma icon -->
         <svg class="resource-card-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">

@@ -32,14 +32,15 @@
 <link rel="stylesheet" href="/base.css" />
 <style>
   /* ── LEGAL PAGE ── */
-  .page-hero{padding:calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-3xl);max-width:900px;margin:0 auto;text-align:center;}
+  /* Hero: shared .page-hero padding; here the text is centred in a 900 px box */
+  .page-hero{max-width:900px;margin:0 auto;text-align:center;}
   .page-hero .eyebrow{margin-bottom:var(--space-md);}
   .page-hero h1{margin-bottom:var(--space-md);overflow-wrap:break-word;}
   .page-hero .lead{color:var(--text-muted);max-width:640px;margin:0 auto;}
   /* Sticky internal tabs (DESIGN.md "service-tab-nav": 52 px bar on surface, Space Mono labels) */
   .legal-tabs{position:sticky;top:68px;z-index:80;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
   .legal-tabs-inner{max-width:1200px;margin:0 auto;padding:0 var(--space-2xl);display:flex;gap:var(--space-xxs);overflow-x:auto;}
-  .tab-link{flex:0 0 auto;display:inline-flex;align-items:center;height:52px;padding:0 var(--space-md);font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--dur-micro) var(--ease-fade),border-color var(--dur-micro) var(--ease-fade);}
+  .tab-link{flex:0 0 auto;display:inline-flex;align-items:center;height:52px;padding:0 var(--space-md);color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:color var(--dur-micro) var(--ease-fade),border-color var(--dur-micro) var(--ease-fade);}
   .tab-link:hover{color:var(--accent);}
   .tab-link.active{color:var(--accent);border-bottom-color:var(--accent);}
   /* Content */
@@ -53,7 +54,7 @@
   .legal-section li strong{color:var(--text);}
   .legal-section a{color:var(--blue-300);text-decoration:underline;}
   @media(max-width:900px){
-    .page-hero{padding:calc(68px + var(--space-2xl)) var(--space-lg) var(--space-2xl);}.legal-tabs-inner{padding:0 var(--space-lg);}.legal-wrap{padding:var(--space-2xl) var(--space-lg) var(--space-3xl);}
+    .legal-tabs-inner{padding:0 var(--space-lg);}.legal-wrap{padding:var(--space-2xl) var(--space-lg) var(--space-3xl);}
   }
 </style>
 <link rel="stylesheet" href="/site.css" />
@@ -105,10 +106,10 @@
 
 <div class="legal-tabs" data-scrollspy data-scrollspy-threshold="0.05">
   <div class="legal-tabs-inner">
-    <a href="#privacy" class="tab-link active">Privacy Policy</a>
-    <a href="#terms" class="tab-link">Terms of Use</a>
-    <a href="#cookies" class="tab-link">Cookies</a>
-    <a href="#disclaimer" class="tab-link">Disclaimer</a>
+    <a href="#privacy" class="tab-link label active">Privacy Policy</a>
+    <a href="#terms" class="tab-link label">Terms of Use</a>
+    <a href="#cookies" class="tab-link label">Cookies</a>
+    <a href="#disclaimer" class="tab-link label">Disclaimer</a>
   </div>
 </div>
 

@@ -32,22 +32,17 @@
 <link rel="stylesheet" href="/base.css" />
 <style>
   /* Page styles only. Tokens, type classes (.display-*, .heading, .lead),
-     .eyebrow, .card, .btn-*, .grain and .patch-tone come from base.css. */
+     .eyebrow, .label, .card, .btn-*, .page-hero, .data-table, .grain and
+     .patch-tone come from base.css. */
 
-  /* ── SHARED-CLASS PLACEMENT ON THIS PAGE ── */
-  main .eyebrow { margin-bottom: var(--space-md); }
-  main h1 em, main h2 em { font-style: normal; color: var(--accent); }
-
-  /* ── HERO: Patch, tone on dark, plus grain ── */
-  .services-hero { padding: calc(68px + var(--space-4xl)) var(--space-2xl) var(--space-4xl); }
-  .services-hero-inner { max-width: 1104px; margin: 0 auto; }
+  /* ── HERO: shared .page-hero on the Patch, tone on dark, plus grain ── */
   .services-hero h1 { max-width: 860px; }
   .services-hero .lead { margin-top: var(--space-lg); color: var(--text-muted); max-width: 560px; }
 
   /* ── STICKY TABS (DESIGN.md "service-tab-nav") ── */
   .service-tabs { position: sticky; top: 68px; z-index: 80; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
   .service-tabs-inner { display: flex; max-width: 1200px; margin: 0 auto; padding: 0 var(--space-2xl); }
-  .tab-link { display: flex; align-items: center; height: 52px; font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); padding: 0 var(--space-md); white-space: nowrap; border-bottom: 2px solid transparent; transition: color var(--dur-micro) var(--ease-fade), border-color var(--dur-micro) var(--ease-fade); }
+  .tab-link { display: flex; align-items: center; height: 52px; color: var(--text-muted); padding: 0 var(--space-md); white-space: nowrap; border-bottom: 2px solid transparent; transition: color var(--dur-micro) var(--ease-fade), border-color var(--dur-micro) var(--ease-fade); }
   .tab-link:first-child { padding-left: 0; }
   .tab-link:hover { color: var(--text); }
   .tab-link.active { color: var(--text); border-bottom-color: var(--accent); }
@@ -74,7 +69,7 @@
   details.sub-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); padding: var(--space-lg) 0; cursor: pointer; list-style: none; user-select: none; }
   details.sub-accordion summary::-webkit-details-marker { display: none; }
   details.sub-accordion summary::marker { display: none; }
-  .sub-accordion-label { font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); transition: color var(--dur-micro) var(--ease-fade); }
+  .sub-accordion-label { color: var(--text-muted); transition: color var(--dur-micro) var(--ease-fade); }
   .sub-accordion-icon { width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color var(--dur-micro) var(--ease-fade); position: relative; }
   .sub-accordion-icon::before, .sub-accordion-icon::after { content: ''; position: absolute; background: var(--text-muted); transition: transform var(--dur-control) var(--ease-enter), background var(--dur-micro) var(--ease-fade), opacity var(--dur-control) var(--ease-fade); }
   .sub-accordion-icon::before { width: 10px; height: 2px; }
@@ -101,13 +96,11 @@
   .quadrant-card .eyebrow, .maturity-card .eyebrow { margin-bottom: var(--space-sm); }
   .engage-option p, .quadrant-card p:not(.eyebrow), .maturity-card p:not(.eyebrow) { font-size: 14px; line-height: 1.55; color: var(--text-muted); margin: 0; max-width: none; }
 
-  /* ── TABLE (DESIGN.md "data-table"; header in --text-muted, not --text-subtle: D2) ── */
-  .data-table { width: 100%; border-collapse: collapse; margin: 0 0 var(--space-xs); font-size: 14px; }
-  .data-table th { text-align: left; font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border); }
-  .data-table td { padding: var(--space-md); border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; line-height: 1.55; }
+  /* ── TABLE: shared .data-table; here, the first column names the row,
+     and under 900 px each row becomes a card ── */
+  .data-table { margin: 0 0 var(--space-xs); }
   .data-table td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
   .data-table td em { font-style: italic; color: var(--text-muted); }
-  .data-table tr:last-child td { border-bottom: none; }
 
   /* ── CTA ── */
   .services-cta { background: var(--surface); padding: var(--space-4xl) var(--space-2xl); text-align: center; }
@@ -120,7 +113,6 @@
     .engage-box { grid-template-columns: 1fr; }
   }
   @media (max-width: 900px) {
-    .services-hero { padding: calc(68px + var(--space-3xl)) var(--space-lg) var(--space-3xl); }
     .service-tabs-inner { padding: 0 var(--space-lg); }
     .service-section { padding: var(--space-3xl) var(--space-lg); }
     .service-header { grid-template-columns: 1fr; gap: var(--space-xl); }
@@ -178,8 +170,8 @@
 </div>
 
 <main id="main-content">
-<div class="services-hero patch-tone grain">
-<div class="services-hero-inner reveal">
+<div class="services-hero page-hero patch-tone grain">
+<div class="services-hero-inner page-hero-inner reveal">
   <p class="eyebrow">Serviços</p>
   <h1 class="display-xl">Desenhamos e controlamos como os sistemas visuais se <em>comportam</em> nos eventos ao vivo.</h1>
   <p class="lead">Do primeiro conceito à última deixa — fazemos a ponte entre a intenção criativa e a execução técnica para que cada sistema funcione exatamente como foi concebido.</p>
@@ -188,10 +180,10 @@
 
 <div class="service-tabs">
   <div class="service-tabs-inner">
-    <a href="#show-design" class="tab-link active">Design de Espetáculo</a>
-    <a href="#show-control" class="tab-link">Controlo de Cena</a>
-    <a href="#system-architecture" class="tab-link">Arquitetura de Sistemas</a>
-    <a href="#technical-direction" class="tab-link">Direção Técnica</a>
+    <a href="#show-design" class="tab-link label active">Design de Espetáculo</a>
+    <a href="#show-control" class="tab-link label">Controlo de Cena</a>
+    <a href="#system-architecture" class="tab-link label">Arquitetura de Sistemas</a>
+    <a href="#technical-direction" class="tab-link label">Direção Técnica</a>
   </div>
 </div>
 
@@ -222,7 +214,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Onde intervimos</span>
+        <span class="sub-accordion-label label">Onde intervimos</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -241,7 +233,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Fases de Design</span>
+        <span class="sub-accordion-label label">Fases de Design</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -256,7 +248,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">O que está incluído</span>
+        <span class="sub-accordion-label label">O que está incluído</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -307,7 +299,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Onde intervimos</span>
+        <span class="sub-accordion-label label">Onde intervimos</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -326,7 +318,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Escala de complexidade</span>
+        <span class="sub-accordion-label label">Escala de complexidade</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -341,7 +333,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Sistemas que programamos</span>
+        <span class="sub-accordion-label label">Sistemas que programamos</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -392,7 +384,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Onde intervimos</span>
+        <span class="sub-accordion-label label">Onde intervimos</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -411,7 +403,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Âmbito da arquitetura</span>
+        <span class="sub-accordion-label label">Âmbito da arquitetura</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -426,7 +418,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Quando nos contactar</span>
+        <span class="sub-accordion-label label">Quando nos contactar</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -477,7 +469,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Onde intervimos</span>
+        <span class="sub-accordion-label label">Onde intervimos</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -496,7 +488,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">O que um Diretor Técnico cobre</span>
+        <span class="sub-accordion-label label">O que um Diretor Técnico cobre</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
@@ -511,7 +503,7 @@
 
     <details class="sub-accordion">
       <summary>
-        <span class="sub-accordion-label">Âmbito por escala de evento</span>
+        <span class="sub-accordion-label label">Âmbito por escala de evento</span>
         <span class="sub-accordion-icon" aria-hidden="true"></span>
       </summary>
       <div class="sub-accordion-body">
