@@ -20,16 +20,18 @@
 <meta property="og:title" content="Encontre o Seu Serviço &#8212; Lumen and Pixel" />
 <meta property="og:description" content="Encontre o serviço certo da Lumen and Pixel para o seu evento." />
 <meta property="og:url" content="https://www.lumenandpixel.com/pt/quiz.html" />
-<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.png" />
+<meta property="og:locale" content="pt_PT" />
+<meta property="og:locale:alternate" content="en_GB" />
+<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Lumen and Pixel" />
+<meta property="og:image:alt" content="O logótipo da Lumen and Pixel e a frase “The creative is ready. Is the system?” sobre azul-escuro" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Encontre o Seu Serviço &#8212; Lumen and Pixel" />
 <meta name="twitter:description" content="Encontre o serviço certo da Lumen and Pixel para o seu evento." />
-<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.png" />
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/base.css" />
+<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+<link rel="stylesheet" href="/fonts.css?v=1.58" />
+<link rel="stylesheet" href="/base.css?v=1.58" />
 <style>
   /* Kept identical in quiz.html and pt/quiz.html: change both together. */
   body { min-height: 100vh; display: flex; flex-direction: column; }
@@ -96,10 +98,10 @@
     .result-actions { flex-direction: column; align-items: stretch; }
   }
 </style>
-<link rel="stylesheet" href="/site.css" />
+<link rel="stylesheet" href="/site.css?v=1.58" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=1.58" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Saltar para o conte&#250;do principal</a>
@@ -276,6 +278,16 @@
       </div>
       <button class="result-restart" id="restart-btn">Come&#231;ar de novo</button>
     </div>
+
+    <noscript>
+      <div class="result-divider"></div>
+      <p class="q-sub">O question&#225;rio precisa de JavaScript.</p>
+      <div class="result-actions">
+        <a class="result-primary btn-primary" href="services.html">Veja os quatro servi&#231;os <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="result-secondary btn-secondary" href="about.html#contact-form">Fale-nos do seu projeto <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+      </div>
+    </noscript>
+
   </div>
 </main>
 
@@ -297,7 +309,7 @@
 // ─── SERVICE DATA ─────────────────────────────────────────────────────────────
 var SERVICES = {
   SD: {
-    nameHTML: 'Design de<br><em>Espetáculo</em>',
+    nameHTML: 'Design de <br><em>Espetáculo</em>',
     anchor: '#show-design',
     why: "As suas respostas apontam para uma lacuna entre onde vive a visão criativa e onde começa a realidade técnica. O Design de Espetáculo fecha essa lacuna — construímos o sistema visual que liga o que imagina ao que pode ser efetivamente construído, programado e entregue em palco.",
     modes: {
@@ -306,7 +318,7 @@ var SERVICES = {
     }
   },
   SC: {
-    nameHTML: 'Controlo de Cena<br><em>&amp; Automação</em>',
+    nameHTML: 'Controlo de Cena <br><em>&amp; Automação</em>',
     anchor: '#show-control',
     why: "As suas respostas apontam para um problema de sincronização — múltiplos sistemas que precisam de disparar juntos mas atualmente não o fazem. O Controlo de Cena & Automação dá ao espetáculo um único relógio a partir do qual tudo corre, eliminando as decisões manuais e os riscos de timing que se acumulam no dia do show.",
     modes: {
@@ -315,7 +327,7 @@ var SERVICES = {
     }
   },
   SA: {
-    nameHTML: 'Arquitetura<br><em>de Sistemas</em>',
+    nameHTML: 'Arquitetura <br><em>de Sistemas</em>',
     anchor: '#system-architecture',
     why: "As suas respostas apontam para um problema de infraestrutura — a espinha dorsal técnica do show não foi devidamente concebida. A Arquitetura de Sistemas define cada caminho de sinal, rede de controlo e interface de equipamento antes de qualquer cabo ser passado, para que o show seja construído com base em factos documentados em vez de suposições.",
     modes: {
@@ -324,7 +336,7 @@ var SERVICES = {
     }
   },
   TD: {
-    nameHTML: 'Direção<br><em>Técnica</em>',
+    nameHTML: 'Direção <br><em>Técnica</em>',
     anchor: '#technical-direction',
     why: "As suas respostas apontam para uma lacuna de responsabilidade — não existe uma única pessoa que compreenda tanto a intenção criativa como a infraestrutura técnica e tenha autoridade para as alinhar. A Direção Técnica preenche esse papel, fazendo a ponte entre a equipa, a equipa criativa e a sala para que cada elemento do show aterro como foi concebido.",
     modes: {

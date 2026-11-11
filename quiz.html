@@ -20,16 +20,18 @@
 <meta property="og:title" content="Find Your Fit — Lumen and Pixel" />
 <meta property="og:description" content="Find the right Lumen and Pixel service for your event — interactive service finder." />
 <meta property="og:url" content="https://www.lumenandpixel.com/quiz.html" />
-<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.png" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:locale:alternate" content="pt_PT" />
+<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Lumen and Pixel" />
+<meta property="og:image:alt" content="The Lumen and Pixel logo and the line “The creative is ready. Is the system?” on dark blue" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Find Your Fit — Lumen and Pixel" />
 <meta name="twitter:description" content="Find the right Lumen and Pixel service for your event — interactive service finder." />
-<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.png" />
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/base.css" />
+<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+<link rel="stylesheet" href="/fonts.css?v=1.58" />
+<link rel="stylesheet" href="/base.css?v=1.58" />
 <style>
   /* Kept identical in quiz.html and pt/quiz.html: change both together. */
   body { min-height: 100vh; display: flex; flex-direction: column; }
@@ -96,10 +98,10 @@
     .result-actions { flex-direction: column; align-items: stretch; }
   }
 </style>
-<link rel="stylesheet" href="/site.css" />
+<link rel="stylesheet" href="/site.css?v=1.58" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=1.58" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -355,6 +357,15 @@
       <button class="result-restart" id="restart-btn">Start over</button>
     </div>
 
+    <noscript>
+      <div class="result-divider"></div>
+      <p class="q-sub">The fit finder needs JavaScript.</p>
+      <div class="result-actions">
+        <a class="result-primary btn-primary" href="services.html">Read the four services <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="result-secondary btn-secondary" href="about.html#contact-form">Tell us about your project <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+      </div>
+    </noscript>
+
   </div>
 </main>
 
@@ -376,7 +387,7 @@
 // ─── SERVICE DATA ─────────────────────────────────────────────────────────────
 var SERVICES = {
   SD: {
-    nameHTML: 'Show<br><em>Design</em>',
+    nameHTML: 'Show <br><em>Design</em>',
     anchor: '#show-design',
     why: "Your answers point to a gap between where the creative vision lives and where the technical reality begins. Show Design bridges that gap — we build the visual system that connects what you imagine to what can actually be built, programmed, and delivered on stage.",
     modes: {
@@ -385,7 +396,7 @@ var SERVICES = {
     }
   },
   SC: {
-    nameHTML: 'Show Control<br><em>&amp; Automation</em>',
+    nameHTML: 'Show Control <br><em>&amp; Automation</em>',
     anchor: '#show-control',
     why: "Your answers point to a synchronization problem — multiple systems that need to fire together but currently don't. Show Control & Automation gives the show a single clock that everything runs from, eliminating the manual decisions and timing risks that compound on show day.",
     modes: {
@@ -394,7 +405,7 @@ var SERVICES = {
     }
   },
   SA: {
-    nameHTML: 'System<br><em>Architecture</em>',
+    nameHTML: 'System <br><em>Architecture</em>',
     anchor: '#system-architecture',
     why: "Your answers point to an infrastructure problem — the technical backbone of the show hasn't been properly designed. System Architecture defines every signal path, control network, and equipment interface before a cable is run, so the show is built on documented fact rather than assumption.",
     modes: {
@@ -403,7 +414,7 @@ var SERVICES = {
     }
   },
   TD: {
-    nameHTML: 'Technical<br><em>Direction</em>',
+    nameHTML: 'Technical <br><em>Direction</em>',
     anchor: '#technical-direction',
     why: "Your answers point to an accountability gap — there's no single person who understands both the creative intent and the technical infrastructure and has the authority to align them. Technical Direction fills that role, bridging crew, creative team, and venue so every element of the show lands as designed.",
     modes: {

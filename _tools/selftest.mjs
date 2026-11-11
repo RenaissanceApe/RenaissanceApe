@@ -89,6 +89,16 @@ main .eyebrow{margin-bottom:16px;}
 .page-hero{padding:164px 48px 96px;}
 .form-input,.form-group input,.form-group select,.form-group textarea{height:44px;}`;
 
+/* Two pages loading the four shared files with the release version (#51). */
+const SHARED_HEAD = v => `<link rel="stylesheet" href="/fonts.css?v=${v}" />
+<link rel="stylesheet" href="/base.css?v=${v}" />
+<link rel="stylesheet" href="/site.css?v=${v}" />
+<script src="/site.js?v=${v}" defer></script>`;
+const VERSIONED = {
+  'a.html': PAGE('<p>ok</p>', '', SHARED_HEAD('1.58')),
+  'pt/a.html': PAGE('<p>ok</p>', '', SHARED_HEAD('1.58')).replace('lang="en"', 'lang="pt"'),
+};
+
 /* Each case: a clean site that must pass, and a broken one that must fail. */
 const CASES = [
   {
@@ -100,6 +110,18 @@ const CASES = [
     check: 'html-structure',
     defect: 'a duplicate id',
     bad: { ...BASE, 'a.html': PAGE('<div id="x"></div><div id="x"></div>') },
+  },
+  {
+    check: 'html-structure',
+    defect: 'one page left on the previous release version',
+    clean: VERSIONED,
+    bad: { ...VERSIONED, 'pt/a.html': VERSIONED['pt/a.html'].replace('/base.css?v=1.58', '/base.css?v=1.57') },
+  },
+  {
+    check: 'html-structure',
+    defect: 'a shared file loaded without ?v=',
+    clean: VERSIONED,
+    bad: { ...VERSIONED, 'a.html': VERSIONED['a.html'].replace('/site.js?v=1.58', '/site.js') },
   },
   {
     check: 'links',

@@ -6,6 +6,115 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.58 — November 2026
+
+### Upkeep 2: defects fixed before the copy review (UP0–UP4)
+
+What a visitor sees: very little. The quiz now says what to do when JavaScript is off instead of
+showing nothing useful; the 404 page works at any missing address, inside a folder too; link
+previews load lighter images; and screen-reader users get real headings, a skip link and
+announced filters where they were missing. Returning visitors no longer see an old stylesheet for
+hours after a release. No copy was rewritten, no form field changed, and nothing loads from
+another origin. English and Portuguese changed together throughout.
+
+Closes #37, #40 and #51. Also from discovery run 1's quick fixes QF1–QF9. #56 (the site answering
+on plain `http://`) was fixed by the owner in Cloudflare on 2026-11-11. How it works from here on:
+`_docs/UPKEEP_2.md`.
+
+### UP0: the checks survive an Ubuntu mirror outage
+
+#### Changed
+
+- **The checks no longer stop when Ubuntu's package mirror is down.** Since 11 November 2026 every
+  run on GitHub failed while installing the test browser, because the runner could not reach
+  Ubuntu's package mirror to download fonts, before any check ran. The browser now downloads
+  without the mirror; the system libraries it needs are installed in a separate step that retries
+  three times and, if the mirror is still down, shows a warning and carries on with the libraries
+  the runner already has. No check, self-test case or step was removed or softened: if a library
+  is really missing, the self-test and the contrast check still fail.
+
+### UP1: quiz and About scripts
+
+#### Added
+
+- **Fit finder without JavaScript:** the quiz now says it needs JavaScript and offers two ways
+  on: the four services, or the contact form (EN and PT). (QF2)
+
+#### Changed
+
+- **Result heading reads as two words:** screen readers now hear "Technical Direction", not
+  "TechnicalDirection", on all four quiz results in both languages. Looks the same. (QF6)
+- **Contact form pre-fill accepts only the four quiz codes:** `about.html?service=` fills the
+  service menu and the hidden `quiz_result` only for `SD`, `SC`, `SA` or `TD`. Anything else
+  leaves both empty, so the page no longer writes text into the form that `INTAKE.md` doesn't
+  allow. (QF3)
+- **About's contact details:** "Based in", "Response time" and "Works with clients" are now plain
+  text instead of form labels with no field. Looks the same. (QF5, About part)
+
+### UP2: 404, confirmation pages, Legal, Services
+
+#### Changed
+
+- **The 404 page works from any folder.** GitHub Pages shows the root `404.html` for every
+  missing address, including ones inside a folder (`/field-notes/nope`, `/pt/nope`). Its logo,
+  menu, buttons, language switcher and footer links were relative, so from inside a folder they
+  pointed at pages that don't exist. They now all start at the site root (`/index.html`,
+  `/images/…`; in Portuguese `/pt/…`). EN and PT. (QF1)
+- **Skip link on the two confirmation pages.** "Thank you" and "Check your inbox" now carry the
+  same "Skip to main content" link (PT: "Saltar para o conteúdo principal") as every other page,
+  and their main area has `id="main-content"`. EN and PT.
+- **Legal's tab bar is a navigation landmark.** The Privacy / Terms / Cookies / Disclaimer bar is
+  now a `<nav>` named "Legal sections" (PT: "Secções legais") for screen readers. It looks and
+  behaves exactly as before. EN and PT.
+- **Services image paths fixed.** The four service backgrounds and icons pointed one folder too
+  high (`../images/` in EN, `../../images/` in PT). They worked only because browsers ignore a
+  step above the site root. Path fix only. EN and PT. (QF5)
+
+### UP3: Field Notes hub and Resources
+
+#### Changed
+
+- **Field Notes hub (EN and PT):** article titles in the list are now real headings (`<h2>`) and
+  look exactly as before, so screen-reader users can jump between articles. (QF4)
+- **Field Notes filters (EN and PT):** each filter button now says whether it is pressed, and the
+  list is announced when it changes, so the "no articles yet" message is read out. (#37)
+- **Resources (EN and PT):** the "Academy launching soon" button is no longer a link to nowhere.
+  It looks the same but can't be clicked or reached with Tab. (#40)
+
+#### Removed
+
+- **Resources (EN and PT):** an HTML note to ourselves ("ACADEMY URL: Replace the href…") that
+  was visible to anyone reading the page source. (#40)
+
+### UP4: head tags, caching, robots, link-preview images
+
+#### Changed
+
+- **A release now reaches visitors straight away.** Every page asks for its four shared files
+  with the release version (`/base.css?v=1.58`, and the same for `site.css`, `site.js`,
+  `fonts.css`), so a browser that cached the previous stylesheet fetches the new one instead of
+  using the old one for up to four hours. The `html-structure` check fails if a page's version is
+  missing or differs from the others, and a self-test proves it. From now on, a release that
+  changes one of those files sets `?v=` to its own version on every page (CLAUDE.md, README,
+  PARALLEL.md). EN and PT. (#51)
+- **Link previews are lighter and better described.** The three preview cards (the site card and
+  the two Portugal Events cards) are now JPEG, about 172 KB each instead of about 795 KB: the
+  same picture. Every page names its language for link previews (`og:locale` `en_GB` / `pt_PT`,
+  with the other as the alternate), and describes its card for people using screen readers
+  (`og:image:alt`, which said only "Lumen and Pixel"). The Portuguese home's preview address is
+  now `/pt/`, matching its canonical. The old PNG cards stay in `images/` until the owner decides
+  (D68). EN and PT. (QF7)
+- **Search engines see the studio from the Portuguese home too.** The organisation data on the
+  English home (name, logo, founder, country, email, social profiles) is now also on the
+  Portuguese home, with the Portuguese description. No city yet (D61). (QF8)
+- **robots.txt no longer blocks the old addresses.** The two `Disallow` lines (`/articles/`,
+  `/pt/field-notes.html`) are gone, so search engines can read those redirect pages and follow
+  them to the current ones. (QF9)
+- **404 icons from any folder.** The 404 page's icons and manifest (in its `<head>`) start at the
+  site root too, finishing what UP2 began. EN and PT. (QF1)
+
+---
+
 ## v1.57 — November 2026
 
 ### Discovery run 1: what to build next, found, challenged and planned (DS1–DS3)

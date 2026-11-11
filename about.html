@@ -20,16 +20,18 @@
 <meta property="og:title" content="About — Lumen and Pixel" />
 <meta property="og:description" content="About Lumen and Pixel. Founded by Ricardo Bedulho, a creative director and lighting designer based in Portugal." />
 <meta property="og:url" content="https://www.lumenandpixel.com/about.html" />
-<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.png" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:locale:alternate" content="pt_PT" />
+<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Lumen and Pixel" />
+<meta property="og:image:alt" content="The Lumen and Pixel logo and the line “The creative is ready. Is the system?” on dark blue" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="About — Lumen and Pixel" />
 <meta name="twitter:description" content="About Lumen and Pixel. Founded by Ricardo Bedulho, a creative director and lighting designer based in Portugal." />
-<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.png" />
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/base.css" />
+<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+<link rel="stylesheet" href="/fonts.css?v=1.58" />
+<link rel="stylesheet" href="/base.css?v=1.58" />
 <style>
   /* Page styles only. Tokens, type classes (.display-*, .heading, .lead),
      .eyebrow, .tag, .label, .card, .btn-*, .page-hero, the form styles,
@@ -87,7 +89,7 @@
   .contact-details{display:flex;flex-direction:column;gap:var(--space-xl);}
   .contact-detail-item{display:flex;align-items:flex-start;gap:var(--space-md);}
   .contact-detail-icon{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:2px;}
-  .contact-detail-item label{display:block;color:var(--accent);margin-bottom:var(--space-xs);}
+  .contact-detail-item .label{display:block;color:var(--accent);margin-bottom:var(--space-xs);}
   .contact-detail-item p{font-size:16px;color:var(--text);}
   .contact-social{display:flex;gap:var(--space-sm);margin-top:var(--space-2xl);flex-wrap:wrap;}
   .cal-cta{margin-top:var(--space-xl);padding-top:var(--space-xl);border-top:1px solid var(--border);}
@@ -113,10 +115,10 @@
     .big-quote{font-size:19px;line-height:1.2;}
   }
 </style>
-<link rel="stylesheet" href="/site.css" />
+<link rel="stylesheet" href="/site.css?v=1.58" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=1.58" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -253,15 +255,15 @@
       <div class="contact-details">
         <div class="contact-detail-item">
           <svg class="contact-detail-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2a5 5 0 015 5c0 3.5-5 11-5 11S5 10.5 5 7a5 5 0 015-5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="10" cy="7" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
-          <div><label class="label">Based in</label><p>Portugal</p></div>
+          <div><span class="label">Based in</span><p>Portugal</p></div>
         </div>
         <div class="contact-detail-item">
           <svg class="contact-detail-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 6v4.5l3 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><label class="label">Response time</label><p>Within 1 business day</p></div>
+          <div><span class="label">Response time</span><p>Within 1 business day</p></div>
         </div>
         <div class="contact-detail-item">
           <svg class="contact-detail-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 2.5c-2 2-3 4.5-3 7.5s1 5.5 3 7.5M10 2.5c2 2 3 4.5 3 7.5s-1 5.5-3 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2.5 10h15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <div><label class="label">Works with clients</label><p>Worldwide</p></div>
+          <div><span class="label">Works with clients</span><p>Worldwide</p></div>
         </div>
       </div>
     </div>
@@ -377,7 +379,8 @@
     var k=p.get('service');
     var sel=document.getElementById('service');
     var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
-    var val=map[k]||k||'';
+    // Only the four codes INTAKE.md allows; anything else leaves the select on its placeholder.
+    var val=Object.prototype.hasOwnProperty.call(map,k)?map[k]:'';
     if(sel&&val)sel.value=val;
     if(window.location.hash==='#contact-form'){
       var ft=document.getElementById('contact-form');
@@ -397,7 +400,7 @@
     var qf=document.getElementById('quiz_result');
     var k=new URLSearchParams(window.location.search).get('service');
     var map={SD:'Show Design',SC:'Show Control & Automation',SA:'System Architecture',TD:'Technical Direction'};
-    if(qf&&k)qf.value=map[k]||k;
+    if(qf&&Object.prototype.hasOwnProperty.call(map,k))qf.value=map[k];
   })();
 
 </script>

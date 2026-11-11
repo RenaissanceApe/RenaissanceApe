@@ -20,16 +20,18 @@
 <meta property="og:title" content="Verifique o seu email — Lumen and Pixel" />
 <meta property="og:description" content="Quase lá. Verifique o seu email e confirme a subscrição." />
 <meta property="og:url" content="https://www.lumenandpixel.com/pt/check-your-inbox.html" />
-<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.png" />
+<meta property="og:locale" content="pt_PT" />
+<meta property="og:locale:alternate" content="en_GB" />
+<meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Lumen and Pixel" />
+<meta property="og:image:alt" content="O logótipo da Lumen and Pixel e a frase “The creative is ready. Is the system?” sobre azul-escuro" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Verifique o seu email — Lumen and Pixel" />
 <meta name="twitter:description" content="Quase lá. Verifique o seu email e confirme a subscrição." />
-<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.png" />
-<link rel="stylesheet" href="/fonts.css" />
-<link rel="stylesheet" href="/base.css" />
+<meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+<link rel="stylesheet" href="/fonts.css?v=1.58" />
+<link rel="stylesheet" href="/base.css?v=1.58" />
 <style>
 body{min-height:100vh;display:flex;flex-direction:column;}
   /* MAIN: Pixel Field ground (.pixel-field) under sand grain (.grain) */
@@ -40,12 +42,13 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   .actions{display:flex;gap:var(--space-md);flex-wrap:wrap;margin-top:var(--space-xl);}
   @media(max-width:700px){main .card{padding:var(--space-xl) var(--space-lg);}.actions{flex-direction:column;}}
 </style>
-<link rel="stylesheet" href="/site.css" />
+<link rel="stylesheet" href="/site.css?v=1.58" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=1.58" defer></script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Saltar para o conteúdo principal</a>
 <nav aria-label="Navegação principal">
   <a href="index.html" class="nav-logo" aria-label="Lumen and Pixel — início">
     <img class="nav-logo-mark" src="../images/logo-mark.svg" alt="Lumen and Pixel" width="236" height="236" />
@@ -57,7 +60,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
     </div>
   </div>
 </nav>
-<main class="pixel-field grain">
+<main id="main-content" class="pixel-field grain">
   <section class="card" aria-labelledby="ty-title">
     <p class="eyebrow">Newsletter</p>
     <h1 id="ty-title" class="display-lg">Quase lá &#8212; verifique o seu email e confirme a subscrição.</h1>
