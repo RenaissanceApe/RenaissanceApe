@@ -355,6 +355,15 @@
       <button class="result-restart" id="restart-btn">Start over</button>
     </div>
 
+    <noscript>
+      <div class="result-divider"></div>
+      <p class="q-sub">The fit finder needs JavaScript.</p>
+      <div class="result-actions">
+        <a class="result-primary btn-primary" href="services.html">Read the four services <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="result-secondary btn-secondary" href="about.html#contact-form">Tell us about your project <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+      </div>
+    </noscript>
+
   </div>
 </main>
 
@@ -376,7 +385,7 @@
 // ─── SERVICE DATA ─────────────────────────────────────────────────────────────
 var SERVICES = {
   SD: {
-    nameHTML: 'Show<br><em>Design</em>',
+    nameHTML: 'Show <br><em>Design</em>',
     anchor: '#show-design',
     why: "Your answers point to a gap between where the creative vision lives and where the technical reality begins. Show Design bridges that gap — we build the visual system that connects what you imagine to what can actually be built, programmed, and delivered on stage.",
     modes: {
@@ -385,7 +394,7 @@ var SERVICES = {
     }
   },
   SC: {
-    nameHTML: 'Show Control<br><em>&amp; Automation</em>',
+    nameHTML: 'Show Control <br><em>&amp; Automation</em>',
     anchor: '#show-control',
     why: "Your answers point to a synchronization problem — multiple systems that need to fire together but currently don't. Show Control & Automation gives the show a single clock that everything runs from, eliminating the manual decisions and timing risks that compound on show day.",
     modes: {
@@ -394,7 +403,7 @@ var SERVICES = {
     }
   },
   SA: {
-    nameHTML: 'System<br><em>Architecture</em>',
+    nameHTML: 'System <br><em>Architecture</em>',
     anchor: '#system-architecture',
     why: "Your answers point to an infrastructure problem — the technical backbone of the show hasn't been properly designed. System Architecture defines every signal path, control network, and equipment interface before a cable is run, so the show is built on documented fact rather than assumption.",
     modes: {
@@ -403,7 +412,7 @@ var SERVICES = {
     }
   },
   TD: {
-    nameHTML: 'Technical<br><em>Direction</em>',
+    nameHTML: 'Technical <br><em>Direction</em>',
     anchor: '#technical-direction',
     why: "Your answers point to an accountability gap — there's no single person who understands both the creative intent and the technical infrastructure and has the authority to align them. Technical Direction fills that role, bridging crew, creative team, and venue so every element of the show lands as designed.",
     modes: {
