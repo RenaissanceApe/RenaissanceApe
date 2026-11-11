@@ -5,7 +5,7 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 1. Setup
 
-- [ ] GitHub → Settings → General → Pull Requests: allow **merge commits** and **squash merging**
+- [x] GitHub → Settings → General → Pull Requests: allow **merge commits** and **squash merging**
       (PARALLEL.md, "What you set up once").
 - [ ] Optional: branch rules on `test` and `main` requiring the `checks` job.
 - [ ] Issue #14 ("start here") is the old running order; `_docs/ROADMAP.md` replaces it. Close it
@@ -16,6 +16,9 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 Nothing yet.
 
 ## 3. Decisions
+
+**D1–D11 were accepted as assumed by the owner on 2026-11-11: the right-hand column is the
+decision.** D12–D21 are still open.
 
 | # | Question | Assumed until answered |
 |---|---|---|
