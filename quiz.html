@@ -31,85 +31,70 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-body { min-height: 100vh; display: flex; flex-direction: column;
-  }
-  /* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-  /* ── QUIZ SHELL ── */
-  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 108px 24px 80px; }
+  /* Kept identical in quiz.html and pt/quiz.html: change both together. */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── QUIZ SHELL ── the whole quiz is one view: Patch (tone on dark) + grain */
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 108px var(--space-lg) var(--space-4xl); }
   .quiz-wrap { width: 100%; max-width: 700px; }
 
-  /* Progress bar */
-  .progress-bar { display: flex; gap: 6px; margin-bottom: 56px; }
-  .progress-segment { height: 2px; flex: 1; background: rgba(130,178,215,0.15); border-radius: 2px; transition: background 0.45s ease; }
-  .progress-segment.done { background: var(--green-500); }
-  .progress-segment.active { background: rgba(51,251,49,0.4); }
+  /* Progress: four square-cornered segments. Done is filled green, the
+     current one is blue and taller, so the state is not colour alone. */
+  .progress-bar { display: flex; align-items: flex-end; gap: var(--space-xxs); height: 8px; margin-bottom: var(--space-2xl); }
+  .progress-segment { height: 4px; flex: 1; background: var(--border); transition: background var(--dur-transition) var(--ease-fade); }
+  .progress-segment.done { background: var(--accent); }
+  .progress-segment.active { height: 8px; background: var(--blue-300); }
 
-  /* Question screens — hidden by default, only .active shows */
+  /* Question screens: hidden by default, only .active shows */
   .q-screen { display: none; }
-  .q-screen.active { display: block; animation: fadeUp 0.38s cubic-bezier(0.16,1,0.3,1) both; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .q-screen.active { display: block; animation: fadeUp var(--dur-transition) var(--ease-enter) both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .q-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-500); margin-bottom: 16px; }
-  .q-text { font-family: var(--font-display); font-size: clamp(1.45rem, 3.5vw, 2.1rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 12px; overflow-wrap: break-word; word-break: break-word; }
-  .q-sub { font-size: 15px; font-weight: 300; color: var(--gray-300); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
+  .q-label { margin-bottom: var(--space-md); }
+  .q-text { margin-bottom: var(--space-sm); }
+  .q-sub { font-size: 16px; font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: var(--space-xl); max-width: 520px; }
 
-  /* Options */
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .option-btn {
-    display: flex; align-items: flex-start; gap: 18px; width: 100%;
-    background: var(--blue-900); border: 1px solid rgba(130,178,215,0.1);
-    border-radius: 3px; padding: 20px 22px; cursor: pointer; text-align: left;
-    color: var(--gray-100); font-family: var(--font-body);
-    transition: border-color 0.18s, background 0.18s, transform 0.15s;
-  }
-  .option-btn:hover { border-color: rgba(51,251,49,0.3); background: rgba(51,251,49,0.04); transform: translateX(3px); }
-  .option-btn.selected { border-color: var(--green-500); background: rgba(51,251,49,0.07); }
-  .option-letter { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--green-500); flex-shrink: 0; margin-top: 3px; width: 16px; }
+  /* Options are choices, not calls to action: outlined, never filled green.
+     Selected = green border + filled letter + a square marker on the right. */
+  .options { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .option-btn { display: flex; align-items: flex-start; gap: var(--space-md); width: 100%; background: var(--surface); border: 1px solid var(--border); padding: var(--space-md) var(--space-lg); cursor: pointer; text-align: left; color: var(--text); font-family: var(--font-body); transition: border-color var(--dur-micro) var(--ease-fade); }
+  .option-btn:hover { border-color: var(--blue-300); }
+  .option-btn.selected { border-color: var(--accent); }
+  .option-btn::after { content: ''; flex-shrink: 0; align-self: center; width: 12px; height: 12px; border: 1px solid var(--border); }
+  .option-btn.selected::after { border-color: var(--accent); background: var(--accent); }
+  .option-letter { font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 20px; text-align: center; color: var(--accent); border: 1px solid var(--border); flex-shrink: 0; width: 22px; height: 22px; }
+  .option-btn.selected .option-letter { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   .option-content { flex: 1; }
-  .option-title { font-size: 15px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; display: block; }
-  .option-desc { font-size: 13px; font-weight: 300; color: var(--gray-300); line-height: 1.6; display: block; }
+  .option-title { font-size: 16px; font-weight: 600; line-height: 1.3; margin-bottom: var(--space-xxs); display: block; }
+  .option-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.55; display: block; }
 
-  /* Navigation buttons */
-  .q-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; gap: 16px; }
-  .btn-back { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); background: none; border: none; cursor: pointer; padding: 8px 0; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
-  .btn-back:hover { color: var(--gray-100); }
+  /* Back / Next. Next is the shared .btn-primary; Back has a leading arrow,
+     which .btn-text (trailing arrow) cannot draw, so it stays here. */
+  .q-actions { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-lg); gap: var(--space-md); }
+  .btn-back { font-family: var(--font-body); font-size: 14px; font-weight: 600; line-height: 1; color: var(--text-muted); background: none; border: 0; cursor: pointer; min-height: 44px; padding: 0; transition: color var(--dur-micro) var(--ease-fade); display: inline-flex; align-items: center; gap: var(--space-xs); }
+  .btn-back:hover { color: var(--text); }
   .btn-back:disabled { opacity: 0; pointer-events: none; }
-  .btn-next { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-700); background: var(--green-500); border: none; border-radius: 3px; padding: 13px 26px; cursor: pointer; transition: background 0.2s, opacity 0.2s; min-height: 44px; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-next:hover { background: var(--green-300); }
   .btn-next:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
   /* Result screen */
   #result-screen { display: none; }
-  #result-screen.active { display: block; animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both; }
-  .result-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-500); border: 1px solid rgba(51,251,49,0.25); padding: 6px 14px; border-radius: 2px; margin-bottom: 28px; }
-  .result-service { font-family: var(--font-display); font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 10px; overflow-wrap: break-word; word-break: break-word; }
-  .result-service em { font-style: italic; color: var(--green-500); }
-  .result-mode { font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-300); }
-  .result-divider { width: 40px; height: 1px; background: rgba(51,251,49,0.35); margin: 36px 0; }
-  .result-why { font-size: 16px; font-weight: 300; color: var(--gray-300); line-height: 1.8; max-width: 580px; margin-bottom: 24px; }
-  .result-mode-desc { font-size: 14px; font-weight: 300; color: var(--gray-500); line-height: 1.75; max-width: 560px; border-left: 2px solid rgba(51,251,49,0.3); padding-left: 20px; margin-bottom: 48px; }
-  .result-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 32px; }
-  .result-primary { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-700); background: var(--green-500); border-radius: 3px; padding: 14px 26px; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
-  .result-primary:hover { background: var(--green-300); }
-  .result-secondary { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-300); border: 1px solid rgba(130,178,215,0.2); border-radius: 3px; padding: 13px 20px; transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
-  .result-secondary:hover { border-color: var(--green-500); color: var(--green-500); }
-  .result-restart { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-500); background: none; border: none; cursor: pointer; padding: 8px 0; transition: color 0.2s; display: block; }
-  .result-restart:hover { color: var(--gray-300); }
-  /* ── FOOTER ── */
+  #result-screen.active { display: block; animation: fadeUp var(--dur-transition) var(--ease-enter) both; }
+  .result-badge { margin-bottom: var(--space-lg); }
+  .result-service { margin-bottom: var(--space-sm); }
+  .result-service em { font-style: normal; color: var(--accent); }
+  .result-mode { font-family: var(--font-display); font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--blue-300); }
+  .result-divider { width: 40px; height: 1px; background: var(--border); margin: var(--space-xl) 0; }
+  .result-why { color: var(--text-muted); max-width: 580px; margin-bottom: var(--space-lg); }
+  .result-mode-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.55; max-width: 560px; border-left: 2px solid var(--accent); padding-left: var(--space-md); margin-bottom: var(--space-2xl); }
+  .result-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; margin-bottom: var(--space-xl); }
+  .result-restart { font-family: var(--font-body); font-size: 14px; font-weight: 600; line-height: 1; color: var(--text-muted); background: none; border: 0; cursor: pointer; min-height: 44px; padding: 0; transition: color var(--dur-micro) var(--ease-fade); display: block; }
+  .result-restart:hover { color: var(--text); }
+
   @media (max-width: 600px) {
     .q-actions { flex-direction: column-reverse; align-items: stretch; }
-    .btn-next { justify-content: center; }
+    .btn-back { justify-content: center; }
     .result-actions { flex-direction: column; align-items: stretch; }
-    .result-primary, .result-secondary { justify-content: center; }
   }
-  @media (max-width: 480px) {
-    h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-  }
-  /* Quiz nav link */
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -151,7 +136,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
   </div>
 </div>
 
-<main id="main-content">
+<main id="main-content" class="patch-tone grain">
   <div class="quiz-wrap">
 
     <div class="progress-bar" role="progressbar" aria-label="Quiz progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" id="progress-bar">
@@ -163,8 +148,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 
     <!-- Q1 -->
     <div class="q-screen active" id="q0">
-      <p class="q-label">Question 1 of 4</p>
-      <h1 class="q-text">What&#8217;s the biggest gap in your show right now?</h1>
+      <p class="q-label eyebrow">Question 1 of 4</p>
+      <h1 class="q-text display-md">What&#8217;s the biggest gap in your show right now?</h1>
       <p class="q-sub">Think about what&#8217;s keeping the project from moving forward with confidence.</p>
       <div class="options" role="group" aria-label="Select one option">
         <button class="option-btn" data-scores='{"SD":4,"SC":1,"SA":1,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":1}'>
@@ -201,7 +186,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
-        <button class="btn-next" disabled id="next-0">
+        <button class="btn-next btn-primary" disabled id="next-0">
           Next
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -210,8 +195,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 
     <!-- Q2 -->
     <div class="q-screen" id="q1">
-      <p class="q-label">Question 2 of 4</p>
-      <h1 class="q-text">Where are you in the production timeline?</h1>
+      <p class="q-label eyebrow">Question 2 of 4</p>
+      <h1 class="q-text display-md">Where are you in the production timeline?</h1>
       <p class="q-sub">This determines which version of the service fits your situation best.</p>
       <div class="options" role="group" aria-label="Select one option">
         <button class="option-btn" data-scores='{"SD":2,"SC":2,"SA":2,"TD":1}' data-engage='{"earlyStage":2,"wantsLead":1}'>
@@ -248,7 +233,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
-        <button class="btn-next" disabled id="next-1">
+        <button class="btn-next btn-primary" disabled id="next-1">
           Next
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -257,8 +242,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 
     <!-- Q3 -->
     <div class="q-screen" id="q2">
-      <p class="q-label">Question 3 of 4</p>
-      <h1 class="q-text">Who else is handling the technical decisions?</h1>
+      <p class="q-label eyebrow">Question 3 of 4</p>
+      <h1 class="q-text display-md">Who else is handling the technical decisions?</h1>
       <p class="q-sub">This tells us whether you need a partner to lead or a specialist to support what&#8217;s already in motion.</p>
       <div class="options" role="group" aria-label="Select one option">
         <button class="option-btn" data-scores='{"SD":2,"SC":1,"SA":2,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":2}'>
@@ -295,7 +280,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
-        <button class="btn-next" disabled id="next-2">
+        <button class="btn-next btn-primary" disabled id="next-2">
           Next
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -304,8 +289,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 
     <!-- Q4 -->
     <div class="q-screen" id="q3">
-      <p class="q-label">Question 4 of 4</p>
-      <h1 class="q-text">What does success look like for this project?</h1>
+      <p class="q-label eyebrow">Question 4 of 4</p>
+      <h1 class="q-text display-md">What does success look like for this project?</h1>
       <p class="q-sub">The outcome you&#8217;re aiming for helps us confirm which service creates the most value for you.</p>
       <div class="options" role="group" aria-label="Select one option">
         <button class="option-btn" data-scores='{"SD":3,"SC":1,"SA":1,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":0}'>
@@ -342,7 +327,7 @@ body { min-height: 100vh; display: flex; flex-direction: column;
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </button>
-        <button class="btn-next" disabled id="next-3">
+        <button class="btn-next btn-primary" disabled id="next-3">
           See my result
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -351,18 +336,18 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 
     <!-- Result -->
     <div id="result-screen">
-      <div class="result-badge">Your match</div>
-      <h1 class="result-service" id="result-service-name"></h1>
+      <div class="result-badge tag">Your match</div>
+      <h1 class="result-service display-xl" id="result-service-name"></h1>
       <p class="result-mode" id="result-mode-name"></p>
       <div class="result-divider"></div>
-      <p class="result-why" id="result-why"></p>
+      <p class="result-why lead" id="result-why"></p>
       <p class="result-mode-desc" id="result-mode-desc"></p>
       <div class="result-actions">
-        <a class="result-primary" id="result-link-service" href="services.html">
+        <a class="result-primary btn-primary" id="result-link-service" href="services.html">
           See full service detail
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a class="result-secondary" id="result-link-contact" href="about.html#contact-form">
+        <a class="result-secondary btn-secondary" id="result-link-contact" href="about.html#contact-form">
           Start a conversation
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         </a>
