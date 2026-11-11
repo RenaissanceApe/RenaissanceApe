@@ -32,171 +32,18 @@
 <link rel="stylesheet" href="/base.css" />
 <style>
 body{min-height:100vh;display:flex;flex-direction:column;}
-  /* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-/* NAV */
-
-  /* MAIN */
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 48px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Subtle background texture */
-  main::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(130,178,215,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(130,178,215,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-  }
-
-  .error-code {
-    font-family: var(--font-display);
-    font-size: clamp(6rem, 18vw, 14rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: var(--blue-900);
-    position: relative;
-    user-select: none;
-    /* Faint green glow to suggest a signal that almost got through */
-    text-shadow:
-      0 0 80px rgba(51,251,49,0.07),
-      0 0 160px rgba(51,251,49,0.04);
-  }
-
+  /* MAIN: Pixel Field ground (.pixel-field) under sand grain (.grain) */
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(68px + var(--space-2xl)) var(--space-2xl) var(--space-4xl);overflow:hidden;}
+  main .eyebrow{margin-bottom:var(--space-lg);}
+  .error-code{font-family:var(--font-display);font-size:clamp(6rem,18vw,14rem);font-weight:700;line-height:1;letter-spacing:-0.04em;color:var(--text-subtle);user-select:none;overflow-wrap:break-word;}
   /* The middle zero blinks — like a no-signal LED */
-  .error-code .blink {
-    color: var(--green-500);
-    animation: blink 2.4s ease-in-out infinite;
-    display: inline-block;
-  }
-
-  @keyframes blink {
-    0%, 90%, 100% { opacity: 1; }
-    92%, 98%      { opacity: 0.15; }
-  }
-
-  .error-label {
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--green-500);
-    margin-bottom: 28px;
-    position: relative;
-  }
-
-  .error-headline {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 3vw, 2.2rem);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-    position: relative;
-    max-width: 560px;
-  }
-
-  .error-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .btn-primary {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    padding: 14px 32px;
-    background: var(--green-500);
-    color: var(--blue-700);
-    border-radius: 50px;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.2s, transform 0.15s;
-  }
-
-  .btn-primary:hover { background: var(--green-300); transform: translateY(-2px); }
-
-  .btn-secondary {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    color: var(--gray-300);
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.2s;
-  }
-
-  .btn-secondary:hover { color: var(--gray-100); }
-
-  /* FOOTER */
-
-  /* MOBILE NAV */
-
-  /* Skip link */
-
-  /* nav-links a color: rgba(15,25,45,0.78) on blue-100 nav → ~8.5:1 PASS; no override needed */
-
-  @media (max-width: 900px) {
-
-    main { padding: 100px 24px 60px; }
-
-  }
-
-  /* ── HEADING OVERFLOW GUARD ─────────────────────────────────
-     Prevents long words (especially italic em elements) from
-     escaping their container on narrow screens.              */
-  h1, h2, h3,
-  .error-code, .store-heading, .page-heading,
-  .academy-left h1, .about-hero h1, .services-hero h1,
-  .contact-left h1 {
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (max-width: 480px) {
-    /* Force all large display headings to a safe max on very small screens */
-    h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-    h2 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
-    .error-code { font-size: clamp(5rem, 22vw, 7rem) !important; }
-    .store-heading { font-size: clamp(2rem, 9vw, 3rem) !important; }
-    .page-heading { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-  }
-  /* ── FOOTER ── */
-  @media(max-width:900px){main{padding:100px 24px 60px;}}
-  @media(max-width:480px){
-    h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;}
-    h2{font-size:clamp(1.4rem,6vw,2rem)!important;}
-    .error-code{font-size:clamp(5rem,22vw,7rem)!important;}
-  }
-
-  /* Quiz nav link */
+  .error-code .blink{color:var(--accent);animation:blink 2.4s var(--ease-move) infinite;display:inline-block;}
+  @keyframes blink{0%,90%,100%{opacity:1;}92%,98%{opacity:0.15;}}
+  .error-headline{max-width:560px;margin-bottom:var(--space-md);overflow-wrap:break-word;}
+  .error-body{max-width:520px;color:var(--text-muted);margin-bottom:var(--space-xl);}
+  .error-actions{display:flex;align-items:center;gap:var(--space-md);flex-wrap:wrap;justify-content:center;}
+  @media(max-width:900px){main{padding:calc(68px + var(--space-xl)) var(--space-lg) var(--space-3xl);}}
+  @media(max-width:480px){.error-code{font-size:clamp(5rem,22vw,7rem);}}
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -218,7 +65,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   <div class="nav-actions">
     <a href="about.html#contact-form" class="nav-cta">Começar</a>
     <div class="lang-switch" aria-label="Seletor de idioma">
-      <a href="../404.html">EN</a><span>/</span><a href="404.html" class="active">PT</a>
+      <a href="../404.html">EN</a><span>/</span><a href="404.html" class="active" aria-current="true">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobileMenu">
@@ -234,17 +81,17 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   </ul>
   <a href="about.html#contact-form" class="mobile-cta">Começar</a>
   <div class="mobile-lang-switch">
-    <a href="../404.html">EN</a><span>/</span><a href="404.html" class="active">PT</a>
+    <a href="../404.html">EN</a><span>/</span><a href="404.html" class="active" aria-current="true">PT</a>
   </div>
 </div>
 
 
 
 
-<main id="main-content">
-  <p class="error-label">Error 404</p>
+<main id="main-content" class="pixel-field grain">
+  <p class="eyebrow">Error 404</p>
   <div class="error-code" aria-hidden="true">4<span class="blink">0</span>4</div>
-  <h1 class="error-headline">Parece que há um cabo que não está corretamente ligado.</h1>
+  <h1 class="error-headline display-md">Parece que há um cabo que não está corretamente ligado.</h1>
   <p class="error-body">A página que procura não existe — pode ter sido movida, renomeada ou nunca publicada. Vamos pô-lo de volta no rumo certo.</p>
   <div class="error-actions">
     <a href="index.html" class="btn-primary">

@@ -31,212 +31,39 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-/* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-  .section-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-500);margin-bottom:20px;}
-/* ── NAV ── */
+  /* Field Notes hub. Tokens and shared classes come from base.css; this block
+     holds only what is particular to this page. */
 
-  /* ── UTILITIES ── */
+  /* ── Hero: Patch (tone on dark) + sand grain ── */
+  /* shared .page-hero; the text keeps the 712 px column of the list below */
+  .fn-hero{border-bottom:1px solid var(--border);}
+  .fn-hero-inner{max-width:712px;}
+  .fn-hero .eyebrow{margin-bottom:var(--space-lg);}
+  .fn-hero h1{color:var(--text);margin-bottom:var(--space-lg);}
+  .fn-hero-sub{color:var(--text-muted);max-width:560px;}
 
-  /* ── HERO ── */
-  .resources-hero {
-    padding: 168px 48px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .resources-hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    max-width: 700px;
-  }
-  .resources-hero h1 em { font-style: italic; color: var(--green-500); }
-  .resources-hero p {
-    margin-top: 24px;
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--gray-300);
-    max-width: 480px;
-    line-height: 1.75;
-  }
+  /* ── Filter: label type; the active filter carries a pixel, not only a colour ── */
+  .fn-list{max-width:760px;margin:0 auto;padding:var(--space-2xl) var(--space-lg) var(--space-4xl);}
+  .fn-filters{display:flex;gap:var(--space-xs);margin-bottom:var(--space-xl);flex-wrap:wrap;}
+  .fn-filter{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;padding:0 var(--space-md);color:var(--text-muted);background:none;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color var(--dur-micro) var(--ease-fade),color var(--dur-micro) var(--ease-fade);}
+  .fn-filter:hover{border-color:var(--blue-300);color:var(--text);}
+  .fn-filter.active{border-color:var(--accent);color:var(--text);}
+  .fn-filter.active::before{content:'';width:6px;height:6px;background:var(--accent);flex-shrink:0;}
 
-  /* ── CARDS ── */
-  .resources-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 48px 120px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
+  /* ── Article list: each entry is a shared .card ── */
+  .fn-article-list{display:flex;flex-direction:column;gap:var(--space-md);}
+  .fn-article-item{display:grid;grid-template-columns:1fr auto;align-items:start;gap:var(--space-md);}
+  a.fn-article-item.card{display:grid;}
+  .fn-item-meta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-sm);}
+  .fn-item-date{color:var(--text-muted);}
+  .fn-item-title{color:var(--text);margin-bottom:var(--space-xs);}
+  .fn-item-excerpt{font-size:14px;line-height:1.55;color:var(--text-muted);max-width:580px;}
+  .fn-item-arrow{color:var(--text-muted);align-self:center;flex-shrink:0;transition:color var(--dur-micro) var(--ease-fade),transform var(--dur-micro) var(--ease-move);}
+  .fn-article-item:hover .fn-item-arrow{color:var(--accent);transform:translateX(4px);}
+  .fn-empty{padding:var(--space-3xl) 0;text-align:center;color:var(--text-muted);font-size:14px;line-height:1.55;}
 
-  .resource-card {
-    background: var(--blue-900);
-    padding: 64px 56px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 48px;
-    transition: background 0.3s;
-  }
-
-  .resource-card:hover { background: var(--blue-500); }
-
-  .resource-card-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--green-500);
-    margin-bottom: 8px;
-  }
-
-  .resource-card h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    margin-bottom: 16px;
-  }
-
-  .resource-card h2 em { font-style: italic; color: var(--green-500); }
-
-  .resource-card p {
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--gray-300);
-    line-height: 1.8;
-    max-width: 380px;
-  }
-
-  .resource-card-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
-  }
-
-  .resource-pill {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-300);
-    border: 1px solid rgba(130,178,215,0.2);
-    padding: 6px 12px;
-    border-radius: 2px;
-  }
-
-  .resource-card-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--blue-700);
-    background: var(--green-500);
-    padding: 14px 28px;
-    border-radius: 3px;
-    transition: background 0.2s;
-    align-self: flex-start;
-  }
-
-  .resource-card-cta:hover { background: var(--green-300); }
-
-  .resource-card-cta svg {
-    width: 13px;
-    height: 13px;
-    flex-shrink: 0;
-  }
-
-  /* Academy card — coming soon state */
-  .resource-card.coming-soon .resource-card-cta {
-    background: rgba(130,178,215,0.12);
-    color: var(--gray-300);
-    cursor: default;
-    pointer-events: none;
-  }
-
-  .coming-soon-badge {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--green-500);
-    border: 1px solid var(--green-500);
-    padding: 4px 8px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  /* ── FOOTER ── */
-
-  /* ── MOBILE MENU ── */
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-
-    .resources-hero { padding: 120px 24px 60px; }
-    .resources-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
-    .resources-grid { grid-template-columns: 1fr; padding: 0 24px 80px; }
-    .resource-card { padding: 48px 32px; }
-
-  }
-
-  @media (max-width: 480px) {
-    h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-  }
-  /* ── FOOTER ── */
-  @media(max-width:900px){
-    .resources-hero{padding:120px 24px 60px;}.resources-hero h1{font-size:clamp(2rem,8vw,3rem);}
-    .resources-grid{grid-template-columns:1fr;padding:0 24px 80px;}.resource-card{padding:48px 32px;}
-  }
-  @media(max-width:480px){
-    h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;}
-    h2{font-size:clamp(1.4rem,6vw,2rem)!important;}
-    .error-code{font-size:clamp(5rem,22vw,7rem)!important;}
-  }
-  /* Quiz nav link */
-
-  /* ── Field Notes shared styles ── */
-  .fn-hero{padding:120px 0 56px;}
-  .fn-hero-inner{max-width:760px;margin:0 auto;padding:0 24px;}
-  .fn-hero h1{font-family:var(--font-display);font-size:clamp(32px,5vw,52px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px;}
-  .fn-hero h1 em{color:var(--green-500);font-style:normal;}
-  .fn-hero .fn-hero-sub{font-size:16px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:560px;}
-  .fn-lang-note{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
-  .fn-lang-note::before{content:'';display:block;width:16px;height:1px;background:rgba(255,255,255,0.25);}
-  .fn-list{max-width:760px;margin:0 auto;padding:0 24px 100px;}
-  .fn-filters{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap;}
-  .fn-filter{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:2px;background:none;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.2s;}
-  .fn-filter.active,.fn-filter:hover{border-color:var(--green-500);color:var(--green-500);}
-  .fn-filter[data-filter="all"].active{background:var(--green-500);color:var(--blue-700);border-color:var(--green-500);}
-  .fn-article-list{display:flex;flex-direction:column;}
-  .fn-article-item{display:grid;grid-template-columns:1fr auto;align-items:start;gap:16px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;}
-  .fn-article-item:first-child{border-top:1px solid rgba(255,255,255,0.08);}
-  .fn-article-item:hover{border-bottom-color:rgba(51,251,49,0.3);}
-  .fn-article-item:hover .fn-item-title{color:var(--green-500);}
-  .fn-item-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-  .fn-item-tag{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;}
-  .fn-item-tag.article{background:rgba(51,251,49,0.12);color:var(--green-500);}
-  .fn-item-tag.case-study{background:rgba(22,89,140,0.4);color:var(--blue-300);}
-  .fn-item-date{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.04em;}
-  .fn-item-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:8px;transition:color 0.2s;}
-  .fn-item-excerpt{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65;max-width:580px;}
-  .fn-item-arrow{color:rgba(255,255,255,0.2);align-self:center;transition:color 0.2s,transform 0.2s;flex-shrink:0;}
-  .fn-article-item:hover .fn-item-arrow{color:var(--green-500);transform:translateX(4px);}
-  .fn-empty{padding:60px 0;text-align:center;color:rgba(255,255,255,0.55);font-size:14px;}
   @media(max-width:600px){
-    .fn-article-item{grid-template-columns:1fr;}
+    .fn-article-item,a.fn-article-item.card{grid-template-columns:1fr;}
     .fn-item-arrow{display:none;}
   }
 </style>
@@ -260,7 +87,7 @@
   <div class="nav-actions">
     <a href="../about.html#contact-form" class="nav-cta">Get started</a>
     <div class="lang-switch" aria-label="Language selector">
-      <a href="index.html" class="active">EN</a><span>/</span><a href="../pt/field-notes/index.html">PT</a>
+      <a href="index.html" class="active" aria-current="true">EN</a><span>/</span><a href="../pt/field-notes/index.html">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -271,49 +98,49 @@
   <ul>
     <li><a href="../services.html">Services</a></li>
     <li><a href="../about.html">About</a></li>
-    <li><a href="index.html">Field Notes</a></li>
+    <li><a href="index.html" aria-current="page">Field Notes</a></li>
     <li><a href="../quiz.html">Find your fit</a></li>
   </ul>
   <a href="../about.html#contact-form" class="mobile-cta">Get started</a>
   <div class="mobile-lang-switch">
-    <a href="index.html" class="active">EN</a><span>/</span><a href="../pt/field-notes/index.html">PT</a>
+    <a href="index.html" class="active" aria-current="true">EN</a><span>/</span><a href="../pt/field-notes/index.html">PT</a>
   </div>
 </div>
 <main id="main-content">
-  <div class="fn-hero">
-    <div class="fn-hero-inner reveal">
-      <p class="section-label">Field Notes</p>
-      <h1>From the rig.<br>To the <em>page.</em></h1>
-      <p class="fn-hero-sub">Long-form writing on live event production — show control, system architecture, technical direction, and the thinking behind the work.</p>
+  <div class="fn-hero page-hero patch-tone grain">
+    <div class="fn-hero-inner page-hero-inner reveal">
+      <p class="eyebrow">Field Notes</p>
+      <h1 class="display-xl">From the rig.<br>To the <em>page.</em></h1>
+      <p class="lead fn-hero-sub">Long-form writing on live event production — show control, system architecture, technical direction, and the thinking behind the work.</p>
     </div>
   </div>
   <div class="fn-list">
     <div class="fn-filters reveal">
-      <button class="fn-filter active" data-filter="all">All</button>
-      <button class="fn-filter" data-filter="article">Articles</button>
-      <button class="fn-filter" data-filter="case-study">Case Studies</button>
+      <button class="fn-filter label active" data-filter="all">All</button>
+      <button class="fn-filter label" data-filter="article">Articles</button>
+      <button class="fn-filter label" data-filter="case-study">Case Studies</button>
     </div>
     <div class="fn-article-list reveal" id="articleList">
       <!-- Add entries here as articles are published. Example:
-      <a href="systems-thinking-live-events.html" class="fn-article-item" data-category="article">
+      <a href="systems-thinking-live-events.html" class="fn-article-item card" data-category="article">
         <div>
           <div class="fn-item-meta">
-            <span class="fn-item-tag article">Article</span>
-            <span class="fn-item-date">September 2026</span>
+            <span class="tag">Article</span>
+            <span class="fn-item-date data">September 2026</span>
           </div>
-          <div class="fn-item-title">Systems Thinking in Live Event Production</div>
+          <div class="fn-item-title heading">Systems Thinking in Live Event Production</div>
           <div class="fn-item-excerpt">How applying systems thinking changes the way you approach show design, infrastructure, and coordination.</div>
         </div>
         <svg class="fn-item-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       -->
-      <a href="portugal-events.html" class="fn-article-item" data-category="article">
+      <a href="portugal-events.html" class="fn-article-item card" data-category="article">
         <div>
           <div class="fn-item-meta">
-            <span class="fn-item-tag article">Article</span>
-            <span class="fn-item-date">August 2026</span>
+            <span class="tag">Article</span>
+            <span class="fn-item-date data">August 2026</span>
           </div>
-          <div class="fn-item-title">AV rental is an eligible cost. Just not for your festival.</div>
+          <div class="fn-item-title heading">AV rental is an eligible cost. Just not for your festival.</div>
           <div class="fn-item-excerpt">Portugal Events applications for 2027 events open 1 September. I went to read the regulation for one specific reason, and found an exception that changes the whole budget.</div>
         </div>
         <svg class="fn-item-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>

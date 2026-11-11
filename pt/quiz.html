@@ -31,60 +31,70 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-body { min-height: 100vh; display: flex; flex-direction: column;
-  }
-  /* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 108px 24px 80px; }
+  /* Kept identical in quiz.html and pt/quiz.html: change both together. */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── QUIZ SHELL ── the whole quiz is one view: Patch (tone on dark) + grain */
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 108px var(--space-lg) var(--space-4xl); }
   .quiz-wrap { width: 100%; max-width: 700px; }
-  .progress-bar { display: flex; gap: 6px; margin-bottom: 56px; }
-  .progress-segment { height: 2px; flex: 1; background: rgba(130,178,215,0.15); border-radius: 2px; transition: background 0.45s ease; }
-  .progress-segment.done { background: var(--green-500); }
-  .progress-segment.active { background: rgba(51,251,49,0.4); }
+
+  /* Progress: four square-cornered segments. Done is filled green, the
+     current one is blue and taller, so the state is not colour alone. */
+  .progress-bar { display: flex; align-items: flex-end; gap: var(--space-xxs); height: 8px; margin-bottom: var(--space-2xl); }
+  .progress-segment { height: 4px; flex: 1; background: var(--border); transition: background var(--dur-transition) var(--ease-fade); }
+  .progress-segment.done { background: var(--accent); }
+  .progress-segment.active { height: 8px; background: var(--blue-300); }
+
+  /* Question screens: hidden by default, only .active shows */
   .q-screen { display: none; }
-  .q-screen.active { display: block; animation: fadeUp 0.38s cubic-bezier(0.16,1,0.3,1) both; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-  .q-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-500); margin-bottom: 16px; }
-  .q-text { font-family: var(--font-display); font-size: clamp(1.45rem, 3.5vw, 2.1rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 12px; overflow-wrap: break-word; word-break: break-word; }
-  .q-sub { font-size: 15px; font-weight: 300; color: var(--gray-300); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .option-btn { display: flex; align-items: flex-start; gap: 18px; width: 100%; background: var(--blue-900); border: 1px solid rgba(130,178,215,0.1); border-radius: 3px; padding: 20px 22px; cursor: pointer; text-align: left; color: var(--gray-100); font-family: var(--font-body); transition: border-color 0.18s, background 0.18s, transform 0.15s; }
-  .option-btn:hover { border-color: rgba(51,251,49,0.3); background: rgba(51,251,49,0.04); transform: translateX(3px); }
-  .option-btn.selected { border-color: var(--green-500); background: rgba(51,251,49,0.07); }
-  .option-letter { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--green-500); flex-shrink: 0; margin-top: 3px; width: 16px; }
+  .q-screen.active { display: block; animation: fadeUp var(--dur-transition) var(--ease-enter) both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .q-label { margin-bottom: var(--space-md); }
+  .q-text { margin-bottom: var(--space-sm); }
+  .q-sub { font-size: 16px; font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: var(--space-xl); max-width: 520px; }
+
+  /* Options are choices, not calls to action: outlined, never filled green.
+     Selected = green border + filled letter + a square marker on the right. */
+  .options { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .option-btn { display: flex; align-items: flex-start; gap: var(--space-md); width: 100%; background: var(--surface); border: 1px solid var(--border); padding: var(--space-md) var(--space-lg); cursor: pointer; text-align: left; color: var(--text); font-family: var(--font-body); transition: border-color var(--dur-micro) var(--ease-fade); }
+  .option-btn:hover { border-color: var(--blue-300); }
+  .option-btn.selected { border-color: var(--accent); }
+  .option-btn::after { content: ''; flex-shrink: 0; align-self: center; width: 12px; height: 12px; border: 1px solid var(--border); }
+  .option-btn.selected::after { border-color: var(--accent); background: var(--accent); }
+  .option-letter { font-family: var(--font-display); font-size: 11px; font-weight: 700; line-height: 20px; text-align: center; color: var(--accent); border: 1px solid var(--border); flex-shrink: 0; width: 22px; height: 22px; }
+  .option-btn.selected .option-letter { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   .option-content { flex: 1; }
-  .option-title { font-size: 15px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; display: block; }
-  .option-desc { font-size: 13px; font-weight: 300; color: var(--gray-300); line-height: 1.6; display: block; }
-  .q-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; gap: 16px; }
-  .btn-back { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); background: none; border: none; cursor: pointer; padding: 8px 0; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
-  .btn-back:hover { color: var(--gray-100); }
+  .option-title { font-size: 16px; font-weight: 600; line-height: 1.3; margin-bottom: var(--space-xxs); display: block; }
+  .option-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.55; display: block; }
+
+  /* Back / Next. Next is the shared .btn-primary; Back is the shared
+     .btn-text .btn-text-back (leading arrow), kept quiet here: muted. */
+  .q-actions { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-lg); gap: var(--space-md); }
+  .btn-back { color: var(--text-muted); }
+  .btn-back:hover { color: var(--text); }
   .btn-back:disabled { opacity: 0; pointer-events: none; }
-  .btn-next { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-700); background: var(--green-500); border: none; border-radius: 3px; padding: 13px 26px; cursor: pointer; transition: background 0.2s, opacity 0.2s; min-height: 44px; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-next:hover { background: var(--green-300); }
   .btn-next:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+  /* Result screen */
   #result-screen { display: none; }
-  #result-screen.active { display: block; animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both; }
-  .result-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-500); border: 1px solid rgba(51,251,49,0.25); padding: 6px 14px; border-radius: 2px; margin-bottom: 28px; }
-  .result-service { font-family: var(--font-display); font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 10px; overflow-wrap: break-word; word-break: break-word; }
-  .result-service em { font-style: italic; color: var(--green-500); }
-  .result-mode { font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-300); }
-  .result-divider { width: 40px; height: 1px; background: rgba(51,251,49,0.35); margin: 36px 0; }
-  .result-why { font-size: 16px; font-weight: 300; color: var(--gray-300); line-height: 1.8; max-width: 580px; margin-bottom: 24px; }
-  .result-mode-desc { font-size: 14px; font-weight: 300; color: var(--gray-500); line-height: 1.75; max-width: 560px; border-left: 2px solid rgba(51,251,49,0.3); padding-left: 20px; margin-bottom: 48px; }
-  .result-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 32px; }
-  .result-primary { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-700); background: var(--green-500); border-radius: 3px; padding: 14px 26px; transition: background 0.2s; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
-  .result-primary:hover { background: var(--green-300); }
-  .result-secondary { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-300); border: 1px solid rgba(130,178,215,0.2); border-radius: 3px; padding: 13px 20px; transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
-  .result-secondary:hover { border-color: var(--green-500); color: var(--green-500); }
-  .result-restart { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-500); background: none; border: none; cursor: pointer; padding: 8px 0; transition: color 0.2s; display: block; }
-  .result-restart:hover { color: var(--gray-300); }
-  /* ── FOOTER ── */
-  @media (max-width: 600px) { .q-actions { flex-direction: column-reverse; align-items: stretch; } .btn-next { justify-content: center; } .result-actions { flex-direction: column; align-items: stretch; } .result-primary, .result-secondary { justify-content: center; } }
-  @media (max-width: 480px) { h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; } }
-  /* Quiz nav link */
+  #result-screen.active { display: block; animation: fadeUp var(--dur-transition) var(--ease-enter) both; }
+  .result-badge { margin-bottom: var(--space-lg); }
+  .result-service { margin-bottom: var(--space-sm); }
+  .result-service em { font-style: normal; color: var(--accent); }
+  .result-mode { font-family: var(--font-display); font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--blue-300); }
+  .result-divider { width: 40px; height: 1px; background: var(--border); margin: var(--space-xl) 0; }
+  .result-why { color: var(--text-muted); max-width: 580px; margin-bottom: var(--space-lg); }
+  .result-mode-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); line-height: 1.55; max-width: 560px; border-left: 2px solid var(--accent); padding-left: var(--space-md); margin-bottom: var(--space-2xl); }
+  .result-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; margin-bottom: var(--space-xl); }
+  .result-restart { font-family: var(--font-body); font-size: 14px; font-weight: 600; line-height: 1; color: var(--text-muted); background: none; border: 0; cursor: pointer; min-height: 44px; padding: 0; transition: color var(--dur-micro) var(--ease-fade); display: block; }
+  .result-restart:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    .q-actions { flex-direction: column-reverse; align-items: stretch; }
+    .btn-back { justify-content: center; }
+    .result-actions { flex-direction: column; align-items: stretch; }
+  }
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -101,12 +111,12 @@ body { min-height: 100vh; display: flex; flex-direction: column;
     <li><a href="services.html">Servi&#231;os</a></li>
     <li><a href="about.html">Sobre</a></li>
     <li><a href="field-notes/index.html">Notas de Campo</a></li>
-    <li><a href="quiz.html" class="nav-quiz-link">Qual é o meu serviço?</a></li>
+    <li><a href="quiz.html" class="nav-quiz-link active" aria-current="page">Qual é o meu serviço?</a></li>
   </ul>
   <div class="nav-actions">
     <a href="about.html#contact-form" class="nav-cta">Come&#231;ar</a>
     <div class="lang-switch" aria-label="Seletor de idioma">
-      <a href="../quiz.html">EN</a><span>/</span><a href="quiz.html" class="active">PT</a>
+      <a href="../quiz.html">EN</a><span>/</span><a href="quiz.html" class="active" aria-current="true">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu de navega&#231;&#227;o" aria-expanded="false" aria-controls="mobileMenu">
@@ -118,15 +128,15 @@ body { min-height: 100vh; display: flex; flex-direction: column;
     <li><a href="services.html">Servi&#231;os</a></li>
     <li><a href="about.html">Sobre</a></li>
     <li><a href="field-notes/index.html">Notas de Campo</a></li>
-    <li><a href="quiz.html">Qual é o meu serviço?</a></li>
+    <li><a href="quiz.html" aria-current="page">Qual é o meu serviço?</a></li>
   </ul>
   <a href="about.html#contact-form" class="mobile-cta">Come&#231;ar</a>
   <div class="mobile-lang-switch">
-    <a href="../quiz.html">EN</a><span>/</span><a href="quiz.html" class="active">PT</a>
+    <a href="../quiz.html">EN</a><span>/</span><a href="quiz.html" class="active" aria-current="true">PT</a>
   </div>
 </div>
 
-<main id="main-content">
+<main id="main-content" class="patch-tone grain">
   <div class="quiz-wrap">
     <div class="progress-bar" role="progressbar" aria-label="Progresso do question&#225;rio" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" id="progress-bar">
       <div class="progress-segment active" id="seg-0"></div>
@@ -136,8 +146,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
     </div>
 
     <div class="q-screen active" id="q0">
-      <p class="q-label">Quest&#227;o 1 de 4</p>
-      <h1 class="q-text">Qual &#233; a maior lacuna no seu espet&#225;culo agora?</h1>
+      <p class="q-label eyebrow">Quest&#227;o 1 de 4</p>
+      <h1 class="q-text display-md">Qual &#233; a maior lacuna no seu espet&#225;culo agora?</h1>
       <p class="q-sub">Pense no que est&#225; a impedir o projeto de avan&#231;ar com confian&#231;a.</p>
       <div class="options" role="group" aria-label="Selecione uma op&#231;&#227;o">
         <button class="option-btn" data-scores='{"SD":4,"SC":1,"SA":1,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":1}'>
@@ -170,11 +180,11 @@ body { min-height: 100vh; display: flex; flex-direction: column;
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" disabled aria-label="Voltar">
+        <button class="btn-back btn-text btn-text-back" disabled aria-label="Voltar">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Voltar
         </button>
-        <button class="btn-next" disabled id="next-0">
+        <button class="btn-next btn-primary" disabled id="next-0">
           Seguinte
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -182,8 +192,8 @@ body { min-height: 100vh; display: flex; flex-direction: column;
     </div>
 
     <div class="q-screen" id="q1">
-      <p class="q-label">Quest&#227;o 2 de 4</p>
-      <h1 class="q-text">Onde est&#225; na linha temporal de produ&#231;&#227;o?</h1>
+      <p class="q-label eyebrow">Quest&#227;o 2 de 4</p>
+      <h1 class="q-text display-md">Onde est&#225; na linha temporal de produ&#231;&#227;o?</h1>
       <p class="q-sub">Isto determina qual vers&#227;o do servi&#231;o melhor se adapta &#224; sua situa&#231;&#227;o.</p>
       <div class="options" role="group" aria-label="Selecione uma op&#231;&#227;o">
         <button class="option-btn" data-scores='{"SD":2,"SC":2,"SA":2,"TD":1}' data-engage='{"earlyStage":2,"wantsLead":1}'>
@@ -200,14 +210,14 @@ body { min-height: 100vh; display: flex; flex-direction: column;
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
-        <button class="btn-next" disabled id="next-1">Seguinte <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn-back btn-text btn-text-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
+        <button class="btn-next btn-primary" disabled id="next-1">Seguinte <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
 
     <div class="q-screen" id="q2">
-      <p class="q-label">Quest&#227;o 3 de 4</p>
-      <h1 class="q-text">Quem est&#225; a gerir as decis&#245;es t&#233;cnicas?</h1>
+      <p class="q-label eyebrow">Quest&#227;o 3 de 4</p>
+      <h1 class="q-text display-md">Quem est&#225; a gerir as decis&#245;es t&#233;cnicas?</h1>
       <p class="q-sub">Isto diz-nos se precisa de um parceiro para liderar ou de um especialista para apoiar o que j&#225; est&#225; em curso.</p>
       <div class="options" role="group" aria-label="Selecione uma op&#231;&#227;o">
         <button class="option-btn" data-scores='{"SD":2,"SC":1,"SA":2,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":2}'>
@@ -224,14 +234,14 @@ body { min-height: 100vh; display: flex; flex-direction: column;
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
-        <button class="btn-next" disabled id="next-2">Seguinte <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn-back btn-text btn-text-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
+        <button class="btn-next btn-primary" disabled id="next-2">Seguinte <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
 
     <div class="q-screen" id="q3">
-      <p class="q-label">Quest&#227;o 4 de 4</p>
-      <h1 class="q-text">Como &#233; o sucesso para este projeto?</h1>
+      <p class="q-label eyebrow">Quest&#227;o 4 de 4</p>
+      <h1 class="q-text display-md">Como &#233; o sucesso para este projeto?</h1>
       <p class="q-sub">O resultado que pretende alcan&#231;ar ajuda-nos a confirmar qual o servi&#231;o que cria mais valor para si.</p>
       <div class="options" role="group" aria-label="Selecione uma op&#231;&#227;o">
         <button class="option-btn" data-scores='{"SD":3,"SC":1,"SA":1,"TD":1}' data-engage='{"earlyStage":1,"wantsLead":0}'>
@@ -248,21 +258,21 @@ body { min-height: 100vh; display: flex; flex-direction: column;
         </button>
       </div>
       <div class="q-actions">
-        <button class="btn-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
-        <button class="btn-next" disabled id="next-3">Ver o meu resultado <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn-back btn-text btn-text-back" aria-label="Voltar"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M12 5H0M4 1L0 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Voltar</button>
+        <button class="btn-next btn-primary" disabled id="next-3">Ver o meu resultado <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
 
     <div id="result-screen">
-      <div class="result-badge">O seu resultado</div>
-      <h1 class="result-service" id="result-service-name"></h1>
+      <div class="result-badge tag">O seu resultado</div>
+      <h1 class="result-service display-xl" id="result-service-name"></h1>
       <p class="result-mode" id="result-mode-name"></p>
       <div class="result-divider"></div>
-      <p class="result-why" id="result-why"></p>
+      <p class="result-why lead" id="result-why"></p>
       <p class="result-mode-desc" id="result-mode-desc"></p>
       <div class="result-actions">
-        <a class="result-primary" id="result-link-service" href="services.html">Ver detalhe completo do servi&#231;o <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="result-secondary" id="result-link-contact" href="about.html#contact-form">Iniciar uma conversa <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+        <a class="result-primary btn-primary" id="result-link-service" href="services.html">Ver detalhe completo do servi&#231;o <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="result-secondary btn-secondary" id="result-link-contact" href="about.html#contact-form">Iniciar uma conversa <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
       </div>
       <button class="result-restart" id="restart-btn">Come&#231;ar de novo</button>
     </div>
@@ -284,29 +294,38 @@ body { min-height: 100vh; display: flex; flex-direction: column;
 </footer>
 
 <script>
+// ─── SERVICE DATA ─────────────────────────────────────────────────────────────
 var SERVICES = {
-  SD: { nameHTML: 'Design de<br><em>Espetáculo</em>', anchor: '#show-design',
+  SD: {
+    nameHTML: 'Design de<br><em>Espetáculo</em>',
+    anchor: '#show-design',
     why: "As suas respostas apontam para uma lacuna entre onde vive a visão criativa e onde começa a realidade técnica. O Design de Espetáculo fecha essa lacuna — construímos o sistema visual que liga o que imagina ao que pode ser efetivamente construído, programado e entregue em palco.",
     modes: {
       lead: { name: 'Líder de Design', desc: "Com base na sua linha temporal e configuração de equipa, precisa de alguém que seja responsável pelo processo de design desde o conceito até à entrega. Nós assumimos o briefing e levamo-lo a um resultado pronto para produção." },
       support: { name: 'Suporte de Design', desc: "Tem uma equipa no lugar e precisa de um especialista para ser responsável por uma parte específica — pré-visualização, o sistema visual ou a documentação técnica. Encaixamo-nos onde é necessário, dimensionado ao que o projeto realmente precisa." }
     }
   },
-  SC: { nameHTML: 'Controlo de Cena<br><em>&amp; Automação</em>', anchor: '#show-control',
+  SC: {
+    nameHTML: 'Controlo de Cena<br><em>&amp; Automação</em>',
+    anchor: '#show-control',
     why: "As suas respostas apontam para um problema de sincronização — múltiplos sistemas que precisam de disparar juntos mas atualmente não o fazem. O Controlo de Cena & Automação dá ao espetáculo um único relógio a partir do qual tudo corre, eliminando as decisões manuais e os riscos de timing que se acumulam no dia do show.",
     modes: {
       lead: { name: 'Programação e Operação no Local', desc: "Dado onde está na produção, precisa de alguém que consiga programar na sala, adaptar-se a mudanças de última hora e operar durante o show. A flexibilidade em tempo real é o que a sua situação exige." },
       support: { name: 'Programação em Pré-Produção', desc: "A sua linha temporal permite-nos programar o ficheiro completo de show antes de entrar na sala. O show está pronto no primeiro dia de load-in — deixas, mapas de timecode, estados de contingência e um briefing de operador tudo entregue antecipadamente." }
     }
   },
-  SA: { nameHTML: 'Arquitetura<br><em>de Sistemas</em>', anchor: '#system-architecture',
+  SA: {
+    nameHTML: 'Arquitetura<br><em>de Sistemas</em>',
+    anchor: '#system-architecture',
     why: "As suas respostas apontam para um problema de infraestrutura — a espinha dorsal técnica do show não foi devidamente concebida. A Arquitetura de Sistemas define cada caminho de sinal, rede de controlo e interface de equipamento antes de qualquer cabo ser passado, para que o show seja construído com base em factos documentados em vez de suposições.",
     modes: {
       lead: { name: 'Arquitetura Completa', desc: "Está numa fase em que o sistema ainda pode ser concebido corretamente de raiz. Mapeamos a infraestrutura completa — fluxo de sinal, redes de controlo, especificação de equipamento e documentação — entregue como um briefing técnico pronto para produção." },
       support: { name: 'Auditoria & Revisão', desc: "Já existe ou está a ser especificado um sistema. Revemos face aos requisitos reais do show, identificamos os riscos escondidos nas lacunas e produzimos um documento claro de recomendações. A forma mais rápida de encontrar problemas antes de se tornarem emergências no dia do show." }
     }
   },
-  TD: { nameHTML: 'Direção<br><em>Técnica</em>', anchor: '#technical-direction',
+  TD: {
+    nameHTML: 'Direção<br><em>Técnica</em>',
+    anchor: '#technical-direction',
     why: "As suas respostas apontam para uma lacuna de responsabilidade — não existe uma única pessoa que compreenda tanto a intenção criativa como a infraestrutura técnica e tenha autoridade para as alinhar. A Direção Técnica preenche esse papel, fazendo a ponte entre a equipa, a equipa criativa e a sala para que cada elemento do show aterro como foi concebido.",
     modes: {
       lead: { name: 'Ciclo Completo de Produção', desc: "O seu projeto precisa de liderança técnica desde a fase de planeamento até ao wrap pós-show. Entramos cedo — sendo responsáveis pelo rider técnico, visitas ao local, briefings de fornecedores e calendário de ensaios — para que o show chegue ao load-in já alinhado." },
@@ -314,9 +333,6 @@ var SERVICES = {
     }
   }
 };
-/* Kept structurally identical to the EN quiz in quiz.html so the two can be
-   diffed against each other — the PT copy previously drifted and silently
-   dropped the ?service= parameter on the contact CTA. */
 
 var TOTAL_Q = 4;
 var SCORE_KEYS = ['SD', 'SC', 'SA', 'TD'];
@@ -421,9 +437,9 @@ function render(step) {
   else showScreen(step);
 }
 
-/* ── URL state ────────────────────────────────────────────────────────────
-   Without this the browser Back button leaves the page entirely — the most
-   natural "previous question" gesture destroys every answer — and a result
+/* \u2500\u2500 URL state \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+   Without this the browser Back button leaves the page entirely \u2014 the most
+   natural "previous question" gesture destroys every answer \u2014 and a result
    can be neither refreshed nor shared. The step and the chosen option index
    per question are small enough to live in the hash.                        */
 
@@ -479,7 +495,7 @@ screens.forEach(function(screen, qIndex) {
     btn.setAttribute('aria-pressed', 'false');
     btn.addEventListener('click', function() {
       applyAnswer(qIndex, optIndex);
-      // Keep the URL in step with the answer without adding a history entry —
+      // Keep the URL in step with the answer without adding a history entry \u2014
       // choosing an option isn't a navigation.
       replaceState(currentQ);
     });
@@ -513,7 +529,7 @@ function computeResult() {
     SCORE_KEYS.forEach(function(k) { totals[k] += (a.scores[k] || 0); });
     Object.keys(engage).forEach(function(k) { engage[k] += (a.engage[k] || 0); });
   });
-  /* Ties resolve to the earliest key in SCORE_KEYS order (SD → SC → SA → TD).
+  /* Ties resolve to the earliest key in SCORE_KEYS order (SD \u2192 SC \u2192 SA \u2192 TD).
      A perfectly balanced answer set therefore always returns Show Design;
      that is intentional and stable, not a coin flip. */
   var win = SCORE_KEYS.reduce(function(a, b) { return totals[a] >= totals[b] ? a : b; });
@@ -532,12 +548,10 @@ function renderResult() {
   var svc = SERVICES[r.win];
   var mode = svc.modes[r.modeKey];
   document.getElementById('result-service-name').innerHTML = svc.nameHTML;
-  document.getElementById('result-mode-name').textContent = '→ ' + mode.name;
+  document.getElementById('result-mode-name').textContent = '\u2192 ' + mode.name;
   document.getElementById('result-why').textContent = svc.why;
   document.getElementById('result-mode-desc').textContent = mode.desc;
   document.getElementById('result-link-service').href = 'services.html' + svc.anchor;
-  // Carries the result through to the PT contact form, which reads ?service=
-  // to pre-select the dropdown and to populate quiz_result in the payload.
   document.getElementById('result-link-contact').href = 'about.html?service=' + encodeURIComponent(r.win) + '#contact-form';
 }
 
@@ -568,6 +582,7 @@ document.getElementById('restart-btn').addEventListener('click', function() {
     replaceState(0);
   }
 })();
+
 
 </script>
 </body>

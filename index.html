@@ -32,64 +32,44 @@
 <link rel="stylesheet" href="/base.css" />
 <style>
 body{display:flex;flex-direction:column;}
-  /* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-  /* ── HERO ── */
-  .hero{position:relative;height:100vh;min-height:640px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:96px;overflow:hidden;}
-  .hero-bg{position:absolute;inset:0;background-image:url('images/og-image.png');background-size:cover;background-position:center;transform:scale(1.04);animation:heroZoom 12s ease-out forwards;}
-
-  .hero-actions{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;}
-  .hero-cta-quiz{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-500);border:1px solid rgba(51,251,49,0.4);padding:12px 28px;border-radius:3px;min-height:44px;transition:border-color 0.2s,background 0.2s;}
-  .hero-cta-quiz:hover{border-color:var(--green-500);background:rgba(51,251,49,0.07);}
-  .hero-cta-quiz svg{transition:transform 0.2s;}
-  .hero-cta-quiz:hover svg{transform:translateX(4px);}
-  @keyframes heroZoom{from{transform:scale(1.04);}to{transform:scale(1.00);}}
-  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,24,41,0.3) 0%,rgba(2,24,41,0.1) 40%,rgba(2,24,41,0.65) 80%,rgba(2,24,41,0.95) 100%);}
-  .hero-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:0 24px;animation:heroFadeUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s both;}
-  @keyframes heroFadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
-  .hero-content h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.12;letter-spacing:-0.01em;color:var(--gray-100);margin-bottom:20px;}
-  .hero-content h1 em{font-style:normal;color:var(--green-500);}
-  .hero-scope{font-family:var(--font-display);font-size:10px;font-weight:400;letter-spacing:0.14em;color:rgba(240,241,243,0.45);text-transform:uppercase;margin-bottom:28px;line-height:1.8;}
-  .hero-scope em{font-style:normal;color:rgba(51,251,49,0.65);}
-  .hero-learn-more{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-100);border:1px solid rgba(240,241,243,0.35);padding:12px 28px;border-radius:3px;min-height:44px;transition:border-color 0.2s;}
-  .hero-learn-more:hover{border-color:var(--green-500);}
-  .hero-learn-more svg{transition:transform 0.2s;}
-  .hero-learn-more:hover svg{transform:translateX(4px);}
+  /* ── HERO: Signal Glow (green-500 radial at 42% over blue-700) under sand grain ── */
+  .hero{min-height:max(640px,100vh);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:calc(68px + var(--space-3xl)) 0 var(--space-4xl);overflow:hidden;background:var(--bg);}
+  .hero::after{content:'';position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 60% 55% at 72% 28%,var(--green-500),transparent 70%);opacity:0.42;pointer-events:none;}
+  .hero-content{position:relative;text-align:center;max-width:800px;padding:0 var(--space-lg);animation:heroFadeUp var(--dur-hero) var(--ease-enter) var(--dur-micro) both;}
+  @keyframes heroFadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .hero-content h1{margin-bottom:var(--space-lg);}
+  .hero-scope{color:var(--text-muted);margin-bottom:var(--space-xl);}
+  .hero-scope em{font-style:normal;color:var(--accent);}
+  .hero-actions{display:flex;gap:var(--space-md);align-items:center;justify-content:center;flex-wrap:wrap;}
   /* ── MARQUEE ── */
-  .marquee-strip{background:var(--green-500);padding:12px 0;overflow:hidden;white-space:nowrap;}
+  .marquee-strip{background:var(--accent);padding:var(--space-sm) 0;overflow:hidden;white-space:nowrap;}
   .marquee-inner{display:inline-flex;animation:marquee 22s linear infinite;}
-  .marquee-inner span{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-700);padding:0 32px;}
-  .marquee-inner span::after{content:'◆';margin-left:32px;opacity:0.5;}
+  .marquee-inner span{font-family:var(--font-display);font-size:11px;font-weight:700;line-height:1.3;letter-spacing:0.24em;text-transform:uppercase;color:var(--on-accent);padding:0 var(--space-xl);}
+  .marquee-inner span::after{content:'◆';margin-left:var(--space-xl);opacity:0.5;}
   @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
   /* ── SERVICES SECTION ── */
-  .section-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-500);margin-bottom:20px;}
-  .services{background:var(--blue-900);padding:100px 48px;}
-  .services-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;max-width:1200px;margin-left:auto;margin-right:auto;}
-  .services-header h2{font-family:var(--font-display);font-weight:700;line-height:1.1;letter-spacing:-0.01em;font-size:clamp(2rem,3.5vw,3rem);max-width:500px;}
+  .services{background:var(--surface);padding:var(--space-4xl) var(--space-2xl);}
+  .services-header{max-width:1200px;margin:0 auto var(--space-3xl);}
+  .services-header h2{max-width:500px;}
   .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;max-width:1200px;margin:0 auto;}
-  .service-card{position:relative;padding:52px 48px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;}
-  .service-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);}
-  .service-card:hover .service-card-bg{transform:scale(1.04);}
-  .service-card::after{content:'';position:absolute;inset:0;background:rgba(2,24,41,0.55);z-index:1;transition:background 0.3s;}
-  .service-card:hover::after{background:rgba(2,24,41,0.35);}
+  .service-card{position:relative;padding:var(--space-2xl);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;}
+  /* The gradient, its grain (.grain) and a navy veil that keeps the text readable */
   .service-card>*{position:relative;z-index:2;}
-  .service-card-icon{width:64px;height:64px;margin-bottom:32px;flex-shrink:0;filter:invert(1);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
-  .service-card:hover .service-card-icon{transform:scale(1.06);}
-  .service-card h3{font-family:var(--font-display);font-size:clamp(1.3rem,2vw,1.9rem);font-weight:700;line-height:1.1;letter-spacing:-0.01em;margin-bottom:16px;}
-  h6,.subtitle{font-size:15px;font-weight:300;color:var(--gray-300);line-height:1.7;max-width:420px;margin-top:14px;}
-  .read-more{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:13px;font-weight:500;letter-spacing:0.06em;color:var(--green-500);min-height:44px;transition:gap 0.2s;}
-  .read-more:hover{gap:14px;}
+  .service-card>.service-card-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;}
+  .service-card::after{content:'';position:absolute;inset:0;z-index:1;background:var(--bg);opacity:0.55;transition:opacity var(--dur-control) var(--ease-fade);}
+  .service-card:hover::after{opacity:0.35;}
+  .service-card-icon{width:64px;height:64px;margin-bottom:var(--space-xl);filter:invert(1);}
+  .service-card h3{margin-bottom:var(--space-md);}
+  .subtitle{font-size:16px;line-height:1.6;color:var(--text-muted);max-width:420px;}
+  .service-card .btn-text{margin-top:var(--space-lg);justify-self:start;}
   /* ── CLIENTS ── */
-  .clients{padding:56px 48px;border-top:1px solid rgba(46,52,65,0.5);border-bottom:1px solid rgba(46,52,65,0.5);}
+  .clients{padding:var(--space-3xl) var(--space-2xl);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
   .clients-inner{max-width:1200px;margin:0 auto;}
-  .clients-label{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gray-500);text-align:center;margin-bottom:36px;}
+  .clients-label{color:var(--text-muted);text-align:center;margin-bottom:var(--space-xl);}
   .clients-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0;}
-  .client-item{display:flex;align-items:center;justify-content:center;padding:14px 28px;opacity:0.42;transition:opacity 0.25s;}
+  .client-item{display:flex;align-items:center;justify-content:center;padding:14px 28px;opacity:0.42;transition:opacity var(--dur-control) var(--ease-fade);}
   .client-item:hover{opacity:0.72;}
-  .client-item+.client-item{border-left:1px solid rgba(46,52,65,0.6);}
+  .client-item+.client-item{border-left:1px solid var(--border);}
   .client-item img.logo-invert{height:36px;width:auto;display:block;object-fit:contain;max-width:140px;filter:invert(1);}
   .client-item img.logo-white{height:36px;width:auto;display:block;object-fit:contain;max-width:140px;filter:brightness(100);}
   /* Randstad is stacked (mark+text) — give it more height */
@@ -97,42 +77,29 @@ body{display:flex;flex-direction:column;}
   /* RCV wordmark is very wide — cap width, let height scale */
   .client-item img.logo-invert.logo-wide{height:auto;max-width:160px;min-height:20px;}
   @media(max-width:1100px){.client-item{padding:12px 20px;}.client-item img.logo-invert,.client-item img.logo-white{height:30px;max-width:110px;}.client-item img.logo-white.logo-stacked{height:44px;max-width:66px;}.client-item img.logo-invert.logo-wide{max-width:130px;}}
-  @media(max-width:700px){.clients{padding:36px 24px;}.clients-grid{flex-direction:column;align-items:stretch;}.client-item{justify-content:center;padding:14px 0;}.client-item+.client-item{border-left:none;border-top:1px solid rgba(46,52,65,0.6);}}
+  @media(max-width:700px){.clients{padding:var(--space-xl) var(--space-lg);}.clients-grid{flex-direction:column;align-items:stretch;}.client-item{justify-content:center;padding:14px 0;}.client-item+.client-item{border-left:none;border-top:1px solid var(--border);}}
   /* ── CTA BANNER ── */
-  .cta-banner{background:var(--blue-500);padding:100px 48px;text-align:center;border-top:1px solid rgba(46,52,65,0.6);border-bottom:1px solid rgba(46,52,65,0.6);}
-  .cta-banner h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.6rem);max-width:700px;margin:0 auto;line-height:1.1;font-weight:700;letter-spacing:-0.01em;}
+  .cta-banner{background:var(--surface-raised);padding:var(--space-4xl) var(--space-2xl);text-align:center;}
+  .cta-banner h2{max-width:700px;margin:0 auto;}
   /* ── NEWSLETTER ── */
-  .newsletter{background:transparent;padding:100px 48px;text-align:center;}
-  .newsletter h2{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.8rem);margin-bottom:12px;font-weight:700;letter-spacing:-0.01em;}
-  .newsletter>p{color:var(--gray-300);margin-bottom:36px;font-size:15px;}
+  .newsletter{padding:var(--space-4xl) var(--space-2xl);text-align:center;}
+  .newsletter h2{margin-bottom:var(--space-sm);}
+  .newsletter>p:not(.eyebrow){color:var(--text-muted);}
   /* Newsletter — first-party form posting to n8n. No third-party embed,
      so nothing here reaches out to another origin. */
-  .newsletter-form{max-width:520px;margin:36px auto 0;text-align:left;}
-  .newsletter-row{display:flex;gap:10px;flex-wrap:wrap;}
-  .newsletter-row input[type="email"]{flex:1 1 240px;min-height:48px;padding:0 18px;border-radius:3px;border:1px solid rgba(130,178,215,0.25);background:rgba(255,255,255,0.05);color:var(--gray-100);font-family:var(--font-body);font-size:15px;}
-  .newsletter-row input[type="email"]::placeholder{color:rgba(240,241,243,0.5);}
-  .newsletter-row button{min-height:48px;padding:0 26px;border-radius:3px;border:0;background:var(--green-500);color:var(--blue-700);font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:background 0.2s;}
-  .newsletter-row button:hover:not(:disabled){background:var(--green-300);}
-  .newsletter-row button:disabled{opacity:0.55;cursor:default;}
-  .newsletter-consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13px;line-height:1.5;color:var(--gray-300);cursor:pointer;}
-  .newsletter-consent input{margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:var(--green-500);}
-  .newsletter-consent a{text-decoration:underline;}
-  .newsletter-status{margin-top:14px;font-size:14px;min-height:1.2em;}
-  /* ── FOOTER ── */
+  .newsletter-form{max-width:520px;margin:var(--space-xl) auto 0;text-align:left;}
+  .newsletter-row{display:flex;gap:var(--space-xs);flex-wrap:wrap;}
+  /* The field and the consent line are the shared form styles in base.css */
+  .newsletter-row input[type="email"]{flex:1 1 240px;}
+  .newsletter-row button:disabled{opacity:0.55;cursor:default;background:var(--accent);}
+  .newsletter-consent{gap:var(--space-xs);margin-top:var(--space-md);}
+  .newsletter-status{margin-top:var(--space-sm);font-size:14px;min-height:1.2em;}
   @media(max-width:900px){
-    .services{padding:72px 24px;}
-    .services-header{flex-direction:column;align-items:flex-start;gap:24px;margin-bottom:48px;}
+    .services,.cta-banner,.newsletter{padding:var(--space-3xl) var(--space-lg);}
+    .services-header{margin-bottom:var(--space-2xl);}
     .service-grid{grid-template-columns:1fr;}
-    .service-card{padding:40px 28px;}
-    .cta-banner{padding:72px 24px;}
-    .newsletter{padding:72px 24px;}
+    .service-card{padding:var(--space-xl) var(--space-lg);}
   }
-  @media(max-width:480px){
-    h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;}
-    h2{font-size:clamp(1.4rem,6vw,2rem)!important;}
-    .error-code{font-size:clamp(5rem,22vw,7rem)!important;}
-  }
-  /* Quiz nav link */
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -178,7 +145,7 @@ body{display:flex;flex-direction:column;}
   <div class="nav-actions">
     <a href="about.html#contact-form" class="nav-cta">Get started</a>
     <div class="lang-switch" aria-label="Language selector">
-      <a href="index.html" class="active">EN</a><span>/</span><a href="pt/index.html">PT</a>
+      <a href="index.html" class="active" aria-current="true">EN</a><span>/</span><a href="pt/index.html">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -194,22 +161,21 @@ body{display:flex;flex-direction:column;}
   </ul>
   <a href="about.html#contact-form" class="mobile-cta">Get started</a>
   <div class="mobile-lang-switch">
-    <a href="index.html" class="active">EN</a><span>/</span><a href="pt/index.html">PT</a>
+    <a href="index.html" class="active" aria-current="true">EN</a><span>/</span><a href="pt/index.html">PT</a>
   </div>
 </div>
 
 <main id="main-content">
-<section class="hero">
-  <div class="hero-bg"></div>
+<section class="hero grain">
   <div class="hero-content">
-    <h1>The creative is ready.<br>Is the <em>system?</em></h1>
-    <p class="hero-scope"><em>Corporate conferences</em> &nbsp;·&nbsp; <em>Music festivals</em> &nbsp;·&nbsp; <em>Touring productions</em> &nbsp;·&nbsp; <em>Brand activations</em><br>Based in <em>Portugal</em> &nbsp;·&nbsp; Working <em>worldwide</em> &nbsp;·&nbsp; Pre-production through <em>show day</em></p>
+    <h1 class="display-xl">The creative is ready.<br>Is the <em>system?</em></h1>
+    <p class="hero-scope data"><em>Corporate conferences</em> &nbsp;·&nbsp; <em>Music festivals</em> &nbsp;·&nbsp; <em>Touring productions</em> &nbsp;·&nbsp; <em>Brand activations</em><br>Based in <em>Portugal</em> &nbsp;·&nbsp; Working <em>worldwide</em> &nbsp;·&nbsp; Pre-production through <em>show day</em></p>
     <div class="hero-actions">
-      <a href="#services" class="hero-learn-more">
+      <a href="#services" class="btn-secondary">
         Explore services
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="quiz.html" class="hero-cta-quiz">
+      <a href="quiz.html" class="btn-primary">
         Find your fit
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -228,34 +194,34 @@ body{display:flex;flex-direction:column;}
 <div class="services" id="services">
   <div class="services-header reveal">
     <div>
-      <p class="section-label">What We Do</p>
-      <h2>System-level thinking.<br>Show-level <em>results.</em></h2>
+      <p class="eyebrow">What We Do</p>
+      <h2 class="display-lg">System-level thinking.<br>Show-level <em>results.</em></h2>
     </div>
   </div>
   <div class="service-grid">
     <div class="service-card reveal">
-      <div class="service-card-bg" style="background-image:url('images/gradients/show-design.svg')"></div>
+      <div class="service-card-bg grain" style="background-image:url('images/gradients/show-design.svg')"></div>
       <img class="service-card-icon" src="images/icons/show-design.png" alt="" aria-hidden="true" width="397" height="368" loading="lazy" decoding="async" />
-      <div><h3>Show Design</h3><p class="subtitle">We translate creative ideas into technically executable systems — turning vision into a show that can actually be built, programmed, and delivered.</p></div>
-      <a href="services.html#show-design" class="read-more" aria-label="Read more about Show Design">Read More <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div><h3 class="heading">Show Design</h3><p class="subtitle">We translate creative ideas into technically executable systems — turning vision into a show that can actually be built, programmed, and delivered.</p></div>
+      <a href="services.html#show-design" class="btn-text" aria-label="Read more about Show Design">Read More</a>
     </div>
     <div class="service-card reveal" style="transition-delay:0.1s">
-      <div class="service-card-bg" style="background-image:url('images/gradients/show-control.svg')"></div>
+      <div class="service-card-bg grain" style="background-image:url('images/gradients/show-control.svg')"></div>
       <img class="service-card-icon" src="images/icons/show-control.png" alt="" aria-hidden="true" width="239" height="434" loading="lazy" decoding="async" />
-      <div><h3>Show Control &amp; Automation</h3><p class="subtitle">We synchronize lighting, video, and effects into a single, unified system. Every cue, every beat, every transition — controlled with precision.</p></div>
-      <a href="services.html#show-control" class="read-more" aria-label="Read more about Show Control and Automation">Read More <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div><h3 class="heading">Show Control &amp; Automation</h3><p class="subtitle">We synchronize lighting, video, and effects into a single, unified system. Every cue, every beat, every transition — controlled with precision.</p></div>
+      <a href="services.html#show-control" class="btn-text" aria-label="Read more about Show Control and Automation">Read More</a>
     </div>
     <div class="service-card reveal" style="transition-delay:0.15s">
-      <div class="service-card-bg" style="background-image:url('images/gradients/system-architecture.svg')"></div>
+      <div class="service-card-bg grain" style="background-image:url('images/gradients/system-architecture.svg')"></div>
       <img class="service-card-icon" src="images/icons/system-architecture.png" alt="" aria-hidden="true" width="349" height="385" loading="lazy" decoding="async" />
-      <div><h3>System Architecture</h3><p class="subtitle">We define the technical backbone — signal flow, equipment topology, and integration logic — so your event infrastructure is built to perform under any condition.</p></div>
-      <a href="services.html#system-architecture" class="read-more" aria-label="Read more about System Architecture">Read More <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div><h3 class="heading">System Architecture</h3><p class="subtitle">We define the technical backbone — signal flow, equipment topology, and integration logic — so your event infrastructure is built to perform under any condition.</p></div>
+      <a href="services.html#system-architecture" class="btn-text" aria-label="Read more about System Architecture">Read More</a>
     </div>
     <div class="service-card reveal" style="transition-delay:0.2s">
-      <div class="service-card-bg" style="background-image:url('images/gradients/technical-direction.svg')"></div>
+      <div class="service-card-bg grain" style="background-image:url('images/gradients/technical-direction.svg')"></div>
       <img class="service-card-icon" src="images/icons/technical-direction.png" alt="" aria-hidden="true" width="358" height="418" loading="lazy" decoding="async" />
-      <div><h3>Technical Direction</h3><p class="subtitle">We are the single point of technical authority on your event — bridging creative intent and crew execution so every element lands exactly as designed.</p></div>
-      <a href="services.html#technical-direction" class="read-more" aria-label="Read more about Technical Direction">Read More <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div><h3 class="heading">Technical Direction</h3><p class="subtitle">We are the single point of technical authority on your event — bridging creative intent and crew execution so every element lands exactly as designed.</p></div>
+      <a href="services.html#technical-direction" class="btn-text" aria-label="Read more about Technical Direction">Read More</a>
     </div>
   </div>
 </div>
@@ -263,7 +229,7 @@ body{display:flex;flex-direction:column;}
 <!-- CLIENTS -->
 <div class="clients reveal">
   <div class="clients-inner">
-    <p class="clients-label">Trusted by</p>
+    <p class="clients-label label">Trusted by</p>
     <div class="clients-grid">
 
       <div class="client-item">
@@ -294,13 +260,13 @@ body{display:flex;flex-direction:column;}
   </div>
 </div>
 
-<div class="cta-banner reveal" id="about">
-  <h2>One partner. Every system. Exactly right.</h2>
+<div class="cta-banner grain reveal" id="about">
+  <h2 class="display-lg">One partner. Every system. Exactly right.</h2>
 </div>
 
 <div class="newsletter reveal" id="contact">
-  <p class="section-label">Stay in the loop</p>
-  <h2>Keep up with the latest news.</h2>
+  <p class="eyebrow">Stay in the loop</p>
+  <h2 class="display-md">Keep up with the latest news.</h2>
   <p>Sign up today.</p>
   <form class="newsletter-form" id="newsletter-form" action="https://lumenandpixel.app.n8n.cloud/webhook/inbound-lead" method="POST">
     <input type="hidden" name="form_type" value="newsletter" />
@@ -309,7 +275,7 @@ body{display:flex;flex-direction:column;}
     <div class="newsletter-row">
       <label class="sr-only" for="newsletter-email">Email address</label>
       <input type="email" id="newsletter-email" name="email" placeholder="you@company.com" maxlength="254" autocomplete="email" required />
-      <button type="submit" id="newsletter-btn">Subscribe</button>
+      <button type="submit" id="newsletter-btn" class="btn-primary">Subscribe</button>
     </div>
     <label class="newsletter-consent">
       <input type="checkbox" id="newsletter-consent" name="consent" value="yes" required />

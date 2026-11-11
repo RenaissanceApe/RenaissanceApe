@@ -31,181 +31,30 @@
 <link rel="stylesheet" href="/fonts.css" />
 <link rel="stylesheet" href="/base.css" />
 <style>
-/* ── NAV ── */
-  /* Hamburger — hidden on desktop */
-  /* Mobile menu — hidden until .open toggled by JS */
-  /* Skip + focus */
-  /* Responsive */
-  .section-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-500);margin-bottom:20px;}
-/* ── NAV ── */
+  /* Kept identical in resources.html and pt/resources.html: change both together. */
 
-  /* ── UTILITIES ── */
+  /* ── HERO ── shared .page-hero on the Patch (tone on dark) + grain */
+  .resources-hero { border-bottom: 1px solid var(--border); }
+  .resources-hero h1 { max-width: 760px; }
+  .resources-hero .lead { margin-top: var(--space-lg); color: var(--text-muted); max-width: 520px; }
 
-  /* ── HERO ── */
-  .resources-hero {
-    padding: 168px 48px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .resources-hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    max-width: 700px;
-  }
-  .resources-hero h1 em { font-style: italic; color: var(--green-500); }
-  .resources-hero p {
-    margin-top: 24px;
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--gray-300);
-    max-width: 480px;
-    line-height: 1.75;
-  }
+  /* ── CARDS ── shared .card and .card-hover (they are not links) */
+  .resources-grid { max-width: 1200px; margin: 0 auto; padding: var(--space-3xl) var(--space-2xl) var(--space-4xl); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+  .resource-card { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2xl); }
+  .resource-card .eyebrow { margin-bottom: 0; }
+  .resource-card-icon { display: block; width: 48px; height: 48px; color: var(--accent); margin-bottom: var(--space-lg); }
+  .resource-card h2 { margin: var(--space-sm) 0 var(--space-md); }
+  .resource-card p:not(.eyebrow) { font-size: 16px; font-weight: 400; color: var(--text-muted); line-height: 1.6; max-width: 420px; }
+  .resource-card-pills { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-lg); }
+  .resource-card-cta { align-self: flex-start; }
+  .resource-card-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-  /* ── CARDS ── */
-  .resources-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 48px 120px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
+  /* Academy card: not open yet, so its button is outlined and inert */
+  .resource-card.coming-soon .resource-card-cta { color: var(--text-muted); border-color: var(--border); cursor: default; pointer-events: none; }
 
-  .resource-card {
-    background: var(--blue-900);
-    padding: 64px 56px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 48px;
-    transition: background 0.3s;
-  }
-
-  .resource-card:hover { background: var(--blue-500); }
-
-  .resource-card-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--green-500);
-    margin-bottom: 8px;
-  }
-
-  .resource-card h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    margin-bottom: 16px;
-  }
-
-  .resource-card h2 em { font-style: italic; color: var(--green-500); }
-
-  .resource-card p {
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--gray-300);
-    line-height: 1.8;
-    max-width: 380px;
-  }
-
-  .resource-card-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
-  }
-
-  .resource-pill {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-300);
-    border: 1px solid rgba(130,178,215,0.2);
-    padding: 6px 12px;
-    border-radius: 2px;
-  }
-
-  .resource-card-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--blue-700);
-    background: var(--green-500);
-    padding: 14px 28px;
-    border-radius: 3px;
-    transition: background 0.2s;
-    align-self: flex-start;
-  }
-
-  .resource-card-cta:hover { background: var(--green-300); }
-
-  .resource-card-cta svg {
-    width: 13px;
-    height: 13px;
-    flex-shrink: 0;
-  }
-
-  /* Academy card — coming soon state */
-  .resource-card.coming-soon .resource-card-cta {
-    background: rgba(130,178,215,0.12);
-    color: var(--gray-300);
-    cursor: default;
-    pointer-events: none;
-  }
-
-  .coming-soon-badge {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--green-500);
-    border: 1px solid var(--green-500);
-    padding: 4px 8px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  /* ── FOOTER ── */
-
-  /* ── MOBILE MENU ── */
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-
-    .resources-hero { padding: 120px 24px 60px; }
-    .resources-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
-    .resources-grid { grid-template-columns: 1fr; padding: 0 24px 80px; }
-    .resource-card { padding: 48px 32px; }
-
+    .resources-grid { grid-template-columns: 1fr; padding: var(--space-2xl) var(--space-lg) var(--space-3xl); }
   }
-
-  @media (max-width: 480px) {
-    h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
-  }
-  /* ── FOOTER ── */
-  @media(max-width:900px){
-    .resources-hero{padding:120px 24px 60px;}.resources-hero h1{font-size:clamp(2rem,8vw,3rem);}
-    .resources-grid{grid-template-columns:1fr;padding:0 24px 80px;}.resource-card{padding:48px 32px;}
-  }
-  @media(max-width:480px){
-    h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;}
-    h2{font-size:clamp(1.4rem,6vw,2rem)!important;}
-    .error-code{font-size:clamp(5rem,22vw,7rem)!important;}
-  }
-  /* Quiz nav link */
 </style>
 <link rel="stylesheet" href="/site.css" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
@@ -228,7 +77,7 @@
   <div class="nav-actions">
     <a href="about.html#contact-form" class="nav-cta">Get started</a>
     <div class="lang-switch" aria-label="Language selector">
-      <a href="resources.html" class="active">EN</a><span>/</span><a href="pt/resources.html">PT</a>
+      <a href="resources.html" class="active" aria-current="true">EN</a><span>/</span><a href="pt/resources.html">PT</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -244,22 +93,24 @@
   </ul>
   <a href="about.html#contact-form" class="mobile-cta">Get started</a>
   <div class="mobile-lang-switch">
-    <a href="resources.html" class="active">EN</a><span>/</span><a href="pt/resources.html">PT</a>
+    <a href="resources.html" class="active" aria-current="true">EN</a><span>/</span><a href="pt/resources.html">PT</a>
   </div>
 </div>
 
 <main id="main-content">
 
-  <div class="resources-hero reveal">
-    <p class="section-label">Resources</p>
-    <h1>Tools and knowledge for better <em>live production.</em></h1>
-    <p>Ready-to-use production assets in the store. Deeper learning in the Academy. Both built from real show experience.</p>
-  </div>
+  <header class="resources-hero page-hero patch-tone grain">
+    <div class="resources-hero-inner page-hero-inner reveal">
+      <p class="eyebrow">Resources</p>
+      <h1 class="display-xl">Tools and knowledge for better <em>live production.</em></h1>
+      <p class="lead">Ready-to-use production assets in the store. Deeper learning in the Academy. Both built from real show experience.</p>
+    </div>
+  </header>
 
   <div class="resources-grid">
 
     <!-- STORE CARD -->
-    <div class="resource-card reveal">
+    <div class="resource-card card card-hover reveal">
       <div>
         <!-- Box / package icon -->
         <svg class="resource-card-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -267,18 +118,18 @@
           <path d="M6 18l6-12h24l6 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
           <path d="M16 18v6a2 2 0 004 0v-6M28 18v6a2 2 0 004 0v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <p class="section-label">Templates &amp; Kits</p>
-        <h2>Production-ready<br><em>design assets.</em></h2>
+        <p class="eyebrow">Templates &amp; Kits</p>
+        <h2 class="display-md">Production-ready<br><em>design assets.</em></h2>
         <p>Motion templates, design kits, and production tools built for live events. Open a file, customise to your show, deliver on time.</p>
         <div class="resource-card-pills">
-          <span class="resource-pill">After Effects</span>
-          <span class="resource-pill">Resolume</span>
-          <span class="resource-pill">Keynote</span>
-          <span class="resource-pill">PowerPoint</span>
-          <span class="resource-pill">Figma</span>
+          <span class="tag">After Effects</span>
+          <span class="tag">Resolume</span>
+          <span class="tag">Keynote</span>
+          <span class="tag">PowerPoint</span>
+          <span class="tag">Figma</span>
         </div>
       </div>
-      <a href="https://lumenandpixel.gumroad.com" target="_blank" rel="noopener" class="resource-card-cta">
+      <a href="https://lumenandpixel.gumroad.com" target="_blank" rel="noopener" class="resource-card-cta btn-primary">
         Browse the store
         <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
           <path d="M2.5 10.5l8-8M10.5 2.5H4M10.5 2.5v6.5"/>
@@ -292,7 +143,7 @@
       when it goes live. Current value is a placeholder.
       e.g. href="https://lumenandpixel.gumroad.com/l/academy"
     -->
-    <div class="resource-card coming-soon reveal" style="transition-delay:0.1s">
+    <div class="resource-card card card-hover coming-soon reveal">
       <div>
         <!-- Mortarboard / diploma icon -->
         <svg class="resource-card-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -300,17 +151,17 @@
           <path d="M12 23v10c0 4 5.373 7 12 7s12-3 12-7V23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M42 19v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <span class="coming-soon-badge">Coming soon</span>
-        <h2>Structured<br><em>training.</em></h2>
+        <p class="eyebrow">Coming soon</p>
+        <h2 class="display-md">Structured<br><em>training.</em></h2>
         <p>Courses and workshops on pre-visualization, show automation, and event branding — built for working professionals who want to go deeper, faster.</p>
         <div class="resource-card-pills">
-          <span class="resource-pill">Pre-Viz</span>
-          <span class="resource-pill">Automation</span>
-          <span class="resource-pill">Event Branding</span>
-          <span class="resource-pill">Show Control</span>
+          <span class="tag">Pre-Viz</span>
+          <span class="tag">Automation</span>
+          <span class="tag">Event Branding</span>
+          <span class="tag">Show Control</span>
         </div>
       </div>
-      <a href="#" class="resource-card-cta" aria-disabled="true">
+      <a href="#" class="resource-card-cta btn-secondary" aria-disabled="true">
         Academy launching soon
       </a>
     </div>
