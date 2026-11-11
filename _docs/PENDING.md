@@ -71,8 +71,11 @@ Field Notes and Legal:
 ## 3. Decisions
 
 **D1–D11 were accepted as assumed by the owner on 2026-11-11: the right-hand column is the
-decision.** D12–D21 are still open. D22–D47 came out of the brand refresh (v1.56): each is
-built as assumed, and stays that way unless the owner says otherwise.
+decision.** D12–D20 are still open; D21 was used as assumed by discovery run 1. D22–D47 came out
+of the brand refresh (v1.56): each is built as assumed, and stays that way unless the owner says
+otherwise. D48–D69 came out of discovery run 1 (v1.57, [DISCOVERY.md](DISCOVERY.md)): nothing is
+built on them yet; the proposed sets in ROADMAP wait on them, and "Assumed" says what the
+challenger assumed or what stays as it is meanwhile.
 
 | # | Question | Assumed until answered |
 |---|---|---|
@@ -96,7 +99,7 @@ built as assumed, and stays that way unless the owner says otherwise.
 | D18 | Languages: who checks the translations? (a) A second bot reader per language only. (b) A native speaker you name reads at least home, services and the contact form before each language goes live. | (b) for legal and the contact form, (a) elsewhere |
 | D19 | Languages: forms would send `lang` = `de`, `fr`, `es`. n8n and MailerLite must handle them (reply language, sequences), and you answer enquiries in those languages. Ready for that, or should the new languages' forms say replies come in English? | Needs your answer before TR1 |
 | D20 | Languages: are Field Notes articles and the legal pages translated too, or only the main pages? | Everything except legal, which waits for #28 and a human check |
-| D21 | Discovery: who are the comparable studios to look at, and which markets matter most? Any ideas that are off the table from the start? | Scouts choose 8–10 studios in PT, ES, FR, DE, UK |
+| D21 | Discovery: who are the comparable studios to look at, and which markets matter most? Any ideas that are off the table from the start? | **Used, as assumed** (discovery run 1, v1.57): nine studios in PT, ES, FR, DE and the UK. Answer it before the next run if the list should change |
 | D22 | **#35.** The nav's "Get started" is filled green on every page, so any page with its own green button shows two, against "one filled green button per viewport". Make the nav button outlined, or count the nav as outside the rule? (On Resources the Academy button became outlined, so page content keeps to one.) | The nav button is chrome, outside the rule, and stays green |
 | D23 | Home hero buttons: "Find your fit" is now the filled green button and "Explore services" the outlined one (before, both were outlined). Swap them if services should lead? | "Find your fit" leads |
 | D24 | Nav width: `DESIGN.md` gives the bar 64 px side padding; it still lines up with the pages' 1200 px column. Change now, or with the Rail Grid? | Keep until the Rail Grid (Layout set) |
@@ -123,3 +126,25 @@ built as assumed, and stays that way unless the owner says otherwise.
 | D45 | Hero spacing: every hero band now has 96 px below it, as About and Services had. Legal and the Field Notes hub had 64 px. Keep 96 everywhere, or 64 everywhere? | 96 px everywhere |
 | D46 | The `brand` check's colour rule is stricter than first described: a raw colour fails in a page even when it equals a token value, and `base.css` has no allowance for `rgb()` with alpha, because nothing uses one today. Keep it strict, or allow alpha forms of token colours in `base.css`? | Strict |
 | D47 | Tab bars: Services and Legal each style their own, and they differ (hover and active colour is white on Services, green on Legal). Leave, or one shared tab bar? | Leave |
+| D48 | Discovery: which proposed sets run, and in what order? **Contact and enquiry path** (CE1–CE5), **Proof of work** (PW1–PW6), **Working with us** (WW1–WW3); ROADMAP "Suggested order" puts them Upkeep 2 → Contact → Copy review (with Working with us) → Proof of work → Previz → Languages. | That order; none starts until you pick it. Upkeep 2 needs no answer and can start now |
+| D49 | **CE1.** Labels for the new contact links on Services (one per service and one at the close) and the button in the Home banner. For example "Ask about Technical Direction" / "Pergunte sobre Direção Técnica", "Start a conversation" / "Vamos conversar". | Secondary or text buttons (D22 keeps the nav's green); wording proposed in the CE1 PR for your yes |
+| D50 | **CE2.** Show the email address in the footer as a `mailto:` link? It is already public in the home page's structured data; showing it invites some spam, and loads nothing. | Not shown; the footer's "Contact" goes to the form |
+| D51 | **CE2.** Call the form "Contact" in the footer, and add "Contact" to the nav? The nav's "Get started" already goes to the form, and the nav's green button is D22 (#35). | "Contact" in the footer only; the nav stays as it is |
+| D52 | **CE4.** Quiz result: make "Start a conversation" the filled button and "See full service detail" the outlined one (today it is the other way round, so the lead button points away from the form)? Like D23 for the home hero. | The challenger suggests the swap; as it is until you say |
+| D53 | **CE5.** Add optional date, place and audience-size fields to the contact form, and carry the quiz's mode ("Full Production Cycle" …) into the form, as **one** `INTAKE.md` change with n8n and Notion updated the same day? Yes or no. | No. The cheaper version first: a message placeholder that asks for date, venue and size, inside the copy review (CR3) |
+| D54 | **Proof of work.** Which 3–4 projects become case pages (client or a description, year, size, your role, the system that mattered, one number, photos), and which clients may be named? | Nothing built until the material is in; clients named only with their permission |
+| D55 | **PW4.** If the founder section is published (D32, #42): is `images/RB.png` the photo, and what are the bio facts? Articles would then be signed with the same name. | `RB.png` is the likely photo; nothing published until D32 is answered |
+| D56 | **PW5.** 3–4 true figures for scale (for example shows a year, the largest audience, countries worked in, years in the trade). Today only "1,200 guests" appears anywhere. | No figures added; the copy review can't invent them |
+| D57 | **WW1.** Say publicly how a quote is shaped (day rate, or a fixed fee per phase), with no prices? Peers don't publish prices; a shape is not a price. | Shape public, no figures |
+| D58 | **WW1.** Does the studio supply equipment, or is it independent of rental houses and specifies what others supply? Buyers ask this outright. | Not stated until you say |
+| D59 | **WW1.** How early should a client get in touch (lead time), for a festival and for a corporate show? | Not stated until you say |
+| D60 | **WW1.** One line on insurance (for example public liability cover): do you hold it, and may the site say so? | Not stated until you say |
+| D61 | **WW2.** On the site: the city (Porto), travel terms (for example "travel and lodging at cost outside Portugal"), and working languages. The city would also go in the page titles and in the structured data (`addressLocality`, held back from Upkeep 2 for this). | "Based in Portugal · Working worldwide", as today |
+| D62 | A studio PDF (EN and PT) for agencies to forward: wanted? It needs keeping current in two languages. | Not built; if yes, after Proof of work, from its content |
+| D63 | A showreel: is there footage, and an edit? It would be self-hosted video only (an embed from Vimeo or YouTube breaks the zero off-origin rule). | Parked until Proof of work shows what footage exists |
+| D64 | **PW6.** Sample deliverables shown on Services (a redacted lighting plot, patch sheet, previz still): which documents may be shown, cleared by the clients concerned? | Not built until documents are cleared |
+| D65 | Newsletter sign-up on Field Notes and Resources too? It grows the list, not enquiries, and needs new `source_page` values in `INTAKE.md`. | No; last on the list |
+| D66 | A Content Security Policy in a `<meta>` tag on every page: the browser would enforce "nothing from another origin" and pin the form to n8n. A wrong policy breaks things silently, and every page needs `'unsafe-inline'`. | Not added |
+| D67 | Fold **Working with us** into the copy review (WW1 into CR3, WW3 into CR5) as meaning changes you approve, instead of a separate set? This relaxes D13 ("wording only") for those blocks only, and WW3 also re-asks D43 (how articles end). | Folded in, if you agree; otherwise it runs after CR6 |
+| D68 | **UP4.** Once the link-preview cards are JPEG (about 200 KB instead of 795 KB), delete the three old PNGs (`images/og-image.png`, `images/og/portugal-events-en.png`, `-pt.png`)? Nothing will use them. | Kept until you say yes |
+| D69 | Hide the quiz from search results (`noindex`)? A search visitor landing on question 1 gets little context; the Services page answers the same search better. | Left indexed |

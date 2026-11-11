@@ -6,6 +6,54 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.57 — November 2026
+
+### Discovery run 1: what to build next, found, challenged and planned (DS1–DS3)
+
+What a visitor sees: nothing. No page, style, script or image changed. Every
+file this release adds is under `_docs/`, which GitHub Pages does not publish,
+except this entry.
+
+#### Added
+
+- **Four scouts' findings** in `_docs/discovery/`: what comparable studios'
+  sites offer (nine studios in Portugal, Spain, France, Germany and the UK),
+  what a prospective client looks for and can't find here, where the path from
+  landing to enquiry leaks, and a technical review (performance, accessibility,
+  search, sharing). 55 findings in all.
+- **The challenger's ranked list**, `_docs/DISCOVERY.md`: every finding
+  re-checked against the code and about a third of the outside sources, merged,
+  scored by value and effort; what was rejected and why.
+- **Upkeep 2**, ready to run, first on the roadmap: nine quick fixes from the
+  list plus issues #51 (old stylesheet after a release), #37 and #40, in four
+  steps that don't share a file. Plan in `_docs/UPKEEP_2.md`, one prompt per
+  step in `_docs/SESSION_PROMPTS.md`. It needs nothing from the owner but a yes
+  to a few new words in its pull request.
+- **Three proposed sets** on the roadmap, not started until the owner picks
+  them: Contact and enquiry path (CE1–CE5), Proof of work (PW1–PW6) and Working
+  with us (WW1–WW3), each with the pages it owns, what it waits on, and which
+  other sets it can't run beside.
+- **Decisions D48–D69** in `_docs/PENDING.md`: which sets to run, contact
+  labels, the email address, form fields, projects and clients to show, the
+  founder, figures, pricing shape, location and travel, and more. Each has the
+  answer assumed meanwhile.
+
+#### Changed
+
+- **The roadmap's suggested order**: Upkeep 2, Contact and enquiry path, the
+  copy review (with Working with us folded in, if the owner agrees), Proof of
+  work, the Previz quadrant, Languages, then Layout, Icons and motion.
+- **D21** (which studios discovery looks at) marked as used: the scouts took
+  the assumed answer.
+
+#### Waiting on the owner
+
+- **#56, urgent:** the site answers on plain `http://` without redirecting to
+  HTTPS. One Cloudflare or GitHub Pages setting that agents may not change; the
+  steps are in the issue.
+
+---
+
 ## v1.56 — November 2026
 
 ### Brand refresh: the site brought up to Brand Book v1.2 (BR1–BR7)
