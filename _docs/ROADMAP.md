@@ -57,32 +57,10 @@ after the quadrant tool (so it is translated with the rest). Strongly better aft
 
 Runs: TR1 alone → TR2, TR3, TR4 together → TR5 alone.
 
-### 4. Contact and enquiry path (proposed)
+### 4. Proof of work
 
-**Proposed by discovery run 1 (v1.57); not started until the owner picks it.** Closes the leaks
-between reading and asking: Services and Home have no contact link at the moment a buyer decides,
-the footer doesn't navigate, a phone visitor without JavaScript has no navigation at all, and the
-quiz result's lead button points away from the form. DISCOVERY.md items 1, 5, 9, 10 (optional 12
-and 15).
-
-| Step | What | Needs | Owns |
-|---|---|---|---|
-| **CE1** | Contact links in each Services section and the Services close (`about.html?service=…#contact-form`, which already pre-fills), and a button in the Home banner. Secondary or text buttons (one green button, D22) | D49 | `services.html`, `index.html`, EN + PT |
-| **CE2** | A footer row that navigates: Services, About, Field Notes, Resources (no inbound link today), Contact, the email address if D50 says yes. Fixes the no-JavaScript phone case too | D50, D51 | the footer markup in every page, `base.css` (bumps `?v=`, #51) |
-| **CE3** | About's contact section on a phone: "Get started" lands above the reply promise and booking button, not past them; required fields marked | yes to the visible text | `about.html`, EN + PT |
-| **CE4** | Quiz result: "Start a conversation" as the filled button | D52 | `quiz.html`, EN + PT |
-| **CE5** | Only with an explicit yes: optional date, place and size fields, and the quiz's mode carried to the form, as **one** `INTAKE.md` change with n8n and Notion updated the same day | D53 | `about.html`, `INTAKE.md` |
-
-Runs: CE1, CE3, CE4 together → CE2 alone (every page). If D53 is yes before the set starts, CE5
-is built inside CE3 (same page); otherwise it isn't built. Can't run beside the copy review:
-CE1, CE3 and CE4 own pages CR2, CR3 and CR4 rewrite, and CE2 touches every page. Run it before
-CR2–CR5 start or after CR6. Much cheaper after **Markup** (#12), which makes CE2 one edit.
-Owner first: the button labels (D49); the email address in the footer (D50); "Contact" in the nav
-(D51, relates to D22/#35); the quiz button order (D52); CE5 yes or no (D53).
-
-### 5. Proof of work (proposed)
-
-**Proposed by discovery run 1 (v1.57); not started until the owner picks it.** The gap every
+**Proposed by discovery run 1 (v1.57); picked by the owner (D48, 2026-11-11), after the copy
+review.** The gap every
 discovery lens found: one anonymous story, six unlinked logos, an empty Case Studies filter, no
 photograph of a show, and a founder-led studio that hides its founder. DISCOVERY.md items 3, 2, 6,
 11 (later 13 and 14). Almost all the effort is the owner's material; the template is small.
@@ -103,9 +81,10 @@ Owner first: 3–4 projects with facts and photos, and which clients may be name
 founder (D32) and the photo and bio facts (D55); 3–4 figures (D56); cleared documents (D64). A
 showreel (D63) and a studio PDF (D62) come after this set, from its content.
 
-### 6. Working with us (proposed)
+### 5. Working with us
 
-**Proposed by discovery run 1 (v1.57); not started until the owner picks it.** A few short blocks
+**Proposed by discovery run 1 (v1.57); picked by the owner (D48, 2026-11-11) and folded into the
+copy review as meaning changes the owner approves (D67).** A few short blocks
 that answer an agency's first questions: how a quote is built, what the studio supplies, how early
 to book, where it is and how far it travels, who wrote the article. DISCOVERY.md items 7, 4, 8.
 Mostly the owner's facts.
@@ -117,8 +96,8 @@ Mostly the owner's facts.
 | **WW3** | An author-and-studio block at the end of the article template and the article, linking to Services and the form | PW4 (the name), D43 | `field-notes/article-template.html`, `field-notes/portugal-events.html`, EN + PT |
 
 Runs: WW1 and WW2 together → WW3 once PW4 has shipped. Owns the same pages as CR2, CR3 and CR5,
-so it can't run beside them: either fold it into CR3 and CR5 as owner-approved meaning changes
-(D67), or run it after CR6. Owner first: pricing shape public or not (D57), supplier or
+so it is folded into CR3 and CR5 as owner-approved meaning changes (D67); WW3 still needs PW4's
+name, so it waits for PW4 if CR5 runs first (D76). Owner first: pricing shape public or not (D57), supplier or
 independent (D58), lead time (D59), insurance (D60), city, travel and languages (D61), the article
 ending (D43).
 
@@ -150,16 +129,14 @@ Proof of work ships, so the scouts judge the site with its proof in place.
 
 ### Suggested order
 
-1. **Contact and enquiry path**: the cheapest change that closes a real leak, and it runs best
-   before the copy review takes the same pages.
-2. **Copy review**, with **Working with us** folded in as owner-approved meaning changes if the
-   owner agrees (D67): one pass over Services, About and the article instead of two.
-3. **Proof of work**, once the owner's projects, photos and permissions are in: the largest gain,
+1. **Copy review**, with **Working with us** folded in as owner-approved meaning changes (D67):
+   one pass over Services, About and the article instead of two.
+2. **Proof of work**, once the owner's projects, photos and permissions are in: the largest gain,
    gated only by material that should start being collected now.
-4. **Previz quadrant**: brings the studio's own tool on site, after the copy it links from is
+3. **Previz quadrant**: brings the studio's own tool on site, after the copy it links from is
    final.
-5. **Languages**: translate the final text once, the quadrant included.
-6. **Layout, Icons and motion**: visual sets that wait on D3 and `ICONS.md`.
+4. **Languages**: translate the final text once, the quadrant included.
+5. **Layout, Icons and motion**: visual sets that wait on D3 and `ICONS.md`.
 
 **Markup** and **Legal** (Later sets) slot in whenever the owner decides them; both are best done
 before Languages.
@@ -168,6 +145,7 @@ before Languages.
 
 | Version | What | How it works |
 |---|---|---|
+| v1.59 | Contact and enquiry path (CE1–CE3): a contact link at the end of each service and on Home (`?service=` pre-fill), phone arrivals at `#contact-form` land on the reply promise above the form, required fields marked, and a footer page-link row on every page. CE4 and CE5 not built (D52, D53) | [CONTACT.md](CONTACT.md) |
 | v1.58 | Upkeep 2 (UP0–UP4): the quiz without JavaScript, a 404 that works below a folder, `?service=` limited to the four codes, screen-reader fixes, JPEG link-preview cards, `og:locale` and `og:image:alt`, Organisation data on the PT home, `robots.txt` without `Disallow`, the release version on the shared-file URLs with its check, and a CI install that survives an apt outage. Closed #37, #40, #51 | [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.57 | Discovery run 1 (DS1–DS3): four scouts, a challenger's ranked list, and this plan: Upkeep 2 ready to run, three proposed sets waiting on the owner, decisions D48–D69 | [DISCOVERY.md](DISCOVERY.md), `_docs/discovery/`, [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.56 | Brand refresh (BR1–BR7): the site on Brand Book v1.2. Inter, tokens and shared classes in `base.css`; nav, menu and footer to spec; Patch, Pixel Field, grain and OG images from generator scripts; every page restyled, EN and PT; the `brand` check in CI. Closed #16, #27, #32, #34, #46 | [BRAND_REFRESH.md](BRAND_REFRESH.md); the comment at the top of `base.css` |
