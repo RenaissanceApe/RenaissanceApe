@@ -13,6 +13,25 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
+### v1.59 Contact and enquiry path
+
+- [ ] Services (EN and PT): click each "Ask about …" / "Pergunte sobre …" link. About opens at
+      the form with that service chosen in the "Service" menu.
+- [ ] Services close and Home banner: "Start a conversation" / "Iniciar uma conversa" opens About
+      at the form with no service chosen.
+- [ ] On a phone, tap ☰ → Get started on any page: you should see "…within one business day" at
+      the top and "Book a discovery call" below it; scroll a little for the form. Same on `pt/`.
+- [ ] Finish the quiz and follow "Tell us about your project": same landing, with the service
+      already chosen in the form.
+- [ ] Look at the form labels: name, email and message say "(required)" / "(obrigatório)".
+- [ ] Any page, EN and PT, at the bottom: click each footer link (Services, About, Field Notes,
+      Resources, Contact / Contacto). Contact opens About at the contact form.
+- [ ] On a phone with JavaScript off (or the browser's "disable JavaScript"): scroll to the
+      footer; the five page links are there and work.
+- [ ] 404 page (EN and PT, e.g. `/nope` and `/pt/nope`): the footer links go to the right pages.
+- [ ] After v1.59 is live, open any page with DevTools → Network: `base.css`, `site.css`,
+      `site.js` and `fonts.css` are requested with `?v=1.59` and return 200.
+
 ### v1.58 Upkeep 2
 
 - [ ] Open the Actions tab: the `checks` runs should be green; a yellow warning on "Install
@@ -94,13 +113,13 @@ Field Notes and Legal:
 
 ## 3. Decisions
 
-**D1–D11 were accepted as assumed by the owner on 2026-11-11: the right-hand column is the
-decision.** D12–D20 are still open; D21 was used as assumed by discovery run 1. D22–D47 came out
-of the brand refresh (v1.56): each is built as assumed, and stays that way unless the owner says
-otherwise. D48–D69 came out of discovery run 1 (v1.57, [DISCOVERY.md](DISCOVERY.md)): nothing is
-built on them yet; the proposed sets in ROADMAP wait on them, and "Assumed" says what the
-challenger assumed or what stays as it is meanwhile. D70 came out of Upkeep 2 (v1.58): built as
-assumed.
+**D1–D11 were accepted as assumed by the owner on 2026-11-11, and so was every decision D12–D70
+on the same day: for D1–D70 the right-hand column is the decision.** The column keeps its heading
+because rows from D71 on are still open. D21 was used as assumed by discovery run 1. D22–D47 came
+out of the brand refresh (v1.56) and D48–D69 out of discovery run 1 (v1.57,
+[DISCOVERY.md](DISCOVERY.md)); D52 and D53 meant CE4 and CE5 were not built. D70 came out of
+Upkeep 2 (v1.58). D71–D76 came out of the Contact and enquiry path (v1.59): each is built as
+assumed, and stays that way unless the owner says otherwise.
 
 | # | Question | Assumed until answered |
 |---|---|---|
@@ -174,3 +193,9 @@ assumed.
 | D68 | **UP4.** Once the link-preview cards are JPEG (about 200 KB instead of 795 KB), delete the three old PNGs (`images/og-image.png`, `images/og/portugal-events-en.png`, `-pt.png`)? Nothing will use them. | Kept until you say yes. Since v1.58 the JPEG cards exist and every page uses them: the three PNGs are unused |
 | D69 | Hide the quiz from search results (`noindex`)? A search visitor landing on question 1 gets little context; the Services page answers the same search better. | Left indexed |
 | D70 | **UP1.** Without JavaScript the quiz shows question 1 above the new "needs JavaScript" line, with answer buttons that do nothing. Leave it, or hide the questions when JavaScript is off (a small look change for the copy review or a later upkeep)? | Left as it is |
+| D71 | **CE1.** The Portuguese "Start a conversation" on the Services close and the Home banner reads "Iniciar uma conversa", the label the PT quiz result already uses for the same link, instead of the suggested "Vamos conversar". Keep it, or switch both? | Kept: one label for one action |
+| D72 | **CE2.** The Portuguese footer link to the form reads "Contacto" (pt-PT spelling). Yes? | "Contacto" |
+| D73 | **CE2.** The footer's page links are the five from the brief (Services, About, Field Notes, Resources, Contact), with no link to "Find your fit" (the quiz) or "Get started". Add either? | The five only; "Contact" already covers the form |
+| D74 | **CE3.** On a phone, links to the form land on the reply promise ("within one business day"), not the top of the contact section: at 375 px the section from its top to the booking button is 770 px, taller than the screen, so landing at the top would hide the button. Keep this, or land at the section top and tighten the phone spacing of the contact details (a visual change)? | Kept: land on the reply promise |
+| D75 | **CE3.** The words "(required)" / "(obrigatório)" in the name, email and message labels (uppercase, in the label type). Yes to the wording? (D13: no other copy changes without your yes.) | Built as written |
+| D76 | **Working with us.** WW3 (an author block at the end of the articles) needs PW4's founder name, but D67 folds it into CR5, which runs before Proof of work. Build WW3 after PW4 ships, or inside CR5 with the studio name only? | After PW4 ships |

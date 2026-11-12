@@ -30,8 +30,8 @@
 <meta name="twitter:title" content="Services — Lumen and Pixel" />
 <meta name="twitter:description" content="Lumen and Pixel services — Show Design, Show Control and Automation, System Architecture, and Technical Direction for live events." />
 <meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
-<link rel="stylesheet" href="/fonts.css?v=1.58" />
-<link rel="stylesheet" href="/base.css?v=1.58" />
+<link rel="stylesheet" href="/fonts.css?v=1.59" />
+<link rel="stylesheet" href="/base.css?v=1.59" />
 <style>
   /* Page styles only. Tokens, type classes (.display-*, .heading, .lead),
      .eyebrow, .label, .card, .btn-*, .page-hero, .data-table, .grain and
@@ -89,6 +89,7 @@
   .service-engage { margin-top: var(--space-xl); padding-top: var(--space-2xl); border-top: 1px solid var(--border); }
   .service-engage h3 { margin-bottom: var(--space-lg); }
   .engage-box { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .service-ask { margin-top: var(--space-lg); }
   .engage-option h4 { color: var(--accent); margin-bottom: var(--space-sm); }
 
   /* ── CARDS INSIDE THE ACCORDIONS (shared .card + page layout) ── */
@@ -107,6 +108,7 @@
   /* ── CTA ── */
   .services-cta { background: var(--surface); padding: var(--space-4xl) var(--space-2xl); text-align: center; }
   .services-cta h2 { margin-bottom: var(--space-md); overflow-wrap: break-word; }
+  .services-cta-actions { display: flex; gap: var(--space-md); align-items: center; justify-content: center; flex-wrap: wrap; }
   .services-cta-copy { max-width: 560px; margin: 0 auto var(--space-xl); font-size: 16px; line-height: 1.6; color: var(--text-muted); }
 
   /* ── RESPONSIVE ── */
@@ -131,10 +133,10 @@
     .data-table td:nth-child(3) { padding-top: var(--space-xs); border-top: 1px solid var(--border); margin-top: var(--space-xxs); }
   }
 </style>
-<link rel="stylesheet" href="/site.css?v=1.58" />
+<link rel="stylesheet" href="/site.css?v=1.59" />
 <noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
 <script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
-<script src="/site.js?v=1.58" defer></script>
+<script src="/site.js?v=1.59" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -272,6 +274,7 @@
       <div class="engage-option card"><h4 class="heading">Design Lead</h4><p>We lead the visual and technical design of your show from concept through to handoff. You bring the creative ambition — we translate it into a system that can be built, programmed, and run.</p></div>
       <div class="engage-option card"><h4 class="heading">Design Support</h4><p>You have a production team already — we come in as the specialist who owns the pre-viz, the visual system, or the technical documentation. Scoped to what you need, not the whole service.</p></div>
     </div>
+    <a href="about.html?service=SD#contact-form" class="btn-text service-ask">Ask about Show Design</a>
   </div>
 </div>
 
@@ -357,6 +360,7 @@
       <div class="engage-option card"><h4 class="heading">Pre-Production Programming</h4><p>We program the full show file — cues, timecode maps, contingency states, and operator documentation — and hand it off before you enter the venue. The show is ready on day one of load-in.</p></div>
       <div class="engage-option card"><h4 class="heading">On-Site Programming &amp; Operation</h4><p>We program in the venue during load-in, adapt to last-minute changes, and operate the system through the show. The right choice for complex productions where flexibility matters as much as precision.</p></div>
     </div>
+    <a href="about.html?service=SC#contact-form" class="btn-text service-ask">Ask about Show Control</a>
   </div>
 </div>
 
@@ -442,6 +446,7 @@
       <div class="engage-option card"><h4 class="heading">Full Architecture</h4><p>We design the complete technical system from scratch — signal paths, control networks, equipment specification, and documentation package. Delivered as a production-ready technical brief for your suppliers and crew.</p></div>
       <div class="engage-option card"><h4 class="heading">Audit &amp; Review</h4><p>You have a system in place — we review it against your show requirements, identify risks, and produce a clear recommendations document. Effective at any stage of production, and often the fastest way to find and fix hidden problems.</p></div>
     </div>
+    <a href="about.html?service=SA#contact-form" class="btn-text service-ask">Ask about System Architecture</a>
   </div>
 </div>
 
@@ -527,6 +532,7 @@
       <div class="engage-option card"><h4 class="heading">Show-Day Direction</h4><p>We join the team for load-in, rehearsal, and the live show — taking technical ownership for the day. The right choice when pre-production is handled but you want experienced leadership in the room when it counts.</p></div>
       <div class="engage-option card"><h4 class="heading">Full Production Cycle</h4><p>We come in at the planning stage — owning the technical rider, attending site visits, briefing suppliers, and building the rehearsal schedule — through to post-show wrap. The complete Technical Direction service.</p></div>
     </div>
+    <a href="about.html?service=TD#contact-form" class="btn-text service-ask">Ask about Technical Direction</a>
   </div>
 </div>
 
@@ -536,9 +542,14 @@
   <p class="eyebrow">Work with us</p>
   <h2 class="display-md">Not sure which service fits your project?</h2>
   <p class="services-cta-copy">Answer a few quick questions and get pointed toward the service that makes the most sense for your current stage.</p>
-  <a href="quiz.html" class="btn-primary">Find your fit
+  <div class="services-cta-actions">
+    <a href="quiz.html" class="btn-primary">Find your fit
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
+    <a href="about.html#contact-form" class="btn-secondary">Start a conversation
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+  </div>
 </div>
 
 </main>
@@ -546,6 +557,15 @@
 <footer>
   <div class="footer-inner">
     <span class="footer-logo">Lumen and Pixel</span>
+    <div class="footer-nav" role="navigation" aria-label="Footer">
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="field-notes/index.html">Field Notes</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html#contact-form">Contact</a></li>
+      </ul>
+    </div>
     <ul class="footer-social">
       <li><a href="https://www.instagram.com/lumenandpixel" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="https://www.linkedin.com/company/lumen-and-pixel" target="_blank" rel="noopener">LinkedIn</a></li>

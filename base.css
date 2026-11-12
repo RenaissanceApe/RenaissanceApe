@@ -470,13 +470,14 @@ footer {
   padding: var(--space-3xl) var(--space-3xl);
   border-top: 1px solid var(--border);
 }
+/* Two rows: name and page links, then socials/legal and the copyright. */
 .footer-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  gap: var(--space-lg);
+  gap: var(--space-md) var(--space-lg);
 }
 .footer-logo {
   font-family: var(--font-display);
@@ -487,13 +488,16 @@ footer {
   text-transform: uppercase;
   color: var(--text-muted);
 }
+.footer-nav ul,
 .footer-social {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 4px 20px;
   list-style: none;
 }
+.footer-nav ul { justify-content: flex-end; }
+.footer-copy { justify-self: end; }
+.footer-nav a,
 .footer-social a {
   display: inline-flex;
   align-items: center;
@@ -502,7 +506,10 @@ footer {
   color: var(--text-muted);
   transition: color var(--dur-micro) var(--ease-fade);
 }
-.footer-social a:hover {
+.footer-nav a:hover,
+.footer-nav a:focus-visible,
+.footer-social a:hover,
+.footer-social a:focus-visible {
   color: var(--text);
   text-decoration: underline;
   text-decoration-color: var(--accent);
@@ -515,7 +522,9 @@ footer {
 }
 @media (max-width: 900px) {
   footer { padding: var(--space-2xl) var(--space-lg); }
-  .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-inner { display: flex; flex-direction: column; gap: 20px; text-align: center; }
+  .footer-nav ul,
+  .footer-social { justify-content: center; }
 }
 
 /* ── Scroll reveal (driven by site.js) and nav quiz link ─────────────── */

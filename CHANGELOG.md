@@ -6,6 +6,73 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.59 — November 2026
+
+### Contact and enquiry path: fewer steps from reading to asking (CE1–CE3)
+
+What a visitor sees: each service on the Services page now ends with a link to the contact form
+with that service already chosen, and the Services close and the Home banner have a "Start a
+conversation" button. On a phone, every link to the contact form lands at the top of the contact
+section's reply promise, with the booking button in view, instead of skipping past both to the
+name field. The form marks its required fields. And the footer on every page now links to
+Services, About, Field Notes, Resources and Contact, so a phone visitor with JavaScript off can
+reach every main page. No form field, name or value changed, `INTAKE.md` is unchanged, and
+nothing loads from another origin. English and Portuguese changed together throughout.
+
+Two proposed steps were not built: CE4 (making "Start a conversation" the filled button on the
+quiz result) stays as it is until the owner says otherwise (D52), and CE5 (date, place and size
+fields on the form) was declined in favour of a message placeholder in the copy review (D53).
+How it works from here on: `_docs/CONTACT.md`.
+
+### CE1: contact links on Services and Home
+
+#### Added
+
+- **Services:** each of the four service sections ends with a link to the contact form with that
+  service already chosen ("Ask about Show Design", "Ask about Show Control", "Ask about System
+  Architecture", "Ask about Technical Direction"), right after "Two ways to engage".
+- **Services close ("Work with us"):** a second button, "Start a conversation", beside "Find your
+  fit". It goes to the contact form on About.
+- **Home:** the "One partner. Every system. Exactly right." banner now has a "Start a
+  conversation" button to the contact form.
+- All in Portuguese too. The new buttons are outlined or text links; the page keeps its one green
+  button.
+
+### CE3: About's contact section on a phone; required fields marked
+
+#### Changed
+
+- **About, contact section on a phone:** every link to the form (`#contact-form`: the nav's
+  "Get started", the quiz result, the Services and Home links) now lands on the reply promise
+  ("within one business day") with **Book a discovery call** below it and the form after that,
+  instead of skipping straight past both to the name field. With and without JavaScript, EN and
+  PT. On wider screens, where the two columns sit side by side, nothing changes.
+- **About, contact form:** name, email and message are marked "(required)" / "(obrigatório)" in
+  their labels, so a visitor knows before sending. No field, name or wording of the form changed
+  otherwise.
+- **About, keyboard focus:** following "Get started" on the About page itself now moves focus to
+  the form (it stayed on the link before), and arriving from another page focuses the first field
+  (it tried a hidden field before and the form kept the focus).
+
+### CE2: a footer that navigates
+
+#### Added
+
+- **Footer, every page (EN and PT):** a row of page links: Services, About, Field Notes,
+  Resources, Contact (PT: Serviços, Sobre, Notas de Campo, Recursos, Contacto). "Contact" opens
+  the contact form on About. Resources now has a link from every page; until now nothing linked
+  to it. A phone visitor with JavaScript off, whose menu can't open, can now reach every main
+  page from the footer.
+
+#### Changed
+
+- **Footer layout:** two rows on a wide screen (the name and the page links, then Instagram,
+  LinkedIn, Privacy, Terms, Cookies and the copyright); one centred column on a phone. Every
+  footer link shows the green underline on keyboard focus as well as on hover.
+- `base.css` changed, so every page now loads the four shared files with `?v=1.59`.
+
+---
+
 ## v1.58 — November 2026
 
 ### Upkeep 2: defects fixed before the copy review (UP0–UP4)
