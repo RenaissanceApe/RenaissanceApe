@@ -6,6 +6,30 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.60 — November 2026
+
+### Proof of work: the Work hub and case 1 (PW1)
+
+What a visitor sees: a new Work page at `/work/` (`/pt/work/` in Portuguese) that lists the
+studio's cases, and the first case page, the awards-ceremony story the About page already tells,
+now laid out as a case: client, event and size, service, our role, the system that mattered and
+one number, then the brief, what we did and how it ran. It uses only facts already on the site and
+names no client. About keeps its story as it was. The Work page is not in the menu yet: that comes
+with step PW3, once cases 2–4 are in. Nothing loads from another origin, no form changed, and no
+shared file (`base.css`, `site.css`, `site.js`, `fonts.css`) changed.
+
+#### Added
+
+- **`work/index.html`, `pt/work/index.html`:** the Work hub, one card per case.
+- **`work/awards-ceremony.html`, `pt/work/awards-ceremony.html`:** case 1.
+- **`work/case-template.html`, `pt/work/case-template.html`:** the fixed case template, with every
+  field (client or description, event and size, year, service, role, the system that mattered, the
+  number, credits, photos) and, in its comments, how to add a case. Like the Field Notes template,
+  it is not indexed and not in the sitemap.
+- **`sitemap.xml`:** the hub and case 1 in both languages, each with its `hreflang` pair.
+
+---
+
 ## v1.59 — November 2026
 
 ### Contact and enquiry path: fewer steps from reading to asking (CE1–CE3)
