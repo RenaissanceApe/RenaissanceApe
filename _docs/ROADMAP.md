@@ -67,7 +67,7 @@ photograph of a show, and a founder-led studio that hides its founder. DISCOVERY
 
 | Step | What | Needs | Owns |
 |---|---|---|---|
-| **PW1** (built, v1.60) | Work hub and a fixed case template (client or description, event and size, year, service, role, the system that mattered, a number, credits, photos), EN and PT, sitemap; the About story becomes case 1 | D54 | `work/`, `pt/work/` (new), `sitemap.xml` |
+| **PW1** (built, v1.60; the four cases' content waits on the owner, [CASE_INTAKE.md](CASE_INTAKE.md)) | Work hub and a fixed case template (client or description, event and size, year, service, role, the system that mattered, a number, credits, photos), EN and PT, sitemap; the About story becomes case 1 | D54 | `work/`, `pt/work/` (new), `sitemap.xml` |
 | **PW2** | Cases 2–4 from the owner's facts and photos (self-hosted; clients named only with permission) | PW1, D54 | the case pages |
 | **PW3** | Tie the proof in: Home's logos link to cases, each Services section gets "Related work", the Case Studies filter gets entries (#38), the nav gets "Work" | PW2 | `index.html`, `services.html`, `field-notes/index.html`, EN + PT; the nav markup in every page |
 | **PW4** | Founder section published and the articles signed (#42) | D32, D55 | `about.html`, EN + PT |
@@ -145,7 +145,7 @@ before Languages.
 
 | Version | What | How it works |
 |---|---|---|
-| v1.60 | Proof of work, step PW1: the Work hub (`work/`, `pt/work/`), a fixed case template (`work/case-template.html`, not published), and case 1, the About page's awards-ceremony story in the template. Not in the nav yet (PW3) | `work/case-template.html` (how to add a case, in its comments) |
+| v1.60 | Proof of work, step PW1: the Work hub (`work/`, `pt/work/`), a fixed case template (`work/case-template.html`, not published), and four case pages from the owner's material ([CASE_INTAKE.md](CASE_INTAKE.md)). Not in the nav yet (PW3) | `work/case-template.html` (how to add a case, in its comments) |
 | v1.59 | Contact and enquiry path (CE1–CE3): a contact link at the end of each service and on Home (`?service=` pre-fill), phone arrivals at `#contact-form` land on the reply promise above the form, required fields marked, and a footer page-link row on every page. CE4 and CE5 not built (D52, D53) | [CONTACT.md](CONTACT.md) |
 | v1.58 | Upkeep 2 (UP0–UP4): the quiz without JavaScript, a 404 that works below a folder, `?service=` limited to the four codes, screen-reader fixes, JPEG link-preview cards, `og:locale` and `og:image:alt`, Organisation data on the PT home, `robots.txt` without `Disallow`, the release version on the shared-file URLs with its check, and a CI install that survives an apt outage. Closed #37, #40, #51 | [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.57 | Discovery run 1 (DS1–DS3): four scouts, a challenger's ranked list, and this plan: Upkeep 2 ready to run, three proposed sets waiting on the owner, decisions D48–D69 | [DISCOVERY.md](DISCOVERY.md), `_docs/discovery/`, [UPKEEP_2.md](UPKEEP_2.md) |
