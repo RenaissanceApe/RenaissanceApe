@@ -13,6 +13,18 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
+### v1.60 Proof of work, PW1
+
+- [ ] Open `/work/` and `/pt/work/` (not in the menu yet: type the address). Four case cards
+      show; each opens its case page, and the case page's "Work" / "Projetos" link goes back.
+- [ ] On each case page, EN and PT: the facts table (client, event and size, year, service, our
+      role, the system that mattered, the number, credits) matches what you sent in
+      `CASE_INTAKE.md`, and the service link opens Services at that section.
+- [ ] No "[" placeholder is left anywhere on the Work pages.
+- [ ] EN / PT switch on every Work page goes to the same page in the other language.
+- [ ] After the release, search console: `/work/` and the four case pages are picked up from
+      `sitemap.xml`.
+
 ### v1.59 Contact and enquiry path
 
 - [ ] Services (EN and PT): click each "Ask about …" / "Pergunte sobre …" link. About opens at
@@ -118,8 +130,8 @@ on the same day: for D1–D70 the right-hand column is the decision.** The colum
 because rows from D71 on are still open. D21 was used as assumed by discovery run 1. D22–D47 came
 out of the brand refresh (v1.56) and D48–D69 out of discovery run 1 (v1.57,
 [DISCOVERY.md](DISCOVERY.md)); D52 and D53 meant CE4 and CE5 were not built. D70 came out of
-Upkeep 2 (v1.58). D71–D76 came out of the Contact and enquiry path (v1.59): each is built as
-assumed, and stays that way unless the owner says otherwise.
+Upkeep 2 (v1.58). D71–D76 came out of the Contact and enquiry path (v1.59) and D77–D79 out of PW1 (v1.60): each is
+built as assumed, and stays that way unless the owner says otherwise.
 
 | # | Question | Assumed until answered |
 |---|---|---|
@@ -199,3 +211,6 @@ assumed, and stays that way unless the owner says otherwise.
 | D74 | **CE3.** On a phone, links to the form land on the reply promise ("within one business day"), not the top of the contact section: at 375 px the section from its top to the booking button is 770 px, taller than the screen, so landing at the top would hide the button. Keep this, or land at the section top and tighten the phone spacing of the contact details (a visual change)? | Kept: land on the reply promise |
 | D75 | **CE3.** The words "(required)" / "(obrigatório)" in the name, email and message labels (uppercase, in the label type). Yes to the wording? (D13: no other copy changes without your yes.) | Built as written |
 | D76 | **Working with us.** WW3 (an author block at the end of the articles) needs PW4's founder name, but D67 folds it into CR5, which runs before Proof of work. Build WW3 after PW4 ships, or inside CR5 with the studio name only? | After PW4 ships |
+| D77 | **PW1.** The Work hub has no link from any page yet: the nav entry is PW3's. Until then it is reachable only by its address and `sitemap.xml`. Keep it that way, or add one link now (for example from About or the footer)? | Unlinked until PW3 |
+| D78 | **PW1.** New visitor-facing words on the hub (D13): the title "The shows. And the systems behind them." / "Os espetáculos. E os sistemas por trás deles.", and the line "Clients are named only with their permission" / "Só nomeamos clientes com a sua autorização". Yes to the wording? | Built as written |
+| D79 | **PW1.** Names and addresses: "Work" in English, "Projetos" in Portuguese; the hub at `/work/` and `/pt/work/`; the cases at `case-1.html` to `case-4.html` until each gets a name from its content (for example `work/awards-ceremony.html`). Keep? | Kept; case pages renamed when the content arrives |

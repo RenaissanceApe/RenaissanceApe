@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>[CASE 3 TITLE] — Work · Lumen and Pixel</title>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <meta name="theme-color" content="#021829" />
+  <link rel="canonical" href="https://www.lumenandpixel.com/work/case-3.html" />
+<link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-3.html" />
+<link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-3.html" />
+<link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-3.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="[CASE 3 META DESCRIPTION, 150-160 CHARACTERS]" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Lumen and Pixel" />
+  <meta property="og:title" content="[CASE 3 TITLE] — Lumen and Pixel" />
+  <meta property="og:description" content="[CASE 3 META DESCRIPTION, 150-160 CHARACTERS]" />
+  <meta property="og:url" content="https://www.lumenandpixel.com/work/case-3.html" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="pt_PT" />
+  <meta property="og:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The Lumen and Pixel logo and the line “The creative is ready. Is the system?” on dark blue" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[CASE 3 TITLE] — Lumen and Pixel" />
+  <meta name="twitter:description" content="[CASE 3 META DESCRIPTION, 150-160 CHARACTERS]" />
+  <meta name="twitter:image" content="https://www.lumenandpixel.com/images/og-image.jpg" />
+<link rel="stylesheet" href="/fonts.css?v=1.59" />
+<link rel="stylesheet" href="/base.css?v=1.59" />
+<style>
+  /* Work case page. Tokens and shared classes come from base.css; this block
+     is the same in every case page and in work/case-template.html, which they
+     are copied from. The reading column matches Field Notes (about 68 characters). */
+
+  /* ── Header: Surface Elevation gradient + sand grain ── */
+  .case-hero{background:linear-gradient(to bottom,var(--surface),var(--bg));}
+  .case-header,.case-facts,.case-body,.case-footer{max-width:calc(68ch + 48px);margin:0 auto;}
+  .case-header{padding:calc(68px + var(--space-2xl)) var(--space-lg) var(--space-2xl);}
+  .case-back,.case-footer-back{display:inline-flex;align-items:center;gap:var(--space-xs);min-height:44px;color:var(--text-muted);transition:color var(--dur-micro) var(--ease-fade);}
+  .case-back{margin-bottom:var(--space-lg);}
+  .case-back:hover,.case-footer-back:hover{color:var(--accent);}
+  .case-back svg,.case-footer-back svg{transition:transform var(--dur-micro) var(--ease-move);}
+  .case-back:hover svg,.case-footer-back:hover svg{transform:translateX(-4px);}
+  .case-meta{display:flex;align-items:center;gap:var(--space-sm);margin-bottom:var(--space-lg);flex-wrap:wrap;}
+  .case-meta-line{color:var(--text-muted);}
+  .case-header h1{color:var(--text);margin-bottom:var(--space-lg);overflow-wrap:break-word;}
+  .case-lede{color:var(--text-muted);border-left:2px solid var(--border);padding-left:var(--space-lg);}
+
+  /* ── The fixed facts: one row per field, label left, value right ── */
+  .case-facts{padding:var(--space-2xl) var(--space-lg) 0;}
+  .case-facts h2{color:var(--text);margin-bottom:var(--space-md);}
+  .case-facts dl{border-top:1px solid var(--border);}
+  .case-fact{display:grid;grid-template-columns:200px 1fr;gap:var(--space-md);padding:var(--space-md) 0;border-bottom:1px solid var(--border);}
+  .case-fact dt{color:var(--text-muted);padding-top:2px;}
+  .case-fact dd{font-size:16px;line-height:1.6;color:var(--text);margin:0;}
+  .case-fact dd a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;transition:color var(--dur-micro) var(--ease-fade);}
+  .case-fact dd a:hover{color:var(--accent-hover);}
+  .case-number{display:block;color:var(--accent);margin-bottom:var(--space-xxs);}
+
+  /* ── The story: Inter 400, 16 px / 1.6 ── */
+  .case-body{padding:var(--space-2xl) var(--space-lg) var(--space-3xl);}
+  .case-body h2{color:var(--text);margin:var(--space-2xl) 0 var(--space-md);}
+  .case-body h2:first-child{margin-top:0;}
+  .case-body p{font-size:16px;font-weight:400;line-height:1.6;color:var(--text);margin-bottom:var(--space-lg);}
+  .case-quote{border-left:2px solid var(--accent);padding:var(--space-xxs) 0 var(--space-xxs) var(--space-lg);margin:var(--space-xl) 0;}
+  .case-quote blockquote p{font-size:18px;font-weight:300;line-height:1.6;color:var(--text);margin:0 0 var(--space-xs);}
+  .case-quote figcaption{color:var(--text-muted);}
+  /* Photos: self-hosted in images/work/, full width of the column, caption below */
+  .case-photo{margin:var(--space-xl) 0;}
+  .case-photo img{display:block;width:100%;height:auto;border-radius:var(--radius);}
+  .case-photo figcaption{font-size:14px;line-height:1.55;color:var(--text-muted);margin-top:var(--space-xs);}
+
+  /* ── After the case ── */
+  .case-footer{padding:var(--space-lg) var(--space-lg) var(--space-3xl);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);flex-wrap:wrap;}
+  .case-footer-cta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-xs);font-size:14px;line-height:1.55;color:var(--text-muted);}
+
+  @media(max-width:600px){
+    .case-header{padding-top:calc(68px + var(--space-xl));padding-bottom:var(--space-xl);}
+    .case-fact{grid-template-columns:1fr;gap:var(--space-xxs);}
+  }
+</style>
+<link rel="stylesheet" href="/site.css?v=1.59" />
+<noscript><style>.reveal{opacity:1;transform:none;}</style></noscript>
+<script>window.__lpRevealFailsafe=setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("visible");});},4000);</script>
+<script src="/site.js?v=1.59" defer></script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<nav aria-label="Main navigation">
+  <a href="../index.html" class="nav-logo" aria-label="Lumen and Pixel — home">
+    <img class="nav-logo-mark" src="../images/logo-mark.svg" alt="Lumen and Pixel" width="236" height="236" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="../services.html">Services</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../field-notes/index.html">Field Notes</a></li>
+    <li><a href="../quiz.html" class="nav-quiz-link">Find your fit</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="../about.html#contact-form" class="nav-cta">Get started</a>
+    <div class="lang-switch" aria-label="Language selector">
+      <a href="case-3.html" class="active" aria-current="true">EN</a><span>/</span><a href="../pt/work/case-3.html">PT</a>
+    </div>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <ul>
+    <li><a href="../services.html">Services</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../field-notes/index.html">Field Notes</a></li>
+    <li><a href="../quiz.html">Find your fit</a></li>
+  </ul>
+  <a href="../about.html#contact-form" class="mobile-cta">Get started</a>
+  <div class="mobile-lang-switch">
+    <a href="case-3.html" class="active" aria-current="true">EN</a><span>/</span><a href="../pt/work/case-3.html">PT</a>
+  </div>
+</div>
+<main id="main-content">
+  <div class="case-hero grain">
+  <div class="case-header">
+    <a href="index.html" class="case-back label"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Work</a>
+    <div class="case-meta">
+      <span class="tag">[SERVICE]</span>
+      <span class="case-meta-line label">[SECTOR · EVENT TYPE · SIZE]</span>
+    </div>
+    <h1 class="display-lg">[CASE 3 HEADLINE]</h1>
+    <p class="lead case-lede">[CASE LEDE: one or two sentences, the problem and how it ended.]</p>
+  </div>
+  </div>
+
+
+  <section class="case-facts" aria-labelledby="case-facts-title">
+    <h2 class="heading" id="case-facts-title">The case at a glance</h2>
+    <dl>
+      <div class="case-fact"><dt class="label">Client</dt><dd>[CLIENT NAME, OR A DESCRIPTION]</dd></div>
+      <div class="case-fact"><dt class="label">Event and size</dt><dd>[EVENT, GUESTS OR AUDIENCE, DAYS]</dd></div>
+      <div class="case-fact"><dt class="label">Year</dt><dd>[YEAR]</dd></div>
+      <div class="case-fact"><dt class="label">Service</dt><dd><a href="../services.html#SERVICE-ID">[SERVICE]</a></dd></div>
+      <!-- SERVICE-ID is one of: show-design, show-control, system-architecture, technical-direction -->
+      <div class="case-fact"><dt class="label">Our role</dt><dd>[WHAT WE DID, AND FROM WHEN]</dd></div>
+      <div class="case-fact"><dt class="label">The system that mattered</dt><dd>[THE ONE SYSTEM OR DECISION THE SHOW DEPENDED ON]</dd></div>
+      <div class="case-fact"><dt class="label">The number</dt><dd><span class="case-number display-md">[N]</span>[WHAT THE NUMBER COUNTS]</dd></div>
+      <div class="case-fact"><dt class="label">Credits</dt><dd>[PRODUCTION COMPANY, VENUE, PARTNERS (WITH PERMISSION)]</dd></div>
+      <div class="case-fact"><dt class="label">Photos</dt><dd>[HOW MANY PHOTOS, AND WHO TOOK THEM] (this row is removed once the photos are in the story below)</dd></div>
+    </dl>
+  </section>
+
+  <div class="case-body">
+    <h2 class="display-md">The brief</h2>
+    <p>[What the client had, and what was missing.]</p>
+    <h2 class="display-md">What we did</h2>
+    <p>[Our part, in the order it happened.]</p>
+    <h2 class="display-md">How it ran</h2>
+    <p>[The show, and the result.]</p>
+    <!-- Photos: one figure each, at least 1600 px wide, JPEG, in images/work/.
+    <figure class="case-photo">
+      <img src="../images/work/case-3-1.jpg" alt="WHAT THE PHOTO SHOWS" width="1600" height="1067" loading="lazy" />
+      <figcaption>CAPTION. Photo: PHOTOGRAPHER.</figcaption>
+    </figure>
+    -->
+    <!-- A quotation, only with the person's permission:
+    <figure class="case-quote">
+      <blockquote><p>&#8220;QUOTE.&#8221;</p></blockquote>
+      <figcaption class="label">ROLE</figcaption>
+    </figure>
+    -->
+  </div>
+
+  <div class="case-footer">
+    <a href="index.html" class="case-footer-back label"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10 7H2M5 3L1 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to Work</a>
+    <p class="case-footer-cta">Working on a production? <a class="btn-text" href="../about.html#contact-form">Let's talk.</a></p>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">Lumen and Pixel</span>
+    <div class="footer-nav" role="navigation" aria-label="Footer">
+      <ul>
+        <li><a href="../services.html">Services</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../field-notes/index.html">Field Notes</a></li>
+        <li><a href="../resources.html">Resources</a></li>
+        <li><a href="../about.html#contact-form">Contact</a></li>
+      </ul>
+    </div>
+    <ul class="footer-social">
+      <li><a href="https://www.instagram.com/lumenandpixel" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.linkedin.com/company/lumen-and-pixel" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="../legal.html#privacy">Privacy</a></li>
+      <li><a href="../legal.html#terms">Terms</a></li>
+      <li><a href="../legal.html#cookies">Cookies</a></li>
+    </ul>
+    <span class="footer-copy" data-copyright-year>© Lumen and Pixel 2026</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -85,4 +85,64 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/field-notes/portugal-events.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/field-notes/portugal-events.html"/>
   </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/work/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/pt/work/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/work/case-1.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-1.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-1.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/pt/work/case-1.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-1.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-1.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-1.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/work/case-2.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-2.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-2.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/pt/work/case-2.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-2.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-2.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/work/case-3.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-3.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-3.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-3.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/pt/work/case-3.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-3.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-3.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-3.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/work/case-4.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-4.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-4.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-4.html"/>
+  </url>
+  <url>
+    <loc>https://www.lumenandpixel.com/pt/work/case-4.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lumenandpixel.com/work/case-4.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.lumenandpixel.com/pt/work/case-4.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lumenandpixel.com/work/case-4.html"/>
+  </url>
 </urlset>

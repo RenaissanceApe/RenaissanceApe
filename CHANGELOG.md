@@ -6,6 +6,30 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.60 — November 2026
+
+### Proof of work: the Work hub and four case pages (PW1)
+
+What a visitor sees: a new Work page at `/work/` (`/pt/work/` in Portuguese) that lists four
+cases, and a page for each case. Every case page has the same fixed layout: client or
+description, event and size, year, service, our role, the system that mattered, one number,
+credits and photos, then the brief, what we did and how it ran. The four cases are the owner's
+own projects. The Work page is not in the menu yet; that comes with step PW3. Nothing loads from
+another origin, no form changed, and no shared file (`base.css`, `site.css`, `site.js`,
+`fonts.css`) changed.
+
+#### Added
+
+- **`work/index.html`, `pt/work/index.html`:** the Work hub, one card per case.
+- **`work/case-1.html` to `case-4.html`, and the same in `pt/work/`:** the four case pages.
+- **`work/case-template.html`, `pt/work/case-template.html`:** the fixed case template. Its
+  comments explain how to add a case. Like the Field Notes template, it is not indexed and not
+  in the sitemap.
+- **`sitemap.xml`:** the hub and the four cases in both languages, each with its `hreflang` pair.
+- **`_docs/CASE_INTAKE.md`:** the form the owner filled in for the four cases.
+
+---
+
 ## v1.59 — November 2026
 
 ### Contact and enquiry path: fewer steps from reading to asking (CE1–CE3)
