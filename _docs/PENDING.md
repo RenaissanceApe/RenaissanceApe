@@ -13,6 +13,14 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
+### v1.60 Legal page: every outside service named
+
+- [ ] Open `/legal.html` and `/pt/legal.html`, section "Third-party services" / "Serviços
+      terceiros": nine services are listed (GitHub Pages, Cloudflare, n8n Cloud, Notion,
+      MailerLite, Google (Gmail), Telegram, cal.com, Gumroad), and the sentence above the list
+      names Cloudflare.
+- [ ] Read each new sentence against what n8n v2-01 really does. If one is wrong, say which.
+
 ### v1.59 Contact and enquiry path
 
 - [ ] Services (EN and PT): click each "Ask about …" / "Pergunte sobre …" link. About opens at
@@ -199,3 +207,5 @@ assumed, and stays that way unless the owner says otherwise.
 | D74 | **CE3.** On a phone, links to the form land on the reply promise ("within one business day"), not the top of the contact section: at 375 px the section from its top to the booking button is 770 px, taller than the screen, so landing at the top would hide the button. Keep this, or land at the section top and tighten the phone spacing of the contact details (a visual change)? | Kept: land on the reply promise |
 | D75 | **CE3.** The words "(required)" / "(obrigatório)" in the name, email and message labels (uppercase, in the label type). Yes to the wording? (D13: no other copy changes without your yes.) | Built as written |
 | D76 | **Working with us.** WW3 (an author block at the end of the articles) needs PW4's founder name, but D67 folds it into CR5, which runs before Proof of work. Build WW3 after PW4 ships, or inside CR5 with the studio name only? | After PW4 ships |
+| D77 | **T1.** The Telegram line says it "sends us an alert for each new enquiry" without saying what is in the alert. If the alert carries the visitor's name, email or message, should the line say so? | Left general |
+| D78 | **T1.** The Gmail line covers only the email to you about each new lead. Once the Sales desk sends visitors a receipt and questions from Gmail, the line needs a second clause, in that change's PR. Agreed? | Not mentioned until it ships |
