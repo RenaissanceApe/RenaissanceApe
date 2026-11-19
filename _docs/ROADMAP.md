@@ -7,6 +7,12 @@ sessions on the `test` branch and reaches `main` as one PR ([PARALLEL.md](PARALL
 Open questions and things waiting on the owner are in [PENDING.md](PENDING.md). The prompt for
 each step still to run is in [SESSION_PROMPTS.md](SESSION_PROMPTS.md).
 
+**State on 2026-11-19.** The repository is now `RenaissanceApe/lp-website` (the old name
+redirects). Since v1.59: **v1.60** shipped the Legal page's full list of outside services (T1,
+#78, a solo PR); **PW1** of Proof of work is built as a draft PR (#76) waiting on the owner's
+four cases; #77 (a Legal sentence that Cloudflare makes untrue) is open. Nothing is running on
+`test`.
+
 ## Next
 
 ### 1. Copy review: every word, humanised
@@ -59,15 +65,15 @@ Runs: TR1 alone → TR2, TR3, TR4 together → TR5 alone.
 
 ### 4. Proof of work
 
-**Proposed by discovery run 1 (v1.57); picked by the owner (D48, 2026-11-11), after the copy
-review.** The gap every
+**Proposed by discovery run 1 (v1.57); picked by the owner (D48, 2026-11-11). Started early on
+2026-11-17, when the owner said four case studies are ready to write (PW1, PR #76).** The gap every
 discovery lens found: one anonymous story, six unlinked logos, an empty Case Studies filter, no
 photograph of a show, and a founder-led studio that hides its founder. DISCOVERY.md items 3, 2, 6,
 11 (later 13 and 14). Almost all the effort is the owner's material; the template is small.
 
 | Step | What | Needs | Owns |
 |---|---|---|---|
-| **PW1** | Work hub and a fixed case template (client or description, event and size, year, service, role, the system that mattered, a number, credits, photos), EN and PT, sitemap; the About story becomes case 1 | D54 | `work/`, `pt/work/` (new), `sitemap.xml` |
+| **PW1** (in progress: draft PR #76) | Work hub, a fixed case template (client or description, event and size, year, service, role, the system that mattered, a number, credits, photos) and four case pages, EN and PT, sitemap. Built with placeholders; the four cases come from the owner through `_docs/CASE_INTAKE.md` (on the PR branch). The About story is not a case unless the owner says so. Must not merge while any `[` placeholder is left: the pages are indexed and in the sitemap | the owner's four cases and photos (D54) | `work/`, `pt/work/` (new), `sitemap.xml` |
 | **PW2** | Cases 2–4 from the owner's facts and photos (self-hosted; clients named only with permission) | PW1, D54 | the case pages |
 | **PW3** | Tie the proof in: Home's logos link to cases, each Services section gets "Related work", the Case Studies filter gets entries (#38), the nav gets "Work" | PW2 | `index.html`, `services.html`, `field-notes/index.html`, EN + PT; the nav markup in every page |
 | **PW4** | Founder section published and the articles signed (#42) | D32, D55 | `about.html`, EN + PT |
@@ -122,17 +128,19 @@ Proof of work ships, so the scouts judge the site with its proof in place.
 | Set | What | Waiting on |
 |---|---|---|
 | **Markup** | Stop repeating nav and footer markup: partials or a site generator (#12). Best done before Languages | the owner (`needs-ricardo`) |
-| **Legal** | Privacy, Terms, Cookies and Disclaimer revised for the v2 stack (#28). Before Languages translates them | the owner (`needs-ricardo`) |
+| **Legal** | Privacy, Terms, Cookies and Disclaimer revised for the v2 stack (#28), including #77 (the line saying a page load discloses no IP address to a third party, untrue with Cloudflare in front). Before Languages translates them. T1 (v1.60) already lists every outside service | the owner (`needs-ricardo`) |
 | **Layout** | Rail Grid on every page (DESIGN.md "Layout") | D3 in PENDING; better after #12 |
 | **Icons and motion** | Signal Pixel icons replacing the PNG service icons; Pixel Build logo reveal; favicon and app icons redrawn in one green (#31) | `ICONS.md` from the owner (D5) |
 | **Upkeep** | U1: keep `CLAUDE.md`, `DESIGN.md`, `INTAKE.md`, `CHANGELOG.md` off the public site (D11) | the owner's yes |
 
 ### Suggested order
 
-1. **Copy review**, with **Working with us** folded in as owner-approved meaning changes (D67):
-   one pass over Services, About and the article instead of two.
-2. **Proof of work**, once the owner's projects, photos and permissions are in: the largest gain,
-   gated only by material that should start being collected now.
+1. **Proof of work, PW1 (PR #76)**: finish it as soon as the owner's four cases are in. It owns
+   only new pages (`work/`, `pt/work/`) and `sitemap.xml`, so it can run beside anything below.
+2. **Copy review**, with **Working with us** folded in as owner-approved meaning changes (D67):
+   one pass over Services, About and the article instead of two. Can start now; it doesn't touch
+   `work/`. PW3–PW6 (nav, Home, Services, About) wait until CR3 is merged, since they own the
+   same pages.
 3. **Previz quadrant**: brings the studio's own tool on site, after the copy it links from is
    final.
 4. **Languages**: translate the final text once, the quadrant included.
@@ -145,6 +153,7 @@ before Languages.
 
 | Version | What | How it works |
 |---|---|---|
+| v1.60 | Legal page lists all nine outside services (Cloudflare, Notion, MailerLite, Gmail and Telegram added) and says every page passes through Cloudflare and GitHub Pages (T1, #78). Solo PR | `legal.html`, `pt/legal.html` |
 | v1.59 | Contact and enquiry path (CE1–CE3): a contact link at the end of each service and on Home (`?service=` pre-fill), phone arrivals at `#contact-form` land on the reply promise above the form, required fields marked, and a footer page-link row on every page. CE4 and CE5 not built (D52, D53) | [CONTACT.md](CONTACT.md) |
 | v1.58 | Upkeep 2 (UP0–UP4): the quiz without JavaScript, a 404 that works below a folder, `?service=` limited to the four codes, screen-reader fixes, JPEG link-preview cards, `og:locale` and `og:image:alt`, Organisation data on the PT home, `robots.txt` without `Disallow`, the release version on the shared-file URLs with its check, and a CI install that survives an apt outage. Closed #37, #40, #51 | [UPKEEP_2.md](UPKEEP_2.md) |
 | v1.57 | Discovery run 1 (DS1–DS3): four scouts, a challenger's ranked list, and this plan: Upkeep 2 ready to run, three proposed sets waiting on the owner, decisions D48–D69 | [DISCOVERY.md](DISCOVERY.md), `_docs/discovery/`, [UPKEEP_2.md](UPKEEP_2.md) |
