@@ -6,6 +6,17 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.61 — November 2026
+
+### Roadmap brought up to date
+
+Nothing a visitor sees changes. `_docs/ROADMAP.md` now records what happened since v1.59: the
+repository's new name (`RenaissanceApe/lp-website`), v1.60 (T1) in "Built", PW1 of Proof of work
+in progress as draft PR #76 waiting on the owner's four cases, #77 folded into the Legal set, and
+a suggested order that finishes PW1 beside the copy review.
+
+---
+
 ## v1.60 — November 2026
 
 ### Legal page: every outside service named (T1)
