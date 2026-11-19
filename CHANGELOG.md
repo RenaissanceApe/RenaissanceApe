@@ -6,6 +6,23 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.60 — November 2026
+
+### Legal page: every outside service named (T1)
+
+What a visitor sees: the privacy section of the Legal page now lists all nine outside services
+that handle visitors' data, not four. Added: Cloudflare (it sits in front of the site on every
+visit), Notion (stores enquiries and newsletter consent), MailerLite (runs the newsletter and its
+confirmation email), Google's Gmail (emails us each new enquiry) and Telegram (alerts us to each
+new enquiry). The sentence above the list said the browser contacts these services only when a
+form is sent or a link followed; that was not true for Cloudflare, so it now says every page
+passes through Cloudflare and GitHub Pages, and that the browser never contacts Notion,
+MailerLite, Google or Telegram directly. The owner approved changing these lines. No other
+wording changed, no form or field changed, `INTAKE.md` is unchanged, and nothing new loads from
+another origin. English and Portuguese changed together.
+
+---
+
 ## v1.59 — November 2026
 
 ### Contact and enquiry path: fewer steps from reading to asking (CE1–CE3)
