@@ -6,6 +6,20 @@ Format: version → date → what changed and why.
 
 ---
 
+## v1.62 — November 2026
+
+### Newsletter moves to Brevo: Legal page and intake contract (lp-ops #65)
+
+What a visitor sees: the Legal page (EN and PT) now names Brevo, not MailerLite, as the service
+that runs the newsletter and its confirmation email, in the services list and in the sentence
+above it. Brevo is not yet live: this release goes out together with the owner publishing the
+Brevo version of n8n workflow v2-01. The forms, their fields, consent wording and redirects are
+unchanged; `INTAKE.md` changes only in its "Downstream" note, which says where sign-ups go. The
+owner approved switching the newsletter to Brevo on 18 November 2026. Nothing new loads from
+another origin: the visitor's browser still only talks to n8n.
+
+---
+
 ## v1.61 — November 2026
 
 ### Roadmap brought up to date

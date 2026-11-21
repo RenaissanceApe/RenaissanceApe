@@ -13,6 +13,17 @@ release. Section 3: decisions, each with the answer assumed until the owner give
 
 ## 2. To try by hand
 
+### v1.62 Newsletter to Brevo
+
+- [ ] Merge this only once the n8n Brevo version is published (the "Switch the newsletter to
+      Brevo" issue), so the Legal page and the workflow change on the same day.
+- [ ] Open `/legal.html` and `/pt/legal.html`, "Third-party services" / "Serviços terceiros":
+      Brevo is listed where MailerLite was, and MailerLite appears nowhere on either page.
+- [ ] Sign up on Home with your own address, once in EN and once in PT: the confirmation email
+      comes from Brevo in that language; after you confirm, the contact is in the Brevo
+      newsletter list with SIGNUP_LANG, SIGNUP_PAGE, CONSENT_TEXT, CONSENT_SOURCE and CONSENT_AT
+      filled in, and the Notion contact still shows Consent Date and Consent Source.
+
 ### v1.60 Legal page: every outside service named
 
 - [ ] Open `/legal.html` and `/pt/legal.html`, section "Third-party services" / "Serviços
@@ -209,3 +220,6 @@ assumed, and stays that way unless the owner says otherwise.
 | D76 | **Working with us.** WW3 (an author block at the end of the articles) needs PW4's founder name, but D67 folds it into CR5, which runs before Proof of work. Build WW3 after PW4 ships, or inside CR5 with the studio name only? | After PW4 ships |
 | D77 | **T1.** The Telegram line says it "sends us an alert for each new enquiry" without saying what is in the alert. If the alert carries the visitor's name, email or message, should the line say so? | Left general |
 | D78 | **T1.** The Gmail line covers only the email to you about each new lead. Once the Sales desk sends visitors a receipt and questions from Gmail, the line needs a second clause, in that change's PR. Agreed? | Not mentioned until it ships |
+| D79 | **Brevo (lp-ops #65).** The contact form's optional email box sends people to MailerLite today, in its own group. The Brevo version sends them to Brevo too (a second list), so MailerLite can close. Keep that, or stop adding contact-form opt-ins to any list? | A second Brevo list, as today |
+| D80 | **Brevo.** After someone clicks the confirmation link, Brevo must open a page. The draft opens the Home page (`/` or `/pt/`). A "you're subscribed" page would be a new page in both languages. | Home page |
+| D81 | **Brevo.** The Legal line says Brevo "records when you confirmed"; the MailerLite line also said it records the IP address. Check in Brevo whether it keeps the IP of the confirmation; if it does, add it back to the line. | Time only |

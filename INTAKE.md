@@ -89,7 +89,9 @@ readable by anyone. Screening happens on the n8n side.
 Recorded so a reader knows where the data goes; the site depends only on the
 contract above.
 
-- Newsletter signups go to **MailerLite** via n8n workflow v2-01. MailerLite
-  runs double opt-in and records the confirmation IP and time.
+- Newsletter signups go to **Brevo** via n8n workflow v2-01. Brevo runs
+  double opt-in (its confirmation email, in the visitor's language) and
+  records the confirmation. n8n also sends Brevo the language, source page,
+  consent wording and time as contact attributes.
 - Consent wording and timestamp are stored on the **Notion** contact.
 - The site never implements email logic.

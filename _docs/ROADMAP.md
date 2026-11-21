@@ -153,6 +153,7 @@ before Languages.
 
 | Version | What | How it works |
 |---|---|---|
+| v1.62 | Newsletter to Brevo (lp-ops #65): Legal page (EN and PT) and `INTAKE.md` name Brevo instead of MailerLite; an unpublished n8n v2-01 version sends consented sign-ups to Brevo double opt-in. Ships together with the owner publishing that version. Solo PR | `legal.html`, `pt/legal.html`, `INTAKE.md`, n8n v2-01 |
 | v1.60 | Legal page lists all nine outside services (Cloudflare, Notion, MailerLite, Gmail and Telegram added) and says every page passes through Cloudflare and GitHub Pages (T1, #78). Solo PR | `legal.html`, `pt/legal.html` |
 | v1.59 | Contact and enquiry path (CE1–CE3): a contact link at the end of each service and on Home (`?service=` pre-fill), phone arrivals at `#contact-form` land on the reply promise above the form, required fields marked, and a footer page-link row on every page. CE4 and CE5 not built (D52, D53) | [CONTACT.md](CONTACT.md) |
 | v1.58 | Upkeep 2 (UP0–UP4): the quiz without JavaScript, a 404 that works below a folder, `?service=` limited to the four codes, screen-reader fixes, JPEG link-preview cards, `og:locale` and `og:image:alt`, Organisation data on the PT home, `robots.txt` without `Disallow`, the release version on the shared-file URLs with its check, and a CI install that survives an apt outage. Closed #37, #40, #51 | [UPKEEP_2.md](UPKEEP_2.md) |
